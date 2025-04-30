@@ -16,8 +16,7 @@ const geistMono = Geist_Mono({
 
 export const metadata: Metadata = {
   title: "Mina Foundation",
-  description:
-    "Islamic non-profit organization helping families through donations",
+  description: "non-profit organization helping families through donations",
 };
 
 export default function RootLayout({

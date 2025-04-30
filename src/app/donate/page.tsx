@@ -5,6 +5,7 @@ import { motion } from "motion/react";
 import StripePayment from "@/components/StripePayment";
 import Link from "next/link";
 import HeroSection from "@/components/hero";
+import Image from "next/image";
 
 export default function DonatePage() {
   const [donationAmount, setDonationAmount] = useState("25");
@@ -42,7 +43,31 @@ export default function DonatePage() {
   };
 
   const heroImages = [
-    { src: "/donate_page.webp", alt: "Supporting hands in unity" },
+    { src: "/images/IMG_9003 2.jpg", alt: "Supporting our community" },
+    { src: "/images/IMG_8983 2.jpg", alt: "Making a difference together" },
+  ];
+
+  // Impact story images
+  const impactImages = [
+    {
+      src: "/images/21.jpg",
+      title: "Family Support Program",
+      description:
+        "Helping families in need with essential resources and support services.",
+      stats: "500+ families helped",
+    },
+    {
+      src: "/images/23.jpg",
+      title: "Educational Initiatives",
+      description: "Providing quality education and resources for all ages.",
+      stats: "1,000+ students enrolled",
+    },
+    {
+      src: "/images/26.jpg",
+      title: "Community Development",
+      description: "Building strong community connections and infrastructure.",
+      stats: "12 community centers",
+    },
   ];
 
   return (
@@ -50,7 +75,7 @@ export default function DonatePage() {
       {/* Hero Section with Image */}
       <HeroSection
         title="Support Our Mission"
-        description="Your generous donations help us provide essential support to Islamic families in need."
+        description="Your generous donations help us provide essential support to families in need."
         primaryButtonText="Donate Now"
         primaryButtonLink="#payment-section"
         secondaryButtonText="Learn More"
@@ -446,13 +471,13 @@ export default function DonatePage() {
         </div>
       </motion.section>
 
-      {/* Impact Section */}
+      {/* Impact Section with Images */}
       <motion.section
         initial={{ opacity: 0, y: 30 }}
         whileInView={{ opacity: 1, y: 0 }}
         viewport={{ once: true }}
         transition={{ duration: 0.8 }}
-        className="py-16 bg-gradient-to-b from-white to-green-50"
+        className="py-16 bg-green-50"
         ref={impactRef}
       >
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -463,88 +488,136 @@ export default function DonatePage() {
             transition={{ duration: 0.8, delay: 0.2 }}
             className="text-center mb-12"
           >
-            <h2 className="section-title text-3xl md:text-4xl font-bold text-green-800 mb-4">
-              Our Impact
+            <h2 className="text-3xl font-bold text-green-800 mb-4">
+              Your Impact
             </h2>
-            <div className="w-24 h-1 bg-green-500 mx-auto mb-6"></div>
-            <p className="section-description text-lg text-gray-700 max-w-3xl mx-auto">
-              Discover how your contributions make a difference in the lives of
-              Islamic families.
+            <p className="max-w-3xl mx-auto text-lg text-gray-600">
+              Your donations make a real difference in the lives of 
+              families in our community. Here are some of the ways your support
+              helps:
             </p>
           </motion.div>
 
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mt-12">
-            {[
-              {
-                icon: "money",
-                title: "Financial Support",
-                description:
-                  "Providing financial assistance to families facing economic hardship.",
-              },
-              {
-                icon: "education",
-                title: "Educational Programs",
-                description:
-                  "Funding Islamic education programs for children and adults in the community.",
-              },
-              {
-                icon: "community",
-                title: "Community Services",
-                description:
-                  "Supporting community events and services that bring people together.",
-              },
-            ].map((impact, index) => (
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+            {impactImages.map((impact, index) => (
               <motion.div
                 key={index}
                 initial={{ opacity: 0, y: 30 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
-                transition={{ duration: 0.5, delay: index * 0.2 }}
-                whileHover={{
-                  y: -10,
-                }}
-                className="impact-card bg-white p-8 rounded-xl border-2 border-green-100 transition-all duration-300"
+                transition={{ duration: 0.6, delay: index * 0.2 }}
+                className="bg-white rounded-lg overflow-hidden shadow-md border border-gray-200 h-full"
               >
-                <div className="w-16 h-16 bg-green-100 text-green-600 rounded-full flex items-center justify-center mx-auto mb-6">
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    className="h-8 w-8"
-                    fill="none"
-                    viewBox="0 0 24 24"
-                    stroke="currentColor"
-                  >
-                    {impact.icon === "money" && (
-                      <path
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        strokeWidth={2}
-                        d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
-                      />
-                    )}
-                    {impact.icon === "education" && (
-                      <path
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        strokeWidth={2}
-                        d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"
-                      />
-                    )}
-                    {impact.icon === "community" && (
-                      <path
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        strokeWidth={2}
-                        d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"
-                      />
-                    )}
-                  </svg>
+                <div className="relative h-48">
+                  <Image
+                    src={impact.src}
+                    alt={impact.title}
+                    fill
+                    className="object-cover"
+                  />
                 </div>
-                <h3 className="text-xl font-semibold text-green-800 mb-3 text-center">
-                  {impact.title}
-                </h3>
-                <p className="text-gray-700 text-center">
-                  {impact.description}
-                </p>
+                <div className="p-6">
+                  <h3 className="text-xl font-semibold text-green-800 mb-2">
+                    {impact.title}
+                  </h3>
+                  <p className="text-gray-600 mb-4">{impact.description}</p>
+                  <div className="bg-green-100 text-green-800 px-3 py-1 rounded-full text-sm font-medium inline-block">
+                    {impact.stats}
+                  </div>
+                </div>
+              </motion.div>
+            ))}
+          </div>
+
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.8, delay: 0.5 }}
+            className="text-center mt-12"
+          >
+            <Link
+              href="#payment-section"
+              className="bg-green-600 hover:bg-green-700 text-white font-medium py-3 px-6 rounded-md transition-all"
+            >
+              Donate Now
+            </Link>
+          </motion.div>
+        </div>
+      </motion.section>
+
+      {/* Testimonials Section with Background Images */}
+      <motion.section
+        initial={{ opacity: 0, y: 30 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true }}
+        transition={{ duration: 0.8 }}
+        className="py-16 bg-white"
+      >
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.8, delay: 0.2 }}
+            className="text-center mb-12"
+          >
+            <h2 className="text-3xl font-bold text-green-800 mb-4">
+              Testimonials
+            </h2>
+            <p className="max-w-3xl mx-auto text-lg text-gray-600">
+              Hear from those whose lives have been touched by the generosity of
+              our donors.
+            </p>
+          </motion.div>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+            {[
+              {
+                quote:
+                  "The educational support my children received has transformed their lives. We are forever grateful for your generosity.",
+                author: "Sara M.",
+                image: "/images/14.jpg",
+              },
+              {
+                quote:
+                  "As a single parent, the assistance provided by the Mina Foundation has been invaluable. Thank you to all who donate.",
+                author: "Ahmed K.",
+                image: "/images/19.jpg",
+              },
+            ].map((testimonial, index) => (
+              <motion.div
+                key={index}
+                initial={{ opacity: 0, x: index % 2 === 0 ? -30 : 30 }}
+                whileInView={{ opacity: 1, x: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.7, delay: index * 0.2 }}
+                className="bg-green-50 p-8 rounded-lg border border-green-200 relative overflow-hidden"
+              >
+                <div className="absolute inset-0 opacity-10">
+                  <Image
+                    src={testimonial.image}
+                    alt="Testimonial background"
+                    fill
+                    className="object-cover"
+                  />
+                </div>
+                <div className="relative z-10">
+                  <div className="text-green-600 text-4xl mb-4">&quot;</div>
+                  <p className="text-gray-700 mb-6 italic text-lg">
+                    {testimonial.quote}
+                  </p>
+                  <div className="flex items-center">
+                    <div className="w-12 h-12 bg-green-200 rounded-full flex items-center justify-center text-green-700 font-bold text-xl">
+                      {testimonial.author.charAt(0)}
+                    </div>
+                    <div className="ml-4">
+                      <p className="font-medium text-green-800">
+                        {testimonial.author}
+                      </p>
+                    </div>
+                  </div>
+                </div>
               </motion.div>
             ))}
           </div>
@@ -568,36 +641,35 @@ export default function DonatePage() {
             transition={{ duration: 0.8, delay: 0.2 }}
             className="text-center mb-12"
           >
-            <h2 className="section-title text-3xl md:text-4xl font-bold text-green-800 mb-4">
+            <h2 className="text-3xl font-bold text-green-800 mb-4">
               Frequently Asked Questions
             </h2>
-            <div className="w-24 h-1 bg-green-500 mx-auto mb-6"></div>
-            <p className="section-description text-lg text-gray-700 max-w-3xl mx-auto">
-              Find answers to common questions about our donation process.
+            <p className="max-w-3xl mx-auto text-lg text-gray-600">
+              Find answers to common questions about donations and our work.
             </p>
           </motion.div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mt-12">
+          <div className="max-w-3xl mx-auto">
             {[
               {
                 question: "Is my donation tax-deductible?",
                 answer:
-                  "Yes, all donations to Mina Foundation are tax-deductible as we are a registered 501(c)(3) non-profit organization.",
+                  "Yes, all donations to Mina Foundation are tax-deductible as we are a registered 501(c)(3) nonprofit organization.",
               },
               {
                 question: "How is my donation used?",
                 answer:
-                  "Your donation directly supports our programs providing financial assistance, educational resources, and community services to Islamic families in need.",
+                  "Your donation directly supports our programs for families, including education, social services, and community development. 95% of all donations go directly to our programs.",
               },
               {
-                question: "Can I make a donation in someone's honor?",
+                question: "Can I make a monthly recurring donation?",
                 answer:
-                  "Yes, you can make a tribute donation. Just include the honoree's name in the message field when making your donation.",
+                  "Yes, you can select the 'Monthly Donation' option on our donation form to set up a recurring contribution.",
               },
               {
-                question: "How secure is the online donation process?",
+                question: "Is my payment information secure?",
                 answer:
-                  "We use industry-standard encryption and secure payment processing through Stripe to ensure your personal and financial information is protected.",
+                  "Absolutely. We use industry-standard encryption and secure payment processors to ensure your personal and financial information is protected.",
               },
             ].map((faq, index) => (
               <motion.div
@@ -605,13 +677,15 @@ export default function DonatePage() {
                 initial={{ opacity: 0, y: 20 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
-                transition={{ duration: 0.5, delay: index * 0.1 }}
-                className="faq-item bg-white p-6 rounded-lg border border-green-100"
+                transition={{ duration: 0.5, delay: 0.3 + index * 0.1 }}
+                className="mb-6 last:mb-0 bg-white rounded-lg overflow-hidden border border-green-200"
               >
-                <h3 className="text-xl font-semibold text-green-800 mb-3">
-                  {faq.question}
-                </h3>
-                <p className="text-gray-700">{faq.answer}</p>
+                <div className="p-6">
+                  <h3 className="text-lg font-semibold text-green-800 mb-2">
+                    {faq.question}
+                  </h3>
+                  <p className="text-gray-600">{faq.answer}</p>
+                </div>
               </motion.div>
             ))}
           </div>
@@ -620,21 +694,67 @@ export default function DonatePage() {
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
-            transition={{ duration: 0.8, delay: 0.6 }}
+            transition={{ duration: 0.5, delay: 0.7 }}
             className="text-center mt-12"
           >
-            <p className="text-gray-700 mb-6">
-              Have more questions about donating? We&apos;re here to help!
+            <p className="text-gray-600 mb-4">
+              Have more questions about donating?
             </p>
             <Link
               href="/contact"
-              className="inline-block bg-green-600 hover:bg-green-700 text-white px-6 py-3 rounded-md font-medium transition-all"
+              className="text-green-600 hover:text-green-700 font-medium underline"
             >
-              Contact Us
+              Contact us for more information
             </Link>
           </motion.div>
         </div>
       </motion.section>
+
+      {/* Call to Action with Background Image */}
+      <section className="relative py-16 overflow-hidden">
+        <div className="absolute inset-0">
+          <Image
+            src="/images/IMG_9014 2.jpg"
+            alt="Donate call to action background"
+            fill
+            className="object-cover brightness-50"
+          />
+        </div>
+        <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+          <motion.h2
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.7 }}
+            className="text-3xl font-bold text-white mb-6"
+          >
+            Support Our Mission Today
+          </motion.h2>
+          <motion.p
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.7, delay: 0.2 }}
+            className="text-lg text-white max-w-3xl mx-auto mb-8"
+          >
+            Your donation can help us reach more families and strengthen our
+            community. Together, we can create lasting positive change.
+          </motion.p>
+          <motion.div
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.7, delay: 0.4 }}
+          >
+            <Link
+              href="#payment-section"
+              className="bg-white text-green-800 hover:bg-green-100 px-8 py-4 rounded-md font-medium inline-block transition-all shadow-md"
+            >
+              Donate Now
+            </Link>
+          </motion.div>
+        </div>
+      </section>
     </div>
   );
 }

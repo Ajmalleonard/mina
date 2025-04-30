@@ -2,72 +2,115 @@
 import React, { useState } from "react";
 import Link from "next/link";
 import { motion } from "framer-motion";
+import Image from "next/image";
 
 export default function GalleryPage() {
-  // Sample gallery items - in a real application, these would come from a database or CMS
+  // Gallery items with images from the images folder
   const galleryItems = [
     {
       id: 1,
       title: "Community Iftar",
       description: "Annual Ramadan community gathering",
       category: "Events",
-      bgColor: "bg-green-100",
+      image: "/images/2.jpg",
     },
     {
       id: 2,
       title: "Educational Workshop",
-      description: "Children's Islamic education program",
+      description: "Children's education program",
       category: "Education",
-      bgColor: "bg-green-200",
+      image: "/images/3.jpg",
     },
     {
       id: 3,
       title: "Charity Drive",
       description: "Winter clothing distribution event",
       category: "Charity",
-      bgColor: "bg-green-300",
+      image: "/images/5.jpg",
     },
     {
       id: 4,
       title: "Family Support Day",
       description: "Providing resources and counseling to families",
       category: "Support",
-      bgColor: "bg-green-100",
+      image: "/images/7.jpg",
     },
     {
       id: 5,
       title: "Eid Celebration",
       description: "Community celebration of Eid al-Fitr",
       category: "Events",
-      bgColor: "bg-green-200",
+      image: "/images/10.jpg",
     },
     {
       id: 6,
       title: "Youth Leadership Program",
       description: "Developing leadership skills in Muslim youth",
       category: "Education",
-      bgColor: "bg-green-300",
+      image: "/images/12.jpg",
     },
     {
       id: 7,
       title: "Food Distribution",
       description: "Monthly food packages for families in need",
       category: "Charity",
-      bgColor: "bg-green-100",
+      image: "/images/14.jpg",
     },
     {
       id: 8,
-      title: "Islamic Art Exhibition",
-      description: "Showcasing traditional and contemporary Islamic art",
+      title: "Art Exhibition",
+      description: "Showcasing traditional and contemporary art",
       category: "Culture",
-      bgColor: "bg-green-200",
+      image: "/images/16.jpg",
     },
     {
       id: 9,
       title: "Community Health Fair",
       description: "Free health screenings and education",
       category: "Health",
-      bgColor: "bg-green-300",
+      image: "/images/18.jpg",
+    },
+    {
+      id: 10,
+      title: "Community Center Opening",
+      description: "Grand opening of our new community center",
+      category: "Events",
+      image: "/images/20.jpg",
+    },
+    {
+      id: 11,
+      title: "Women's Empowerment Workshop",
+      description: "Supporting women in our community",
+      category: "Education",
+      image: "/images/22.jpg",
+    },
+    {
+      id: 12,
+      title: "Orphan Sponsorship Program",
+      description: "Supporting orphans through education and care",
+      category: "Charity",
+      image: "/images/24.jpg",
+    },
+    {
+      id: 13,
+      title: "Family Counseling Services",
+      description: "Professional support for families in need",
+      category: "Support",
+      image: "/images/26.jpg",
+    },
+    {
+      id: 14,
+      title: "Cultural Heritage Day",
+      description: "Celebrating our rich cultural heritage",
+      category: "Culture",
+      image: "/images/IMG_2480 2.jpg",
+    },
+    {
+      id: 15,
+      title: "Health Awareness Campaign",
+      description: "Educating our community on important health topics",
+      category: "Health",
+      image: "/images/IMG_2509 2.jpg",
     },
   ];
 
@@ -96,12 +139,22 @@ export default function GalleryPage() {
     }
   }, [activeCategory]);
 
-  // Array of hero section background images that will slide
-  const heroBackgrounds = [
-    { gradient: "from-green-600/30 to-green-800/40", opacity: 0.7 },
-    { gradient: "from-emerald-600/30 to-emerald-800/40", opacity: 0.6 },
-    { gradient: "from-teal-600/30 to-teal-800/40", opacity: 0.65 },
+  // Array of hero section background images
+  const heroImages = [
+    { src: "/images/IMG_2525 2.jpg", alt: "Community gathering" },
+    { src: "/images/IMG_8967 2.jpg", alt: "Foundation activities" },
+    { src: "/images/IMG_9003 2.jpg", alt: "Community support" },
   ];
+
+  const [currentHeroImage, setCurrentHeroImage] = useState(0);
+
+  React.useEffect(() => {
+    const interval = setInterval(() => {
+      setCurrentHeroImage((prev) => (prev + 1) % heroImages.length);
+    }, 6000);
+
+    return () => clearInterval(interval);
+  }, [heroImages.length]);
 
   return (
     <div className="w-full">
@@ -110,28 +163,31 @@ export default function GalleryPage() {
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ duration: 0.8 }}
-        className="relative py-20 bg-green-50 overflow-hidden"
+        className="relative py-20 overflow-hidden"
       >
-        {/* Sliding background effect */}
+        {/* Background Image */}
         <div className="absolute inset-0 z-0 overflow-hidden">
-          {heroBackgrounds.map((bg, index) => (
+          {heroImages.map((image, index) => (
             <motion.div
               key={index}
-              initial={{ opacity: 0, x: "100%" }}
+              initial={{ opacity: 0 }}
               animate={{
-                opacity: [0, bg.opacity, 0],
-                x: ["100%", "0%", "-100%"],
+                opacity: currentHeroImage === index ? 1 : 0,
               }}
               transition={{
-                duration: 20,
-                repeat: Infinity,
-                repeatType: "loop",
-                ease: "linear",
-                delay: index * 6,
-                times: [0, 0.5, 1],
+                duration: 1.5,
+                ease: "easeInOut",
               }}
-              className={`absolute inset-0 bg-gradient-to-r ${bg.gradient}`}
-            ></motion.div>
+              className="absolute inset-0"
+            >
+              <Image
+                src={image.src}
+                alt={image.alt}
+                fill
+                className="object-cover"
+              />
+              <div className="absolute inset-0 bg-gradient-to-r from-green-900/50 to-green-800/60"></div>
+            </motion.div>
           ))}
         </div>
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 text-center py-12">
@@ -139,7 +195,7 @@ export default function GalleryPage() {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.2 }}
-            className="text-4xl md:text-5xl font-bold text-green-900 mb-6"
+            className="text-4xl md:text-5xl font-bold text-white mb-6"
           >
             Our Gallery
           </motion.h1>
@@ -153,7 +209,7 @@ export default function GalleryPage() {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.6 }}
-            className="text-xl text-green-800 mb-8 max-w-3xl mx-auto"
+            className="text-xl text-white mb-8 max-w-3xl mx-auto"
           >
             Explore the impact of our work through images of our events,
             programs, and community activities.
@@ -231,8 +287,17 @@ export default function GalleryPage() {
                 }}
                 onHoverStart={() => setHoveredItem(item.id)}
                 onHoverEnd={() => setHoveredItem(null)}
-                className={`gallery-item relative h-80 ${item.bgColor} rounded-xl overflow-hidden border border-green-200 transition-all duration-300`}
+                className="gallery-item relative h-80 rounded-xl overflow-hidden border border-green-200 transition-all duration-300 shadow-sm hover:shadow-md"
               >
+                <div className="absolute inset-0">
+                  <Image
+                    src={item.image}
+                    alt={item.title}
+                    fill
+                    className="object-cover"
+                    sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
+                  />
+                </div>
                 <motion.div
                   className="absolute inset-0 bg-gradient-to-t from-green-900/80 via-green-900/40 to-transparent flex items-end"
                   animate={{
@@ -255,7 +320,7 @@ export default function GalleryPage() {
                       whileInView={{ opacity: 1, y: 0 }}
                       viewport={{ once: true }}
                       transition={{ duration: 0.3, delay: index * 0.1 + 0.3 }}
-                      className="text-xl font-semibold mb-2"
+                      className="text-xl font-bold mb-2"
                     >
                       {item.title}
                     </motion.h3>
@@ -264,7 +329,7 @@ export default function GalleryPage() {
                       whileInView={{ opacity: 1, y: 0 }}
                       viewport={{ once: true }}
                       transition={{ duration: 0.3, delay: index * 0.1 + 0.4 }}
-                      className="text-sm text-white/90"
+                      className="text-gray-200 text-sm"
                     >
                       {item.description}
                     </motion.p>
@@ -277,158 +342,51 @@ export default function GalleryPage() {
                       transition={{ duration: 0.3 }}
                       className="mt-4"
                     >
-                      <button className="text-sm bg-white/20 hover:bg-white/30 text-white px-4 py-2 rounded-md transition-colors backdrop-blur-sm">
-                        View Details
-                      </button>
+                      <Link
+                        href="#"
+                        className="text-white border border-white hover:bg-white hover:text-green-800 px-3 py-1 rounded-full text-sm inline-block transition-all"
+                      >
+                        View Larger
+                      </Link>
                     </motion.div>
                   </div>
                 </motion.div>
               </motion.div>
             ))}
           </motion.div>
-
-          {/* Empty State */}
-          {filteredItems.length === 0 && (
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.5 }}
-              className="text-center py-16 bg-green-50/50 rounded-xl"
-            >
-              <motion.div
-                initial={{ scale: 0.9, opacity: 0 }}
-                animate={{ scale: 1, opacity: 1 }}
-                transition={{ duration: 0.5, delay: 0.2 }}
-                className="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-4"
-              >
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  className="h-8 w-8 text-green-600"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                  stroke="currentColor"
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth={2}
-                    d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"
-                  />
-                </svg>
-              </motion.div>
-              <motion.p
-                initial={{ y: 10, opacity: 0 }}
-                animate={{ y: 0, opacity: 1 }}
-                transition={{ duration: 0.5, delay: 0.3 }}
-                className="text-gray-600 text-lg mb-4"
-              >
-                No gallery items found for this category.
-              </motion.p>
-              <motion.button
-                initial={{ y: 10, opacity: 0 }}
-                animate={{ y: 0, opacity: 1 }}
-                transition={{ duration: 0.5, delay: 0.4 }}
-                whileHover={{ scale: 1.05 }}
-                whileTap={{ scale: 0.95 }}
-                onClick={() => setActiveCategory("All")}
-                className="mt-2 px-4 py-2 bg-green-600 text-white rounded-md hover:bg-green-700 transition-colors"
-              >
-                View all items
-              </motion.button>
-            </motion.div>
-          )}
         </div>
       </motion.section>
 
       {/* Call to Action */}
-      <motion.section
-        initial={{ opacity: 0, y: 30 }}
-        whileInView={{ opacity: 1, y: 0 }}
-        viewport={{ once: true }}
-        transition={{ duration: 0.8 }}
-        className="py-16 bg-gradient-to-b from-white to-green-50"
-      >
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <section className="relative py-16 overflow-hidden">
+        <div className="absolute inset-0">
+          <Image
+            src="/images/IMG_2530 2.jpg"
+            alt="Call to action background"
+            fill
+            className="object-cover brightness-50"
+          />
+        </div>
+        <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+          <h2 className="text-3xl font-bold text-white mb-6">Get Involved</h2>
+          <p className="text-xl text-white max-w-2xl mx-auto mb-8">
+            Join us in our mission to support the community through our various
+            programs and initiatives.
+          </p>
           <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.8, delay: 0.2 }}
-            className="bg-green-600 rounded-2xl overflow-hidden border-2 border-green-500"
+            whileHover={{ scale: 1.05 }}
+            whileTap={{ scale: 0.95 }}
+            className="inline-block"
           >
-            <div className="relative p-8 md:p-12">
-              <motion.div
-                initial={{ opacity: 0 }}
-                whileInView={{ opacity: 0.1 }}
-                viewport={{ once: true }}
-                transition={{ duration: 1, delay: 0.5 }}
-                className="absolute top-0 right-0 w-64 h-64 bg-white rounded-full -mr-16 -mt-16"
-              ></motion.div>
-              <motion.div
-                initial={{ opacity: 0 }}
-                whileInView={{ opacity: 0.1 }}
-                viewport={{ once: true }}
-                transition={{ duration: 1, delay: 0.7 }}
-                className="absolute bottom-0 left-0 w-80 h-80 bg-white rounded-full -ml-20 -mb-20"
-              ></motion.div>
-
-              <div className="relative z-10 text-center text-white">
-                <motion.h2
-                  initial={{ opacity: 0, y: 20 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  viewport={{ once: true }}
-                  transition={{ duration: 0.5, delay: 0.3 }}
-                  className="text-3xl md:text-4xl font-bold mb-6"
-                >
-                  Be Part of Our Story
-                </motion.h2>
-                <motion.p
-                  initial={{ opacity: 0, y: 20 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  viewport={{ once: true }}
-                  transition={{ duration: 0.5, delay: 0.4 }}
-                  className="text-lg text-white/90 mb-10 max-w-2xl mx-auto"
-                >
-                  Join us in our mission to support Islamic families through
-                  your donations and volunteer work.
-                </motion.p>
-                <motion.div
-                  initial={{ opacity: 0, y: 20 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  viewport={{ once: true }}
-                  transition={{ duration: 0.5, delay: 0.5 }}
-                  className="flex flex-col sm:flex-row justify-center gap-4"
-                >
-                  <motion.div
-                    whileHover={{ scale: 1.05, y: -5 }}
-                    whileTap={{ scale: 0.95 }}
-                    transition={{ type: "spring", stiffness: 400, damping: 15 }}
-                  >
-                    <Link
-                      href="/donate"
-                      className="btn-primary bg-white hover:bg-green-50 text-green-600 px-8 py-3 rounded-md font-medium text-lg inline-block shadow-lg"
-                    >
-                      Donate Now
-                    </Link>
-                  </motion.div>
-                  <motion.div
-                    whileHover={{ scale: 1.05, y: -5 }}
-                    whileTap={{ scale: 0.95 }}
-                    transition={{ type: "spring", stiffness: 400, damping: 15 }}
-                  >
-                    <Link
-                      href="/contact"
-                      className="border-2 border-white text-white hover:bg-white/20 px-8 py-3 rounded-md font-medium text-lg inline-block backdrop-blur-sm"
-                    >
-                      Contact Us
-                    </Link>
-                  </motion.div>
-                </motion.div>
-              </div>
-            </div>
+            <Link
+              href="/contact"
+              className="bg-white text-green-800 px-8 py-4 rounded-md font-medium hover:bg-green-50 transition-all shadow-md"
+            >
+              Contact Us
+            </Link>
           </motion.div>
         </div>
-      </motion.section>
+      </section>
     </div>
   );
 }

@@ -1,6 +1,7 @@
 "use client";
 import React, { useState } from "react";
 import { motion } from "motion/react";
+import Image from "next/image";
 
 export default function ContactPage() {
   const [formData, setFormData] = useState({
@@ -46,9 +47,15 @@ export default function ContactPage() {
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ duration: 0.8 }}
-        className="relative py-20 bg-green-50"
+        className="relative py-20"
       >
         <div className="absolute inset-0 z-0 overflow-hidden">
+          <Image
+            src="/images/4.jpg"
+            alt="Contact page hero background"
+            fill
+            className="object-cover brightness-[0.85]"
+          />
           <motion.div
             initial={{ opacity: 0.5 }}
             animate={{ opacity: [0.5, 0.7, 0.5] }}
@@ -58,7 +65,7 @@ export default function ContactPage() {
               repeatType: "reverse",
               ease: "easeInOut",
             }}
-            className="absolute inset-0 bg-gradient-to-r from-green-600/20 to-green-800/30"
+            className="absolute inset-0 bg-gradient-to-r from-green-600/40 to-green-800/50"
           ></motion.div>
         </div>
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 text-center py-12">
@@ -66,7 +73,7 @@ export default function ContactPage() {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.2 }}
-            className="text-4xl md:text-5xl font-bold text-green-900 mb-6"
+            className="text-4xl md:text-5xl font-bold text-white mb-6"
           >
             Contact Us
           </motion.h1>
@@ -80,7 +87,7 @@ export default function ContactPage() {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.6 }}
-            className="text-xl text-green-800 mb-8 max-w-3xl mx-auto"
+            className="text-xl text-white mb-8 max-w-3xl mx-auto"
           >
             We&apos;d love to hear from you. Reach out with questions, feedback,
             or to learn more about our work.
@@ -104,13 +111,23 @@ export default function ContactPage() {
               whileInView={{ opacity: 1, x: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 0.8, delay: 0.2 }}
+              className="relative z-10"
             >
-              <h2 className="text-2xl md:text-3xl font-bold text-green-800 mb-6">
+              <div className="absolute -z-10 top-0 left-0 w-full h-full overflow-hidden opacity-10 rounded-lg">
+                <Image
+                  src="/images/9.jpg"
+                  alt="Contact information background"
+                  fill
+                  className="object-cover"
+                />
+              </div>
+
+              <h2 className="text-2xl mx-4 md:text-3xl font-bold text-green-800 mb-6">
                 Get in Touch
               </h2>
-              <div className="w-20 h-1 bg-green-500 mb-8"></div>
+              <div className="w-20 mx-4 h-1 bg-green-500 mb-8"></div>
 
-              <div className="space-y-6">
+              <div className="space-y-6 px-4">
                 {[
                   {
                     icon: "location",
@@ -246,217 +263,173 @@ export default function ContactPage() {
               whileInView={{ opacity: 1, x: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 0.8, delay: 0.4 }}
-              className="bg-green-50 p-8 rounded-lg border border-green-200"
+              className="bg-green-50 p-8 rounded-lg border border-green-200 relative overflow-hidden"
             >
-              <h2 className="text-2xl font-bold text-green-800 mb-6">
-                Send Us a Message
-              </h2>
+              <div className="absolute -z-10 inset-0 opacity-5">
+                <Image
+                  src="/images/11.jpg"
+                  alt="Contact form background"
+                  fill
+                  className="object-cover"
+                />
+              </div>
 
-              {isSubmitted && (
-                <motion.div
-                  initial={{ opacity: 0, y: -20 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  className="bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded relative mb-6"
-                  role="alert"
-                >
-                  <strong className="font-bold">Thank you!</strong>
-                  <span className="block sm:inline">
-                    {" "}
-                    Your message has been sent successfully. We&apos;ll get back
-                    to you soon.
-                  </span>
-                </motion.div>
-              )}
+              <div className="relative z-10">
+                <h2 className="text-2xl md:text-3xl font-bold text-green-800 mb-6">
+                  Send a Message
+                </h2>
+                <div className="w-20 h-1 bg-green-500 mb-8"></div>
 
-              <form onSubmit={handleSubmit} className="space-y-6">
-                {[
-                  {
-                    type: "text",
-                    name: "name",
-                    label: "Your Name *",
-                    value: formData.name,
-                    required: true,
-                  },
-                  {
-                    type: "email",
-                    name: "email",
-                    label: "Email Address *",
-                    value: formData.email,
-                    required: true,
-                  },
-                ].map((field, index) => (
+                {/* Success Message */}
+                {isSubmitted && (
                   <motion.div
-                    key={index}
-                    initial={{ opacity: 0, y: 20 }}
-                    whileInView={{ opacity: 1, y: 0 }}
-                    viewport={{ once: true }}
-                    transition={{ duration: 0.5, delay: index * 0.1 + 0.5 }}
+                    initial={{ opacity: 0, y: -20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    exit={{ opacity: 0, y: -20 }}
+                    className="bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded mb-6 flex items-center"
                   >
-                    <label
-                      htmlFor={field.name}
-                      className="block text-sm font-medium text-green-700 mb-1"
+                    <svg
+                      className="w-5 h-5 mr-2"
+                      fill="currentColor"
+                      viewBox="0 0 20 20"
                     >
-                      {field.label}
-                    </label>
-                    <input
-                      type={field.type}
-                      name={field.name}
-                      id={field.name}
-                      value={field.value}
-                      onChange={handleChange}
-                      className="focus:ring-green-500  block w-[98%] mx-auto p-2 sm:text-sm text-black border-gray-300 rounded-md py-3 focus:outline-none ring-1 ring-green-500"
-                      required={field.required}
-                    />
+                      <path
+                        fillRule="evenodd"
+                        d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z"
+                        clipRule="evenodd"
+                      />
+                    </svg>
+                    <span>Your message has been sent successfully!</span>
                   </motion.div>
-                ))}
+                )}
 
-                <motion.div
-                  initial={{ opacity: 0, y: 20 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  viewport={{ once: true }}
-                  transition={{ duration: 0.5, delay: 0.7 }}
-                >
-                  <label
-                    htmlFor="subject"
-                    className="block text-sm font-medium text-green-700 mb-1"
-                  >
-                    Subject *
-                  </label>
-                  <select
-                    name="subject"
-                    id="subject"
-                    value={formData.subject}
-                    onChange={handleChange}
-                    className="focus:ring-green-500  block w-[98%] mx-auto p-2 sm:text-sm text-black border-gray-300 rounded-md py-3 focus:outline-none ring-1 ring-green-500"
-                    required
-                  >
-                    <option value="">Please select a subject</option>
-                    <option value="General Inquiry">General Inquiry</option>
-                    <option value="Donation Question">Donation Question</option>
-                    <option value="Volunteer Opportunities">
-                      Volunteer Opportunities
-                    </option>
-                    <option value="Program Information">
-                      Program Information
-                    </option>
-                    <option value="Other">Other</option>
-                  </select>
-                </motion.div>
-
-                <motion.div
-                  initial={{ opacity: 0, y: 20 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  viewport={{ once: true }}
-                  transition={{ duration: 0.5, delay: 0.8 }}
-                >
-                  <label
-                    htmlFor="message"
-                    className="block text-sm font-medium text-green-700 mb-1"
-                  >
-                    Message *
-                  </label>
-                  <textarea
-                    name="message"
-                    id="message"
-                    rows={5}
-                    value={formData.message}
-                    onChange={handleChange}
-                    className="focus:ring-green-500  block w-[98%] mx-auto p-2 sm:text-sm text-black border-gray-300 rounded-md py-3 focus:outline-none ring-1 ring-green-500"
-                    required
-                  />
-                </motion.div>
-
-                <motion.div
-                  initial={{ opacity: 0, y: 20 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  viewport={{ once: true }}
-                  transition={{ duration: 0.5, delay: 0.9 }}
-                >
-                  <motion.button
-                    whileHover={{ scale: 1.02 }}
-                    whileTap={{ scale: 0.98 }}
-                    type="submit"
-                    className="w-full bg-green-600 hover:bg-green-700 text-white font-bold py-3 px-4 rounded-md transition-all focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500"
-                  >
-                    Send Message
-                  </motion.button>
-                </motion.div>
-              </form>
+                {/* Form */}
+                <form onSubmit={handleSubmit}>
+                  <div className="space-y-6">
+                    <div>
+                      <label
+                        htmlFor="name"
+                        className="block text-sm font-medium text-gray-700 mb-1"
+                      >
+                        Your Name
+                      </label>
+                      <input
+                        type="text"
+                        id="name"
+                        name="name"
+                        value={formData.name}
+                        onChange={handleChange}
+                        required
+                        className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-green-500 transition-all"
+                        placeholder="Enter your name"
+                      />
+                    </div>
+                    <div>
+                      <label
+                        htmlFor="email"
+                        className="block text-sm font-medium text-gray-700 mb-1"
+                      >
+                        Email Address
+                      </label>
+                      <input
+                        type="email"
+                        id="email"
+                        name="email"
+                        value={formData.email}
+                        onChange={handleChange}
+                        required
+                        className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-green-500 transition-all"
+                        placeholder="Enter your email"
+                      />
+                    </div>
+                    <div>
+                      <label
+                        htmlFor="subject"
+                        className="block text-sm font-medium text-gray-700 mb-1"
+                      >
+                        Subject
+                      </label>
+                      <input
+                        type="text"
+                        id="subject"
+                        name="subject"
+                        value={formData.subject}
+                        onChange={handleChange}
+                        required
+                        className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-green-500 transition-all"
+                        placeholder="Enter subject"
+                      />
+                    </div>
+                    <div>
+                      <label
+                        htmlFor="message"
+                        className="block text-sm font-medium text-gray-700 mb-1"
+                      >
+                        Message
+                      </label>
+                      <textarea
+                        id="message"
+                        name="message"
+                        value={formData.message}
+                        onChange={handleChange}
+                        required
+                        rows={5}
+                        className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-green-500 transition-all resize-none"
+                        placeholder="Type your message here..."
+                      ></textarea>
+                    </div>
+                    <motion.button
+                      whileHover={{ scale: 1.02 }}
+                      whileTap={{ scale: 0.98 }}
+                      type="submit"
+                      className="w-full bg-green-600 text-white py-3 px-6 rounded-md hover:bg-green-700 transition-all font-medium"
+                    >
+                      Send Message
+                    </motion.button>
+                  </div>
+                </form>
+              </div>
             </motion.div>
           </div>
         </div>
       </motion.section>
 
       {/* Map Section */}
-      <motion.section
-        initial={{ opacity: 0, y: 30 }}
-        whileInView={{ opacity: 1, y: 0 }}
-        viewport={{ once: true }}
-        transition={{ duration: 0.8 }}
-        className="py-12 bg-white"
-      >
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <motion.div
-            initial={{ opacity: 0, scale: 0.95 }}
-            whileInView={{ opacity: 1, scale: 1 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.8 }}
-            className="bg-green-50 h-96 rounded-lg overflow-hidden border border-green-200"
-          >
-            {/* This would typically be an embedded map */}
-            <div className="w-full h-full flex items-center justify-center bg-green-100 relative overflow-hidden">
+      <section className="relative h-96">
+        <div className="absolute inset-0 bg-gray-200">
+          <div className="relative h-full w-full overflow-hidden">
+            <Image
+              src="/images/27.jpg"
+              alt="Our location"
+              fill
+              className="object-cover"
+            />
+            <div className="absolute inset-0 bg-green-900 opacity-40"></div>
+            <div className="absolute inset-0 flex items-center justify-center">
               <motion.div
-                initial={{ opacity: 0.7 }}
-                animate={{
-                  opacity: [0.7, 0.9, 0.7],
-                  background: [
-                    "linear-gradient(120deg, rgba(167, 243, 208, 0.5) 0%, rgba(110, 231, 183, 0.8) 100%)",
-                    "linear-gradient(120deg, rgba(167, 243, 208, 0.8) 0%, rgba(110, 231, 183, 0.5) 100%)",
-                    "linear-gradient(120deg, rgba(167, 243, 208, 0.5) 0%, rgba(110, 231, 183, 0.8) 100%)",
-                  ],
-                }}
-                transition={{
-                  duration: 10,
-                  repeat: Infinity,
-                  repeatType: "reverse",
-                }}
-                className="absolute inset-0"
-              ></motion.div>
-              <div className="text-center relative z-10">
-                <motion.h3
-                  initial={{ opacity: 0, y: 10 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  viewport={{ once: true }}
-                  transition={{ duration: 0.6 }}
-                  className="text-xl font-semibold text-green-800 mb-2"
+                initial={{ opacity: 0, scale: 0.5 }}
+                whileInView={{ opacity: 1, scale: 1 }}
+                viewport={{ once: true }}
+                transition={{ type: "spring", stiffness: 100, damping: 20 }}
+                className="bg-white p-4 rounded-full shadow-lg"
+              >
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  className="h-12 w-12 text-green-600"
+                  viewBox="0 0 20 20"
+                  fill="currentColor"
                 >
-                  Map Location
-                </motion.h3>
-                <motion.p
-                  initial={{ opacity: 0, y: 10 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  viewport={{ once: true }}
-                  transition={{ duration: 0.6, delay: 0.2 }}
-                  className="text-gray-700"
-                >
-                  An interactive map would be displayed here
-                </motion.p>
-                <motion.div
-                  initial={{ opacity: 0, scale: 0.9 }}
-                  whileInView={{ opacity: 1, scale: 1 }}
-                  viewport={{ once: true }}
-                  transition={{ duration: 0.6, delay: 0.4 }}
-                  className="mt-6"
-                >
-                  <button className="px-4 py-2 bg-green-600 text-white rounded-md hover:bg-green-700 transition-all">
-                    Get Directions
-                  </button>
-                </motion.div>
-              </div>
+                  <path
+                    fillRule="evenodd"
+                    d="M5.05 4.05a7 7 0 119.9 9.9L10 18.9l-4.95-4.95a7 7 0 010-9.9zM10 11a2 2 0 100-4 2 2 0 000 4z"
+                    clipRule="evenodd"
+                  />
+                </svg>
+              </motion.div>
             </div>
-          </motion.div>
+          </div>
         </div>
-      </motion.section>
+      </section>
     </div>
   );
 }

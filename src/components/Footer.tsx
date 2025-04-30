@@ -8,10 +8,7 @@ function Footer() {
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
           <div>
             <h3 className="text-xl font-bold mb-4">Mina Foundation</h3>
-            <p>
-              Supporting Islamic families through donations and community
-              services.
-            </p>
+            <p>Supporting families through donations and community services.</p>
           </div>
           <div>
             <h3 className="text-xl font-bold mb-4">Quick Links</h3>
