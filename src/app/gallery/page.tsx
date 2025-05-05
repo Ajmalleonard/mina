@@ -137,7 +137,7 @@ export default function GalleryPage() {
         galleryItems.filter((item) => item.category === activeCategory)
       );
     }
-  }, [activeCategory]);
+  }, [activeCategory, galleryItems]);
 
   // Array of hero section background images
   const heroImages = [
@@ -154,7 +154,7 @@ export default function GalleryPage() {
     }, 6000);
 
     return () => clearInterval(interval);
-  }, [heroImages.length]);
+  }, [heroImages]);
 
   return (
     <div className="w-full">

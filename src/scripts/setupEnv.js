@@ -1,8 +1,13 @@
 #!/usr/bin/env node
-const fs = require("fs");
-const path = require("path");
+import fs from "fs";
+import path from "path";
+import { fileURLToPath } from "url";
 
-const envFilePath = path.join(process.cwd(), ".env.local");
+// Get the directory name using ES modules approach
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
+
+const envFilePath = path.join(process.cwd(), '.env.local');
 
 // Check if .env.local already exists
 if (fs.existsSync(envFilePath)) {
