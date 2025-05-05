@@ -1,3 +1,4 @@
+"use client";
 import React, { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "motion/react";
 import Link from "next/link";
@@ -26,7 +27,7 @@ type HeroSectionProps = {
 
 /**
  * Hero Section Component
- * 
+ *
  * Displays a full-screen hero section with rotating background images,
  * headline, description, and call-to-action buttons.
  */
