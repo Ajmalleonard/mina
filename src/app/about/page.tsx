@@ -6,6 +6,22 @@ import { team } from "@/constants/data";
 import { HeartHandshake, Scale, Star } from "lucide-react";
 import Image from "next/image";
 
+import { Metadata } from "next";
+
+export const metadata: Metadata = {
+  title: "About Us",
+  description:
+    "Learn about Mina Foundation's mission, values, and the team dedicated to serving our community.",
+  keywords: "Mina Foundation, community support, nonprofit, foundation team",
+  openGraph: {
+    title: "About Us | Mina Foundation",
+    description:
+      "Learn about Mina Foundation's mission, values, and the team dedicated to serving our community.",
+    images: "/opengraph-image.png",
+  },
+};
+
+
 export default function About() {
   // Images for hero slider from images folder
   const heroImages = [

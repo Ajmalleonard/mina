@@ -7,6 +7,23 @@ import Link from "next/link";
 import HeroSection from "@/components/hero";
 import Image from "next/image";
 
+import { Metadata } from "next";
+
+export const metadata: Metadata = {
+  title: "Donate",
+  description:
+    "Support Mina Foundation's mission. Your donation helps us create positive change in our community.",
+  keywords:
+    "donate, support Mina Foundation, charitable giving, make a difference",
+  openGraph: {
+    title: "Donate | Mina Foundation",
+    description:
+      "Support Mina Foundation's mission. Your donation helps us create positive change in our community.",
+    images: "/opengraph-image.png",
+  },
+};
+
+
 export default function DonatePage() {
   const [donationAmount, setDonationAmount] = useState("25");
   const [customAmount, setCustomAmount] = useState("");

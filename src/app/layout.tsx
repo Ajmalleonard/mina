@@ -14,9 +14,19 @@ const geistMono = Geist_Mono({
   subsets: ["latin"],
 });
 
+
+
 export const metadata: Metadata = {
-  title: "Mina Foundation",
+  metadataBase: new URL("https://minafoundationtz.org"),
+  title: "Mina Foundation ",
+  openGraph: {
+    images: "/opengraph-image.png",
+  },
   description: "non-profit organization helping families through donations",
+  twitter: {
+    card: "summary_large_image",
+    images: "/opengraph-image.png",
+  },
 };
 
 export default function RootLayout({
