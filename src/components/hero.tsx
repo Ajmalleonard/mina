@@ -3,21 +3,33 @@ import { motion, AnimatePresence } from "motion/react";
 import Link from "next/link";
 import Image from "next/image";
 
+/**
+ * Type definition for background image objects
+ */
 type BackgroundImage = {
-  src: string;
-  alt: string;
+  src: string; // Image source path
+  alt: string; // Alt text for accessibility
 };
 
+/**
+ * Props interface for the HeroSection component
+ */
 type HeroSectionProps = {
-  title: string;
-  description: string;
-  primaryButtonText?: string;
-  primaryButtonLink?: string;
-  secondaryButtonText?: string;
-  secondaryButtonLink?: string;
-  backgroundImages?: BackgroundImage[];
+  title: string; // Main headline
+  description: string; // Subtitle or description
+  primaryButtonText?: string; // Text for primary action button
+  primaryButtonLink?: string; // URL for primary button
+  secondaryButtonText?: string; // Text for secondary action button
+  secondaryButtonLink?: string; // URL for secondary button
+  backgroundImages?: BackgroundImage[]; // Array of background images
 };
 
+/**
+ * Hero Section Component
+ * 
+ * Displays a full-screen hero section with rotating background images,
+ * headline, description, and call-to-action buttons.
+ */
 function HeroSection({
   title,
   description,
@@ -27,22 +39,26 @@ function HeroSection({
   secondaryButtonLink = "/about",
   backgroundImages = [],
 }: HeroSectionProps) {
+  // Track the current background image
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
 
   // Auto-rotate through background images
   useEffect(() => {
+    // Skip if there's only 0-1 images
     if (backgroundImages.length <= 1) return;
 
+    // Set up interval to change image every 6 seconds
     const interval = setInterval(() => {
       setCurrentImageIndex((prevIndex) =>
         prevIndex === backgroundImages.length - 1 ? 0 : prevIndex + 1
       );
-    }, 6000); // Change image every 6 seconds
+    }, 6000);
 
+    // Clean up interval on component unmount
     return () => clearInterval(interval);
   }, [backgroundImages.length]);
 
-  // Fallback to gradient backgrounds if no images provided
+  // Fallback gradient backgrounds if no images are provided
   const heroBackgrounds = [
     { gradient: "from-green-600/40 to-green-800/50", opacity: 0.8 },
     { gradient: "from-emerald-600/40 to-emerald-800/50", opacity: 0.75 },
@@ -56,8 +72,9 @@ function HeroSection({
       transition={{ duration: 0.8 }}
       className="w-full h-screen flex items-center justify-center relative overflow-hidden bg-green-50"
     >
-      {/* Background Image/Effect */}
+      {/* ===== BACKGROUND SECTION ===== */}
       <div className="absolute inset-0 z-0 overflow-hidden">
+        {/* If we have background images, show them with animation */}
         {backgroundImages.length > 0 ? (
           <AnimatePresence mode="wait">
             <motion.div
@@ -68,19 +85,27 @@ function HeroSection({
               transition={{ duration: 1.2 }}
               className="absolute inset-0"
             >
-              <Image
-                src={backgroundImages[currentImageIndex].src}
-                alt={backgroundImages[currentImageIndex].alt}
-                fill
-                priority
-                sizes="100vw"
-                className="object-cover"
-              />
-              <div className="absolute inset-0 bg-black opacity-30" />
+              {/* Image container with darkening effect */}
+              <div className="relative w-full h-full">
+                <Image
+                  src={backgroundImages[currentImageIndex].src}
+                  alt={backgroundImages[currentImageIndex].alt}
+                  fill
+                  priority
+                  sizes="100vw"
+                  className="object-cover"
+                  style={{ filter: "brightness(0.4)" }}
+                />
+                {/* Dark overlay to increase text contrast */}
+                <div
+                  className="absolute inset-0 z-10"
+                  style={{ backgroundColor: "rgba(0, 0, 0, 0.65)" }}
+                />
+              </div>
             </motion.div>
           </AnimatePresence>
         ) : (
-          // Fallback gradient animations if no images provided
+          // Fallback animated gradients if no images provided
           heroBackgrounds.map((bg, index) => (
             <motion.div
               key={index}
@@ -103,8 +128,9 @@ function HeroSection({
         )}
       </div>
 
-      {/* Content */}
-      <div className="relative z-10 text-center max-w-4xl mx-auto px-6">
+      {/* ===== CONTENT SECTION ===== */}
+      <div className="relative z-20 text-center max-w-4xl mx-auto px-6">
+        {/* Headline with animation */}
         <motion.h1
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
@@ -114,6 +140,7 @@ function HeroSection({
           {title}
         </motion.h1>
 
+        {/* Animated separator line */}
         <motion.div
           initial={{ scale: 0, opacity: 0 }}
           animate={{ scale: 1, opacity: 1 }}
@@ -121,6 +148,7 @@ function HeroSection({
           className="w-24 h-1 bg-green-500 mx-auto mb-8"
         ></motion.div>
 
+        {/* Description with animation */}
         <motion.p
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
@@ -130,77 +158,53 @@ function HeroSection({
           {description}
         </motion.p>
 
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8, delay: 0.8 }}
-          className="flex flex-col sm:flex-row justify-center gap-4"
-        >
+        {/* Call-to-action buttons */}
+        <div className="flex flex-col sm:flex-row justify-center gap-4">
+          {/* Primary button (green) */}
           {primaryButtonText && primaryButtonLink && (
-            <motion.div
-              whileHover={{ scale: 1.05, y: -5 }}
-              whileTap={{ scale: 0.95 }}
-              transition={{ type: "spring", stiffness: 400, damping: 15 }}
+            <Link
+              href={primaryButtonLink}
+              className="bg-green-600 hover:bg-green-700 text-white px-8 py-3 rounded-xl font-medium text-lg inline-block border border-green-600 transition-colors"
             >
-              <Link
-                href={primaryButtonLink}
-                className="btn-primary bg-green-600 hover:bg-green-700 text-white px-8 py-4 rounded-md font-medium text-lg inline-block border border-green-600 transition-all"
-              >
-                {primaryButtonText}
-              </Link>
-            </motion.div>
+              {primaryButtonText}
+            </Link>
           )}
 
+          {/* Secondary button (white) */}
           {secondaryButtonText && secondaryButtonLink && (
-            <motion.div
-              whileHover={{ scale: 1.05, y: -5 }}
-              whileTap={{ scale: 0.95 }}
-              transition={{ type: "spring", stiffness: 400, damping: 15 }}
+            <Link
+              href={secondaryButtonLink}
+              className="bg-white hover:bg-gray-100 text-green-700 px-8 py-3 rounded-xl font-medium text-lg border border-white inline-block transition-colors"
             >
-              <Link
-                href={secondaryButtonLink}
-                className="px-8 py-4 rounded-md font-medium text-lg border-2 border-white text-white hover:bg-white hover:text-green-700 inline-block transition-all"
-              >
-                {secondaryButtonText}
-              </Link>
-            </motion.div>
+              {secondaryButtonText}
+            </Link>
           )}
-        </motion.div>
-
-        {/* Scroll indicator */}
-        <motion.div
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1, y: [0, 10, 0] }}
-          transition={{
-            opacity: { delay: 1.2, duration: 0.8 },
-            y: {
-              delay: 1.2,
-              duration: 2,
-              repeat: Infinity,
-              repeatType: "loop",
-            },
-          }}
-          className="absolute bottom-10 left-1/2 transform -translate-x-1/2"
-        >
-          <div className="flex flex-col items-center">
-            <span className="text-white text-sm mb-2">Scroll Down</span>
-            <svg
-              className="w-6 h-6 text-white"
-              fill="none"
-              stroke="currentColor"
-              viewBox="0 0 24 24"
-              xmlns="http://www.w3.org/2000/svg"
-            >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                strokeWidth={2}
-                d="M19 14l-7 7m0 0l-7-7m7 7V3"
-              ></path>
-            </svg>
-          </div>
-        </motion.div>
+        </div>
       </div>
+
+      {/* ===== IMAGE PROGRESS INDICATORS =====
+       * These indicators show which image is currently displayed and
+       * allow users to manually navigate between images.
+       * Positioned at the very bottom of the screen.
+       */}
+      {backgroundImages.length > 1 && (
+        <div className="absolute bottom-2 left-0 right-0 z-30">
+          <div className="flex justify-center gap-2">
+            {backgroundImages.map((_, index) => (
+              <button
+                key={index}
+                onClick={() => setCurrentImageIndex(index)}
+                className={`w-2 h-2 rounded-full transition-all ${
+                  currentImageIndex === index
+                    ? "bg-white w-6" // Current image indicator is wider
+                    : "bg-white/50 hover:bg-white/80" // Inactive indicators are semi-transparent
+                }`}
+                aria-label={`View image ${index + 1}`}
+              />
+            ))}
+          </div>
+        </div>
+      )}
     </motion.div>
   );
 }
