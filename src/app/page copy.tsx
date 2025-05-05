@@ -98,7 +98,7 @@ export default function Home() {
 
       {/* Donation Shortcuts Section */}
       <section className="py-20 bg-gradient-to-br from-indigo-50 to-teal-50">
-        <div className=" mx-auto px-6 max-w-4xl">
+        <div className="container mx-auto px-6 max-w-4xl">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
@@ -121,7 +121,7 @@ export default function Home() {
             >
               Make Your Impact
             </motion.h2>
-            <div className="w-24 h-1 bg-gradient-to-r from-teal-500 to-green-500 mx-auto mb-6"></div>
+            <div className="w-24 h-1 bg-gradient-to-r from-teal-500 to-indigo-500 mx-auto mb-6"></div>
             <motion.p
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
@@ -147,7 +147,7 @@ export default function Home() {
                   {activeTab === tab && (
                     <motion.div
                       layoutId="tabBackground"
-                      className="absolute inset-0 bg-gradient-to-r from-teal-500 to-green-500 rounded-lg shadow-md z-0"
+                      className="absolute inset-0 bg-gradient-to-r from-teal-500 to-indigo-500 rounded-lg shadow-md z-0"
                       initial={false}
                       transition={{
                         type: "spring",
@@ -191,7 +191,7 @@ export default function Home() {
                       onClick={() => handleDonationSelect(option.amount)}
                       className={`px-8 py-4 rounded-xl text-lg font-medium transition-all ${
                         activeAmount === option.amount
-                          ? "bg-gradient-to-r from-teal-500 to-green-500 text-white shadow-md"
+                          ? "bg-gradient-to-r from-teal-500 to-indigo-500 text-white shadow-md"
                           : "bg-gray-50 text-gray-700 hover:bg-gray-100 border border-gray-100"
                       }`}
                     >
