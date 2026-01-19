@@ -14,7 +14,7 @@ export default function Home() {
 
   const [activeTab, setActiveTab] = useState<string | null>("oneTime");
 
-  const handleCustomAmountChange = (e) => {
+  const handleCustomAmountChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setCustomAmount(e.target.value);
     setActiveAmount(null);
   };
@@ -207,7 +207,7 @@ export default function Home() {
                     </div>
                     <input
                       type="text"
-                      value={customAmount}
+                      value={customAmount || ""}
                       onChange={handleCustomAmountChange}
                       placeholder="Custom amount"
                       className="w-full pl-8 pr-4 py-4 rounded-xl bg-gray-50 border text-neutral-800 border-gray-100 focus:ring-2 focus:ring-teal-400 focus:border-transparent outline-none transition-all"

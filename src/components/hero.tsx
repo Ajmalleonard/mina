@@ -130,7 +130,7 @@ const HeroSection: React.FC<HeroSectionProps> = ({
             <div
               className={`inline-block ${
                 colorScheme.light
-              } px-4 py-1 rounded-full mb-2 ${
+              } px-4 py-1 rounded-md mb-2 ${
                 colorScheme.primaryText
               } font-medium text-sm transition-all duration-300 transform ${
                 isInView
@@ -196,13 +196,9 @@ const HeroSection: React.FC<HeroSectionProps> = ({
                 <Link
                   href={primaryButtonLink}
                   className={`
-                relative overflow-hidden text-white px-8 py-4 rounded-lg font-medium text-lg inline-flex items-center transition-all duration-300 transform hover:-translate-y-1 hover:shadow-lg
+                relative overflow-hidden ${colorScheme.primary} ${colorScheme.primaryHover} text-white px-8 py-3 rounded-md font-medium text-lg inline-flex items-center transition-all duration-300 transform hover:-translate-y-1 hover:shadow-lg
               `}
                 >
-                  {/* Blurred background with faint green */}
-                  <div className="absolute inset-0 backdrop-blur-sm bg-opacity-20 bg-black/40"></div>
-                  {/* <div className="absolute inset-0 bg-gradient-to-r from-green-500/20 to-green-600/15"></div> */}
-
                   {/* Button content with arrow */}
                   <span className="relative z-10 flex items-center">
                     {primaryButtonText}
@@ -227,7 +223,7 @@ const HeroSection: React.FC<HeroSectionProps> = ({
               {secondaryButtonText && secondaryButtonLink && (
                 <Link
                   href={secondaryButtonLink}
-                  className="bg-transparent border-2 border-white/30 text-white hover:bg-white/10 px-8 py-4 rounded-lg font-medium text-lg inline-flex items-center transition-all duration-300 transform hover:-translate-y-1"
+                  className="bg-transparent border border-white/30 text-white hover:bg-white/10 px-8 py-3 rounded-md font-medium text-lg inline-flex items-center transition-all duration-300 transform hover:-translate-y-1"
                 >
                   {secondaryButtonText}
                 </Link>
@@ -239,18 +235,18 @@ const HeroSection: React.FC<HeroSectionProps> = ({
           <div
             className={`md:col-span-2 relative transition-all duration-1000 transform ${
               isInView
-                ? "translate-x-0 opacity-100"
-                : "translate-x-24 opacity-0"
+                ? "translate-y-0 opacity-100"
+                : "translate-y-12 opacity-0"
             }`}
             style={{ transitionDelay: "600ms" }}
           >
             <div className="aspect-square relative">
               {/* Abstract decorative elements */}
               <div
-                className={`absolute top-0 right-0 w-64 h-64 border-2 ${colorScheme.border} rounded-full opacity-20`}
+                className={`absolute top-0 right-0 w-64 h-64 border ${colorScheme.border} rounded-full opacity-20`}
               ></div>
               <div
-                className={`absolute bottom-12 left-12 w-48 h-48 border-2 ${colorScheme.border} rounded-full opacity-30`}
+                className={`absolute bottom-12 left-12 w-48 h-48 border ${colorScheme.border} rounded-full opacity-30`}
               ></div>
               <div
                 className={`absolute top-1/4 left-1/4 w-32 h-32 ${colorScheme.primary} rounded-full opacity-20 blur-lg`}
@@ -278,7 +274,7 @@ const HeroSection: React.FC<HeroSectionProps> = ({
             }
           >
             <span className="text-white/70 text-sm mb-2">Discover More</span>
-            <div className="w-8 h-12 rounded-full border-2 border-white/30 flex items-start justify-center p-1">
+            <div className="w-8 h-12 rounded-full border border-white/30 flex items-start justify-center p-1">
               <div className="w-1 h-3 bg-white/70 rounded-full animate-bounce mt-1"></div>
             </div>
           </div>
