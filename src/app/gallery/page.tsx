@@ -1,12 +1,12 @@
 "use client";
-import React, { useState } from "react";
+import React, { useState, useMemo } from "react";
 import Link from "next/link";
 import { motion } from "framer-motion";
 import Image from "next/image";
 
 export default function GalleryPage() {
   // Gallery items with images from the images folder
-  const galleryItems = [
+  const galleryItems = useMemo(() => [
     {
       id: 1,
       title: "Community Iftar",
@@ -112,7 +112,7 @@ export default function GalleryPage() {
       category: "Health",
       image: "/images/IMG_2509 2.jpg",
     },
-  ];
+  ], []);
 
   // Categories for filtering
   const categories = [
