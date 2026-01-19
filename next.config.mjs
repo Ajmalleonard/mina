@@ -16,8 +16,6 @@ const nextConfig = {
     minimumCacheTTL: 60, // 60 seconds
     dangerouslyAllowSVG: false,
   },
-  // Enable SWC minification for improved performance
-  swcMinify: true,
   // Configure compiler options
   compiler: {
     // Remove console.log in production
