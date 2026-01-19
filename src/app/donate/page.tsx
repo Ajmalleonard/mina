@@ -156,7 +156,7 @@ export default function DonatePage() {
                     initial={{ opacity: 0 }}
                     animate={{ opacity: 1 }}
                     transition={{ duration: 0.5 }}
-                    className="w-full flex-shrink-0"
+                    className="w-full shrink-0"
                   >
                     <form onSubmit={handleSubmit} className="space-y-8">
                       {/* Donation Type */}
@@ -288,7 +288,7 @@ export default function DonatePage() {
                             id="donorName"
                             value={donorName}
                             onChange={(
-                              e: React.ChangeEvent<HTMLInputElement>
+                              e: React.ChangeEvent<HTMLInputElement>,
                             ) => setDonorName(e.target.value)}
                             className="focus:ring-green-500  block w-[98%] mx-auto p-2 sm:text-sm text-black border-gray-300 rounded-md py-3 focus:outline-none ring-1 ring-green-500"
                             required
@@ -313,7 +313,7 @@ export default function DonatePage() {
                             id="email"
                             value={email}
                             onChange={(
-                              e: React.ChangeEvent<HTMLInputElement>
+                              e: React.ChangeEvent<HTMLInputElement>,
                             ) => setEmail(e.target.value)}
                             className="focus:ring-green-500  block w-[98%] mx-auto p-2 sm:text-sm text-black border-gray-300 rounded-md py-3 focus:outline-none ring-1 ring-green-500"
                             required
@@ -346,7 +346,7 @@ export default function DonatePage() {
                           id="message"
                           value={message}
                           onChange={(
-                            e: React.ChangeEvent<HTMLTextAreaElement>
+                            e: React.ChangeEvent<HTMLTextAreaElement>,
                           ) => setMessage(e.target.value)}
                           className="focus:ring-green-500  block w-[98%] mx-auto p-2 sm:text-sm text-black border-gray-300 rounded-md py-3 focus:outline-none ring-1 ring-green-500"
                           rows={4}
@@ -380,7 +380,7 @@ export default function DonatePage() {
                     initial={{ opacity: 0 }}
                     animate={{ opacity: step === 2 ? 1 : 0 }}
                     transition={{ duration: 0.5 }}
-                    className="w-full flex-shrink-0"
+                    className="w-full shrink-0"
                   >
                     <div className="mb-6">
                       <motion.button
@@ -492,9 +492,8 @@ export default function DonatePage() {
               Your Impact
             </h2>
             <p className="max-w-3xl mx-auto text-lg text-gray-600">
-              Your donations make a real difference in the lives of 
-              families in our community. Here are some of the ways your support
-              helps:
+              Your donations make a real difference in the lives of families in
+              our community. Here are some of the ways your support helps:
             </p>
           </motion.div>
 

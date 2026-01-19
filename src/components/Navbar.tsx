@@ -35,11 +35,11 @@ const Navbar = () => {
 
   return (
     <>
-      <nav className="bg-white/90 backdrop-blur-md fixed w-full z-[9999]">
+      <nav className="bg-white/90 backdrop-blur-md fixed w-full z-9999">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex justify-between h-16">
             <div className="flex items-center">
-              <Link href="/" className="flex-shrink-0 flex items-center">
+              <Link href="/" className="shrink-0 flex items-center">
                 <Image
                   src={"/logo.PNG"}
                   height={80}
@@ -75,7 +75,7 @@ const Navbar = () => {
 
       {/* Mobile menu as a separate fixed element */}
       {isMenuOpen && (
-        <div className="fixed inset-0 z-[10000] md:hidden">
+        <div className="fixed inset-0 z-10000 md:hidden">
           {/* Opaque backdrop */}
           <div className="absolute inset-0 bg-white opacity-100"></div>
 
@@ -83,7 +83,7 @@ const Navbar = () => {
           <div className="relative h-full w-full bg-white overflow-auto">
             <div className="p-2">
               <div className="flex justify-between items-center border-b border-gray-200 pb-2">
-                <Link href="/" className="flex-shrink-0 flex items-center">
+                <Link href="/" className="shrink-0 flex items-center">
                   <Image
                     src={"/logo.PNG"}
                     height={70}

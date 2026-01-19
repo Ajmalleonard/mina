@@ -79,7 +79,7 @@ const HeroSection: React.FC<HeroSectionProps> = ({
       className="w-full min-h-screen flex items-center justify-center relative overflow-hidden bg-gray-900"
     >
       {/* Background gradient overlay base */}
-      <div className="absolute inset-0 bg-gradient-to-b from-gray-900 via-gray-900/80 to-gray-900/60 z-10"></div>
+      <div className="absolute inset-0 bg-linear-to-b from-gray-900 via-gray-900/80 to-gray-900/60 z-10"></div>
 
       {/* Animated shapes */}
       <div className="absolute inset-0 overflow-hidden">

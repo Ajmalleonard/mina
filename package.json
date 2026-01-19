@@ -11,12 +11,14 @@
   "dependencies": {
     "@stripe/react-stripe-js": "^3.6.0",
     "@stripe/stripe-js": "^7.2.0",
+    "@types/nodemailer": "^7.0.5",
     "framer-motion": "^12.9.0",
     "gsap": "^3.12.7",
     "iconsax-reactjs": "^0.0.8",
     "lucide-react": "^0.503.0",
     "motion": "^12.9.0",
     "next": "15.3.1",
+    "nodemailer": "^7.0.12",
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
     "react-icons": "^5.5.0",
@@ -32,6 +34,5 @@
     "eslint-config-next": "15.3.1",
     "tailwindcss": "^4",
     "typescript": "^5"
-  },
-  "packageManager": "pnpm@10.6.3+sha512.bb45e34d50a9a76e858a95837301bfb6bd6d35aea2c5d52094fa497a467c43f5c440103ce2511e9e0a2f89c3d6071baac3358fc68ac6fb75e2ceb3d2736065e6"
+  }
 }

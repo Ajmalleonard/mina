@@ -159,7 +159,7 @@ export default function ContactPage() {
                     transition={{ duration: 0.5, delay: index * 0.1 + 0.3 }}
                     className="flex items-start"
                   >
-                    <div className="flex-shrink-0 w-10 h-10 bg-green-100 rounded-full flex items-center justify-center mr-4">
+                    <div className="shrink-0 w-10 h-10 bg-green-100 rounded-full flex items-center justify-center mr-4">
                       <svg
                         xmlns="http://www.w3.org/2000/svg"
                         className="h-5 w-5 text-green-600"
