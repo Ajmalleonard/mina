@@ -1,567 +1,414 @@
 "use client";
-import React, { useState } from "react";
+import React from "react";
 import Link from "next/link";
-import { motion } from "motion/react";
 import HeroSection from "@/components/hero";
 import Image from "next/image";
-import { FaBriefcase, FaHandshake } from "react-icons/fa";
-import { FaGraduationCap } from "react-icons/fa";
-import { AnimatePresence } from "motion/react";
 
 export default function Home() {
-  const [activeAmount, setActiveAmount] = useState<string | null>(null);
-  const [customAmount, setCustomAmount] =useState<string | null>("");
+    return (
+        <main className="min-h-screen bg-[#FFFBF2] text-[#111111]">
+            <HeroSection
+                title="Your Empathy Transforms Lives"
+                description="Empowering communities by transforming lives and fostering sustainable change through compassionate giving across Tanzania."
+            />
 
-  const [activeTab, setActiveTab] = useState<string | null>("oneTime");
-
-  const handleCustomAmountChange = (e) => {
-    setCustomAmount(e.target.value);
-    setActiveAmount(null);
-  };
-
-  const donationOptions = [
-    { amount: "10", label: "$10" },
-    { amount: "25", label: "$25" },
-    { amount: "50", label: "$50" },
-    { amount: "100", label: "$100" },
-  ];
-
-  const handleDonationSelect = (amount: string) => {
-    setActiveAmount(amount);
-    // In a real application, you might want to navigate to the donation page with the selected amount
-    // or open a modal to complete the donation process
-  };
-
-  // Images for hero slider from images folder
-  const heroImages = [
-    { src: "/images/IMG_2479 2.jpg", alt: "Community gathering" },
-    { src: "/images/IMG_9003 2.jpg", alt: "Community event" },
-    { src: "/images/IMG_8967 2.jpg", alt: "Foundation activities" },
-  ];
-
-  // Random selection of images for gallery
-  const galleryImages = [
-    {
-      src: "/images/2.jpg",
-      alt: "Mina Foundation event",
-      title: "Community Event",
-      description: "Members of our community gathering to support one another.",
-    },
-    {
-      src: "/images/5.jpg",
-      alt: "Foundation activities",
-      title: "Outreach Program",
-      description:
-        "Our outreach program bringing joy and education to the community.",
-    },
-    {
-      src: "/images/7.jpg",
-      alt: "Community support",
-      title: "Support Services",
-      description: "Providing essential support to families in need.",
-    },
-    {
-      src: "/images/12.jpg",
-      alt: "Educational activities",
-      title: "Education Initiative",
-      description:
-        "Fostering education and knowledge sharing within our community.",
-    },
-    {
-      src: "/images/17.jpg",
-      alt: "Community gathering",
-      title: "Community Gathering",
-      description:
-        "Building connections and strengthening our community bonds.",
-    },
-    {
-      src: "/images/24.jpg",
-      alt: "Foundation event",
-      title: "Special Event",
-      description:
-        "A memorable moment during one of our foundation's special events.",
-    },
-  ];
-
-  return (
-    <main className="min-h-screen">
-      {/* Hero Section */}
-      <HeroSection
-        title="Supporting families Through Compassion"
-        description="Mina Foundation is dedicated to providing support, resources, and community services to families in need."
-        primaryButtonText="Donate Now"
-        primaryButtonLink="/donate"
-        secondaryButtonText="Learn More"
-        secondaryButtonLink="/about"
-        backgroundImages={heroImages}
-      />
-
-      {/* Donation Shortcuts Section */}
-      <section className="py-20 bg-gradient-to-br from-indigo-50 to-teal-50">
-        <div className=" mx-auto px-6 max-w-4xl">
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6 }}
-            className="text-center mb-12"
-          >
-            <motion.span
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              transition={{ delay: 0.3 }}
-              className="inline-block py-1 px-3 rounded-full bg-teal-100 text-teal-800 text-sm font-medium"
-            >
-              Support Our Mission
-            </motion.span>
-            <motion.h2
-              initial={{ opacity: 0, y: 10 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.5 }}
-              className="text-4xl md:text-5xl font-bold text-gray-800 mt-4 mb-4"
-            >
-              Make Your Impact
-            </motion.h2>
-            <div className="w-24 h-1 bg-gradient-to-r from-teal-500 to-green-500 mx-auto mb-6"></div>
-            <motion.p
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              transition={{ delay: 0.7 }}
-              className="max-w-2xl mx-auto text-gray-600 text-lg"
-            >
-              Your generosity powers our work. Choose how you'd like to
-              contribute.
-            </motion.p>
-          </motion.div>
-
-          {/* Donation Type Tabs */}
-          <div className="max-w-md mx-auto mb-8">
-            <div className="bg-white p-1 rounded-xl shadow-sm flex">
-              {["oneTime", "monthly"].map((tab) => (
-                <motion.button
-                  key={tab}
-                  onClick={() => setActiveTab(tab)}
-                  className={`relative flex-1 py-3 rounded-lg font-medium text-center z-10`}
-                  whileHover={{ scale: activeTab !== tab ? 1.02 : 1 }}
-                  whileTap={{ scale: 0.98 }}
-                >
-                  {activeTab === tab && (
-                    <motion.div
-                      layoutId="tabBackground"
-                      className="absolute inset-0 bg-gradient-to-r from-teal-500 to-green-500 rounded-lg shadow-md z-0"
-                      initial={false}
-                      transition={{
-                        type: "spring",
-                        stiffness: 400,
-                        damping: 30,
-                      }}
-                    />
-                  )}
-                  <span
-                    className={`relative z-10 ${
-                      activeTab === tab ? "text-white" : "text-gray-600"
-                    }`}
-                  >
-                    {tab === "oneTime" ? "One-time Gift" : "Monthly Support"}
-                  </span>
-                </motion.button>
-              ))}
-            </div>
-          </div>
-
-          <motion.div
-            className="max-w-3xl mx-auto bg-white rounded-2xl shadow-lg p-8"
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.4, duration: 0.6 }}
-          >
-            <AnimatePresence mode="wait">
-              <motion.div
-                key={activeTab}
-                initial={{ opacity: 0, x: 20 }}
-                animate={{ opacity: 1, x: 0 }}
-                exit={{ opacity: 0, x: -20 }}
-                transition={{ duration: 0.3 }}
-              >
-                <div className="flex flex-wrap justify-center gap-3 mb-8">
-                  {donationOptions.map((option) => (
-                    <motion.button
-                      key={option.amount}
-                      whileHover={{ scale: 1.05, y: -2 }}
-                      whileTap={{ scale: 0.95 }}
-                      onClick={() => handleDonationSelect(option.amount)}
-                      className={`px-8 py-4 rounded-xl text-lg font-medium transition-all ${
-                        activeAmount === option.amount
-                          ? "bg-gradient-to-r from-teal-500 to-green-500 text-white shadow-md"
-                          : "bg-gray-50 text-gray-700 hover:bg-gray-100 border border-gray-100"
-                      }`}
-                    >
-                      {option.label}
-                    </motion.button>
-                  ))}
-                </div>
-
-                <div className="mb-8">
-                  <div className="relative">
-                    <div className="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
-                      <span className="text-gray-500 text-lg">$</span>
+            {/* Impact Text Section */}
+            <section className="py-24 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto border-b border-[#111111]">
+                <div className="grid grid-cols-1 md:grid-cols-12 gap-12">
+                    <div className="md:col-span-4 space-y-2">
+                        <h3 className="font-bold text-sm uppercase tracking-wide border-b border-[#111111] pb-2 inline-block">Our Positive Impact</h3>
+                        <p className="text-[#111111] text-xs font-medium mt-2">Across Tanzania</p>
+                        <p className="text-[#111111] text-xs mt-4 font-medium">Core Values Guiding <br /> Our National Mission</p>
                     </div>
-                    <input
-                      type="text"
-                      value={customAmount || ""}
-                      onChange={handleCustomAmountChange}
-                      placeholder="Custom amount"
-                      className="w-full pl-8 pr-4 py-4 rounded-xl bg-gray-50 border text-neutral-800 border-gray-100 focus:ring-2 focus:ring-teal-400 focus:border-transparent outline-none transition-all"
-                    />
-                  </div>
-                </div>
 
-                <motion.div
-                  className="flex flex-col space-y-4"
-                  initial={{ opacity: 0, y: 10 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ delay: 0.2 }}
-                >
-                  <motion.button
-                    whileHover={{ scale: 1.02 }}
-                    whileTap={{ scale: 0.98 }}
-                    className="w-full py-4 px-6 bg-gradient-to-r from-teal-500 to-indigo-500 rounded-xl text-white font-medium text-lg shadow-md hover:shadow-lg transition-all"
-                  >
-                    {activeTab === "oneTime"
-                      ? "Donate Now"
-                      : "Start Monthly Giving"}
-                  </motion.button>
+                    <div className="md:col-span-8">
+                        <p className="text-2xl md:text-3xl font-medium leading-tight mb-8">
+                            Over 80,000 lives have been touched by our charity's work. We focus on empowering individuals, improving communities, and fostering sustainable development across Tanzania. Through targeted initiatives, we have enabled access to education, healthcare, and economic opportunities.
+                        </p>
 
-                  <div className="text-center mt-4">
-                    <p className="text-gray-500 text-sm flex items-center justify-center">
-                      <svg
-                        className="w-4 h-4 mr-1"
-                        fill="currentColor"
-                        viewBox="0 0 20 20"
-                        xmlns="http://www.w3.org/2000/svg"
-                      >
-                        <path
-                          fillRule="evenodd"
-                          d="M5 9V7a5 5 0 0110 0v2a2 2 0 012 2v5a2 2 0 01-2 2H5a2 2 0 01-2-2v-5a2 2 0 012-2zm8-2v2H7V7a3 3 0 016 0z"
-                          clipRule="evenodd"
-                        ></path>
-                      </svg>
-                      Secure donation processed by Stripe
-                    </p>
-                  </div>
-                </motion.div>
-              </motion.div>
-            </AnimatePresence>
-          </motion.div>
-        </div>
-      </section>
-      {/* Mission Section */}
-      <section className="py-20 bg-white">
-        <div className="container mx-auto px-6">
-          <motion.div
-            initial={{ opacity: 0, y: 50 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.8 }}
-            className="text-center mb-16"
-          >
-            <span className="text-sm uppercase tracking-wider text-green-600 font-medium">
-              Our purpose
-            </span>
-            <h2 className="text-3xl md:text-4xl font-bold text-gray-800 mt-2 mb-4">
-              Our Mission
-            </h2>
-            <div className="w-20 h-1 bg-green-500 mx-auto mb-6"></div>
-            <p className="max-w-3xl mx-auto text-lg text-gray-600">
-              At Mina Foundation, we strive to empower families through
-              education, community support, and sustainable aid programs that
-              promote dignity and self-reliance.
-            </p>
-          </motion.div>
-
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            {[
-              {
-                title: "Education",
-                icon: (
-                  <FaGraduationCap className="text-4xl mx-auto text-green-600" />
-                ),
-                desc: "Providing access to quality education and resources for all ages.",
-              },
-              {
-                title: "Community",
-                icon: (
-                  <FaHandshake className="text-4xl mx-auto text-green-600" />
-                ),
-                desc: "Building strong community connections and support networks for families.",
-              },
-              {
-                title: "Economic Empowerment",
-                icon: (
-                  <FaBriefcase className="text-4xl mx-auto text-green-600" />
-                ),
-                desc: "Creating opportunities for financial independence and career development.",
-              },
-            ].map((item, index) => (
-              <motion.div
-                key={index}
-                initial={{ opacity: 0, y: 30 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ duration: 0.6, delay: index * 0.2 }}
-                className="bg-green-50 p-8 rounded-lg border border-green-200 hover:border-green-300 transition-all text-center"
-              >
-                <div className="text-4xl mb-4">{item.icon}</div>
-                <h3 className="text-xl font-semibold text-green-700 mb-3">
-                  {item.title}
-                </h3>
-                <p className="text-gray-600">{item.desc}</p>
-              </motion.div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* Impact Numbers Section */}
-      <section className="py-16 bg-green-900 text-white">
-        <div className="container mx-auto px-6">
-          <div className="text-center mb-12">
-            <span className="text-sm uppercase tracking-wider text-green-300 font-medium">
-              Our reach
-            </span>
-            <h2 className="text-3xl font-bold text-white mt-2 mb-6">
-              Our Impact in Numbers
-            </h2>
-          </div>
-
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-8 text-center">
-            {[
-              { value: "2,500+", label: "Families Supported" },
-              { value: "12", label: "Community Centers" },
-              { value: "18,000+", label: "Volunteer Hours" },
-              { value: "95%", label: "Donation Efficiency" },
-            ].map((stat, index) => (
-              <motion.div
-                key={index}
-                initial={{ opacity: 0, scale: 0.8 }}
-                whileInView={{ opacity: 1, scale: 1 }}
-                viewport={{ once: true }}
-                transition={{ duration: 0.6, delay: index * 0.1 }}
-                className="flex flex-col items-center"
-              >
-                <span className="text-4xl md:text-5xl font-bold mb-2">
-                  {stat.value}
-                </span>
-                <span className="text-green-300">{stat.label}</span>
-              </motion.div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* Image Gallery Preview Section */}
-      <section className="py-20 bg-white">
-        <div className="container mx-auto px-6">
-          <motion.div
-            initial={{ opacity: 0, y: 30 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.8 }}
-            className="text-center mb-16"
-          >
-            <span className="text-sm uppercase tracking-wider text-green-600 font-medium">
-              See our work
-            </span>
-            <h2 className="text-3xl md:text-4xl font-bold text-gray-800 mt-2 mb-4">
-              Our Gallery
-            </h2>
-            <div className="w-20 h-1 bg-green-500 mx-auto mb-6"></div>
-            <p className="max-w-3xl mx-auto text-lg text-gray-600">
-              Witness the impact of our work through these moments captured at
-              our events and programs.
-            </p>
-          </motion.div>
-
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-            {galleryImages.slice(0, 6).map((image, index) => (
-              <motion.div
-                key={index}
-                initial={{ opacity: 0, scale: 0.8 }}
-                whileInView={{ opacity: 1, scale: 1 }}
-                viewport={{ once: true }}
-                transition={{ duration: 0.5, delay: index * 0.1 }}
-                whileHover={{ scale: 1.05, y: -5 }}
-                className="overflow-hidden rounded-lg border border-green-200 transition-all"
-              >
-                <div className="aspect-[4/3] flex items-center justify-center">
-                  <Image
-                    src={image.src}
-                    alt={image.alt}
-                    width={400}
-                    height={300}
-                    className="w-full h-full object-cover"
-                  />
-                </div>
-                <div className="p-4 bg-white">
-                  <h3 className="font-medium text-lg text-green-800">
-                    {image.title}
-                  </h3>
-                  <p className="text-gray-600 text-sm mt-1">
-                    {image.description}
-                  </p>
-                </div>
-              </motion.div>
-            ))}
-          </div>
-
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.5, delay: 0.3 }}
-            className="text-center mt-12"
-          >
-            <Link
-              href="/gallery"
-              className="inline-block px-6 py-3 bg-green-100 hover:bg-green-200 text-green-800 rounded-md font-medium transition-colors border border-green-200"
-            >
-              View Full Gallery →
-            </Link>
-          </motion.div>
-        </div>
-      </section>
-
-      {/* Testimonials Section with Background Images */}
-      <section className="py-20 bg-gray-50">
-        <div className="container mx-auto px-6">
-          <motion.div
-            initial={{ opacity: 0, y: 30 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.8 }}
-            className="text-center mb-16"
-          >
-            <span className="text-sm uppercase tracking-wider text-green-600 font-medium">
-              Voices from our community
-            </span>
-            <h2 className="text-3xl md:text-4xl font-bold text-gray-800 mt-2 mb-4">
-              Testimonials
-            </h2>
-            <div className="w-20 h-1 bg-green-500 mx-auto mb-6"></div>
-            <p className="max-w-3xl mx-auto text-lg text-gray-600">
-              Hear from those whose lives have been touched by the work of Mina
-              Foundation.
-            </p>
-          </motion.div>
-
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-            {[
-              {
-                quote:
-                  "The Mina Foundation has been a blessing for my family during our difficult times. Their support helped us establish ourselves in a new community.",
-                author: "Fatima K.",
-                role: "Program Beneficiary",
-                image: "/images/15.jpg",
-              },
-              {
-                quote:
-                  "Volunteering with Mina has been the most rewarding experience. Seeing the direct impact of our work on families is truly inspiring.",
-                author: "Ahmed J.",
-                role: "Volunteer",
-                image: "/images/10.jpg",
-              },
-            ].map((testimonial, index) => (
-              <motion.div
-                key={index}
-                initial={{ opacity: 0, x: index % 2 === 0 ? -30 : 30 }}
-                whileInView={{ opacity: 1, x: 0 }}
-                viewport={{ once: true }}
-                transition={{ duration: 0.7, delay: index * 0.2 }}
-                className="bg-white p-8 rounded-lg border border-gray-200 relative overflow-hidden"
-              >
-                <div className="absolute inset-0 opacity-10">
-                  <Image
-                    src={testimonial.image}
-                    alt="Testimonial background"
-                    fill
-                    className="object-cover"
-                  />
-                </div>
-                <div className="relative z-10">
-                  <div className="text-green-600 text-4xl mb-4">&quot;</div>
-                  <p className="text-gray-700 mb-6 italic">
-                    {testimonial.quote}
-                  </p>
-                  <div className="flex items-center">
-                    <div className="w-12 h-12 bg-green-200 rounded-full flex items-center justify-center text-green-700 font-bold text-xl">
-                      {testimonial.author.charAt(0)}
+                        <div className="flex flex-wrap gap-3">
+                            {["Spreading Hope", "Inspiring Action", "Building Futures", "Fostering Unity"].map((tag) => (
+                                <span key={tag} className="px-6 py-2 rounded-none border border-[#111111] bg-white text-sm font-medium hover:bg-[#111111] hover:text-white cursor-default">
+                                    {tag}
+                                </span>
+                            ))}
+                        </div>
                     </div>
-                    <div className="ml-4">
-                      <p className="font-medium text-green-800">
-                        {testimonial.author}
-                      </p>
-                      <p className="text-gray-600 text-sm">
-                        {testimonial.role}
-                      </p>
-                    </div>
-                  </div>
                 </div>
-              </motion.div>
-            ))}
-          </div>
+            </section>
+
+            {/* Our Achievements Section */}
+            <section className="py-16 bg-[#111111] text-white border-b border-[#111111]">
+                <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                    <div className="grid grid-cols-1 md:grid-cols-3 gap-8 text-center divide-y md:divide-y-0 md:divide-x divide-white/20">
+                        <div className="p-6">
+                            <h3 className="text-5xl font-bold mb-4 text-[#95E18A]">15</h3>
+                            <p className="text-xl font-medium uppercase tracking-wide">Masjids Across Nation</p>
+                            <p className="text-sm mt-3 text-white/70">Built to serve rural communities as spiritual and educational centers.</p>
+                        </div>
+                        <div className="p-6">
+                            <h3 className="text-5xl font-bold mb-4 text-[#95E18A]">2,348</h3>
+                            <p className="text-xl font-medium uppercase tracking-wide">Cataract Surgeries</p>
+                            <p className="text-sm mt-3 text-white/70">Successfully performed, restoring sight to the elderly and vulnerable.</p>
+                        </div>
+                        <div className="p-6">
+                            <h3 className="text-5xl font-bold mb-4 text-[#95E18A]">500+</h3>
+                            <p className="text-xl font-medium uppercase tracking-wide">Orphans Sponsored</p>
+                            <p className="text-sm mt-3 text-white/70">Receiving comprehensive care, education, and family support.</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            {/* Our Activities Section */}
+            <section className="py-24 bg-[#FFFBF2] border-b border-[#111111]">
+                <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                    <div className="mb-16">
+                        <h2 className="text-4xl font-bold mb-4">Our Core Activities</h2>
+                        <p className="text-lg text-gray-700 max-w-2xl">A comprehensive focus on sustainable humanitarian initiatives designed to provide immediate relief and long-term empowerment across Tanzania.</p>
+                    </div>
+
+                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                        {/* Zakat Card */}
+                        <div className="bg-white border border-[#111111] flex flex-col group h-full">
+                            <div className="aspect-video relative overflow-hidden border-b border-[#111111]">
+                                <Image src="/images/IMG_8983 2.jpg" alt="Zakat Distribution" fill className="object-cover" />
+                            </div>
+                            <div className="p-8 flex flex-col grow">
+                                <h3 className="text-2xl font-bold mb-3">Zakat & Zakat-ul-fitr</h3>
+                                <p className="text-sm text-gray-600 mb-8 grow leading-relaxed">
+                                    Purify your wealth and fulfill your religious duty. We manage Zakat distribution with 100% transparency, ensuring funds reach only those strictly eligible under Sharia guidelines in the most impoverished regions.
+                                </p>
+                                <Link href="/donate" className="inline-block w-full py-4 border border-[#111111] bg-white text-[#111111] text-center font-bold text-xs uppercase tracking-widest hover:bg-[#111111] hover:text-white">
+                                    Donate Zakat
+                                </Link>
+                            </div>
+                        </div>
+
+                        {/* Eid Clothing Card */}
+                        <div className="bg-white border border-[#111111] flex flex-col group h-full">
+                            <div className="aspect-video relative overflow-hidden border-b border-[#111111]">
+                                <Image src="/images/10.jpg" alt="Eid Clothing" fill className="object-cover" />
+                            </div>
+                            <div className="p-8 flex flex-col grow">
+                                <h3 className="text-2xl font-bold mb-3">Eid Clothing</h3>
+                                <p className="text-sm text-gray-600 mb-8 grow leading-relaxed">
+                                    Celebrate the joy of Eid by gifting new clothes to orphans and vulnerable children. Every child deserves to feel beautiful and valued during our most sacred festivals.
+                                </p>
+                                <Link href="/donate" className="inline-block w-full py-4 border border-[#111111] bg-white text-[#111111] text-center font-bold text-xs uppercase tracking-widest hover:bg-[#111111] hover:text-white">
+                                    Gift a Set
+                                </Link>
+                            </div>
+                        </div>
+
+                        {/* Iftar Card */}
+                        <div className="bg-white border border-[#111111] flex flex-col group h-full">
+                            <div className="aspect-video relative overflow-hidden border-b border-[#111111]">
+                                <Image src="/images/2.jpg" alt="Mina Iftar Table" fill className="object-cover" />
+                            </div>
+                            <div className="p-8 flex flex-col grow">
+                                <h3 className="text-2xl font-bold mb-3">Mina Iftar Table</h3>
+                                <p className="text-sm text-gray-600 mb-8 grow leading-relaxed">
+                                    Our community Iftar tables serve thousands of fasting individuals. We focus on providing nutritious, hot meals to orphans and families who struggle to find Suhoor and Iftar every day.
+                                </p>
+                                <Link href="/donate" className="inline-block w-full py-4 border border-[#111111] bg-white text-[#111111] text-center font-bold text-xs uppercase tracking-widest hover:bg-[#111111] hover:text-white">
+                                    Feed a Family
+                                </Link>
+                            </div>
+                        </div>
+
+                        {/* Water Well Card */}
+                        <div className="bg-white border border-[#111111] flex flex-col group h-full">
+                            <div className="aspect-video relative overflow-hidden border-b border-[#111111]">
+                                <Image src="/images/IMG_5852.jpg" alt="Water Well" fill className="object-cover" />
+                            </div>
+                            <div className="p-8 flex flex-col grow">
+                                <h3 className="text-2xl font-bold mb-3">Water Well</h3>
+                                <p className="text-sm text-gray-600 mb-8 grow leading-relaxed">
+                                    Water is the source of life. We construct solar-powered and hand-pumped wells in remote villages, ensuring permanent access to clean drinking water and stopping the spread of diseases.
+                                </p>
+                                <Link href="/donate" className="inline-block w-full py-4 border border-[#111111] bg-white text-[#111111] text-center font-bold text-xs uppercase tracking-widest hover:bg-[#111111] hover:text-white">
+                                    Fund a Well
+                                </Link>
+                            </div>
+                        </div>
+
+                        {/* Masjid Card */}
+                        <div className="bg-white border border-[#111111] flex flex-col group h-full">
+                            <div className="aspect-video relative overflow-hidden border-b border-[#111111]">
+                                <Image src="/assets/MASJID/DJI_20250902124328_0005_D.JPG" alt="Masjid Construction" fill className="object-cover" />
+                            </div>
+                            <div className="p-8 flex flex-col grow">
+                                <h3 className="text-2xl font-bold mb-3">Masjid & Madrasa</h3>
+                                <p className="text-sm text-gray-600 mb-8 grow leading-relaxed">
+                                    We build durable, high-capacity Mosques that serve as the spiritual and educational heart of the community, providing a safe space for prayer and traditional education for children.
+                                </p>
+                                <Link href="/donate" className="inline-block w-full py-4 border border-[#111111] bg-white text-[#111111] text-center font-bold text-xs uppercase tracking-widest hover:bg-[#111111] hover:text-white">
+                                    Build a Masjid
+                                </Link>
+                            </div>
+                        </div>
+
+                        {/* Cataract Card */}
+                        <div className="bg-white border border-[#111111] flex flex-col group h-full">
+                            <div className="aspect-video relative overflow-hidden border-b border-[#111111]">
+                                <Image src="/assets/KATARAKT/JQ0G4907_1.JPG" alt="Cataract Surgery" fill className="object-cover" />
+                            </div>
+                            <div className="p-8 flex flex-col grow">
+                                <h3 className="text-2xl font-bold mb-3">Cataract Surgery</h3>
+                                <p className="text-sm text-gray-600 mb-8 grow leading-relaxed">
+                                    In just 30 minutes, we can restore a person's sight. Our specialized surgical camps provide free cataract procedures to the elderly, helping them regain their independence and quality of life.
+                                </p>
+                                <Link href="/donate" className="inline-block w-full py-4 border border-[#111111] bg-white text-[#111111] text-center font-bold text-xs uppercase tracking-widest hover:bg-[#111111] hover:text-white">
+                                    Restore Sight
+                                </Link>
+                            </div>
+                        </div>
+
+                        {/* Emergency Relief Card */}
+                        <div className="bg-white border border-[#111111] flex flex-col group h-full">
+                            <div className="aspect-video relative overflow-hidden border-b border-[#111111]">
+                                <Image src="/images/7.jpg" alt="Emergency Relief" fill className="object-cover" />
+                            </div>
+                            <div className="p-8 flex flex-col grow">
+                                <h3 className="text-2xl font-bold mb-3">Emergency Relief</h3>
+                                <p className="text-sm text-gray-600 mb-8 grow leading-relaxed">
+                                    Responding to urgent crises, floods, and droughts. We provide direct food aid, medicine, and emergency shelter to families facing immediate life-threatening situations across Tanzania.
+                                </p>
+                                <Link href="/donate" className="inline-block w-full py-4 border border-[#111111] bg-white text-[#111111] text-center font-bold text-xs uppercase tracking-widest hover:bg-[#111111] hover:text-white">
+                                    Donate Now
+                                </Link>
+                            </div>
+                        </div>
+
+                        {/* Orphan Sponsorship Card */}
+                        <div className="bg-[#95E18A] border border-[#111111] flex flex-col group h-full">
+                            <div className="aspect-video relative overflow-hidden border-b border-[#111111]">
+                                <Image src="/images/15.jpg" alt="Orphan Sponsorship" fill className="object-cover" />
+                            </div>
+                            <div className="p-8 flex flex-col grow">
+                                <h3 className="text-2xl font-bold mb-3 text-[#111111]">Orphan Sponsorship</h3>
+                                <p className="text-sm text-[#111111] mb-8 grow leading-relaxed font-medium">
+                                    Change a life forever. Your sponsorship provides a child with education, healthcare, nutrition, and home support, ensuring they have the foundation to build a successful future.
+                                </p>
+                                <Link href="/donate" className="inline-block w-full py-4 border border-[#111111] bg-[#111111] text-white text-center font-bold text-xs uppercase tracking-widest hover:bg-white hover:text-[#111111] transition-colors">
+                                    Sponsor Today
+                                </Link>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            {/* Seasonal Campaigns: Ramadan, Zakat, Eid */}
+            <section className="py-24 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto border-b border-[#111111]">
+                <div className="mb-16">
+                    <h2 className="text-4xl font-bold mb-4">Core Islamic Campaigns</h2>
+                    <p className="text-lg text-gray-700 max-w-2xl">Fulfilling specific community obligations and spreading joy during holy months in Tanzania.</p>
+                </div>
+
+                <div className="grid grid-cols-1 md:grid-cols-3 gap-0 border-t border-l border-[#111111]">
+                    {/* Ramadan Card */}
+                    <div className="bg-white p-8 border-r border-b border-[#111111]">
+                        <h3 className="text-2xl font-bold mb-4">Ramadan Relief</h3>
+                        <p className="text-sm text-gray-700 mb-8 min-h-[60px]">Providing Suhoor and Iftar food packages to impoverished families throughout the holy month of Ramadan.</p>
+                        <Link href="/ramadan" className="inline-block py-3 px-6 bg-white border border-[#111111] text-center font-bold text-sm hover:bg-[#111111] hover:text-white">
+                            Support Ramadan
+                        </Link>
+                    </div>
+
+                    {/* Zakat Card */}
+                    <div className="bg-[#95E18A] p-8 border-r border-b border-[#111111]">
+                        <h3 className="text-2xl font-bold mb-4">Zakat Distribution</h3>
+                        <p className="text-sm text-[#111111] mb-8 font-medium min-h-[60px]">Purify your wealth. We ensure your Zakat reaches the most eligible families strictly under Islamic guidelines.</p>
+                        <Link href="/zakat" className="inline-block py-3 px-6 bg-[#111111] text-white border border-[#111111] text-center font-bold text-sm hover:bg-white hover:text-[#111111]">
+                            Pay Zakat
+                        </Link>
+                    </div>
+
+                    {/* Eid Clothing Card */}
+                    <div className="bg-white p-8 border-r border-b border-[#111111]">
+                        <h3 className="text-2xl font-bold mb-4">Eid Clothing</h3>
+                        <p className="text-sm text-gray-700 mb-8 min-h-[60px]">Gift a child the joy of Eid with brand new clothes. Ensure they feel valued and celebrated.</p>
+                        <Link href="/eid" className="inline-block py-3 px-6 bg-white border border-[#111111] text-center font-bold text-sm hover:bg-[#111111] hover:text-white">
+                            Donate Clothes
+                        </Link>
+                    </div>
+                </div>
+      </section>
+
+            {/* Masjid Construction Section */}
+            <section className="py-24 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto border-b border-[#111111]">
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
+                    <div>
+                        <h2 className="text-4xl font-bold mb-6">Masjid Construction</h2>
+                        <p className="text-lg text-gray-700 mb-8">
+                            Building a Masjid is an ongoing charity (Sadaqah Jariyah). Across rural Tanzania, many communities lack a proper place for worship, education, and gathering. Our construction projects aim to provide structurally sound, large-capacity Mosques that serve as the heart of the community.
+                        </p>
+                        <ul className="space-y-4 mb-8">
+                            <li className="flex items-start gap-3">
+                                <span className="text-[#95E18A] text-xl">✓</span>
+                                <span className="font-medium text-sm">Providing safe spiritual centers.</span>
+                            </li>
+                            <li className="flex items-start gap-3">
+                                <span className="text-[#95E18A] text-xl">✓</span>
+                                <span className="font-medium text-sm">Serving as educational hubs for children.</span>
+                            </li>
+                            <li className="flex items-start gap-3">
+                                <span className="text-[#95E18A] text-xl">✓</span>
+                                <span className="font-medium text-sm">Building with durable, modern materials.</span>
+                            </li>
+                        </ul>
+                        <Link href="/masjid" className="inline-flex items-center gap-2 bg-[#111111] text-white px-8 py-4 font-bold text-sm uppercase tracking-wide hover:bg-[#333333]">
+                            Fund a Masjid
+                            <span>→</span>
+                        </Link>
+                    </div>
+
+                    <div className="grid grid-cols-2 gap-4">
+                        <div className="aspect-4/5 relative border border-[#111111]">
+                            <Image src="/assets/MASJID/DJI_20250902124328_0005_D.JPG" alt="Masjid Construction" fill className="object-cover" />
+                        </div>
+                        <div className="grid grid-rows-2 gap-4">
+                            <div className="relative border border-[#111111]">
+                                <Image src="/assets/MASJID/IMG_4157.JPG" alt="Masjid Workers" fill className="object-cover" />
+                            </div>
+                            <div className="relative border border-[#111111]">
+                                <Image src="/assets/MASJID/DJI_20241221122624_0083_D.JPG" alt="Masjid Drone View" fill className="object-cover" />
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            {/* Cataract Surgeries (Katarakt) Section */}
+            <section className="py-24 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto border-b border-[#111111]">
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
+                    <div className="grid grid-cols-2 gap-4 order-2 md:order-1">
+                        <div className="grid grid-rows-2 gap-4">
+                            <div className="relative border border-[#111111]">
+                                <Image src="/assets/KATARAKT/JQ0G3807.JPG" alt="Medical Exam" fill className="object-cover" />
+                            </div>
+                            <div className="relative border border-[#111111]">
+                                <Image src="/assets/KATARAKT/JQ0G3753_1.JPG" alt="Elderly Patient" fill className="object-cover" />
+                            </div>
+                        </div>
+                        <div className="aspect-4/5 relative border border-[#111111]">
+                            <Image src="/assets/KATARAKT/JQ0G4907_1.JPG" alt="Restored Sight" fill className="object-cover" />
+                        </div>
+                    </div>
+
+                    <div className="order-1 md:order-2">
+                        <h2 className="text-4xl font-bold mb-6">Restoring Sight: Cataract Relief</h2>
+                        <p className="text-lg text-gray-700 mb-8">
+                            Thousands in Tanzania suffer from preventable blindness due to cataracts. For many elderly individuals, this means a loss of independence and severe hardship. Our medical camps provide free, life-changing cataract surgeries that restore sight in under 30 minutes.
+                        </p>
+                        <div className="bg-[#e6f7e4] border border-[#111111] p-6 mb-8">
+                            <h4 className="font-bold mb-2">Impact per $75</h4>
+                            <p className="text-sm">Funds an entire surgery, including pre-operative screening, the procedure itself, and post-operative medications.</p>
+                        </div>
+                        <Link href="/katarakt" className="inline-flex items-center gap-2 bg-[#111111] text-white px-8 py-4 font-bold text-sm uppercase tracking-wide hover:bg-[#333333]">
+                            Give the Gift of Sight
+                            <span>→</span>
+                        </Link>
+                    </div>
         </div>
       </section>
 
-      {/* Call to Action with Background Image */}
-      <section className="py-20 relative text-white">
-        <div className="absolute inset-0">
-          <Image
-            src="/images/IMG_2512 2.jpg"
-            alt="Call to action background"
-            fill
-            className="object-cover brightness-50"
-          />
-        </div>
-        <div className="container mx-auto px-6 text-center relative z-10">
-          <motion.h2
-            initial={{ opacity: 0, y: 30 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.7 }}
-            className="text-3xl md:text-4xl font-bold mb-6"
-          >
-            Join Us in Making a Difference
-          </motion.h2>
-          <motion.p
-            initial={{ opacity: 0, y: 30 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.7, delay: 0.2 }}
-            className="text-lg text-green-100 max-w-3xl mx-auto mb-8"
-          >
-            Your support can help us reach more families and strengthen our
-            community. Together, we can create lasting positive change.
-          </motion.p>
-          <motion.div
-            initial={{ opacity: 0, y: 30 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.7, delay: 0.4 }}
-            className="flex flex-col sm:flex-row justify-center gap-4"
-          >
-            <Link
-              href="/donate"
-              className="px-8 py-4 bg-white text-green-800 hover:bg-green-100 rounded-md font-medium text-lg inline-block border border-white transition-all"
-            >
-              Donate Now
-            </Link>
-            <Link
-              href="/contact"
-              className="px-8 py-4 border-2 border-white text-white hover:bg-white hover:text-green-800 rounded-md font-medium text-lg inline-block transition-all"
-            >
-              Contact Us
-            </Link>
-          </motion.div>
-        </div>
+            {/* Standard Donation Cards Section (Without animations/shadows/rounded borders) */}
+            <section className="py-24">
+                <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                    <div className="text-center mb-16">
+                        <h2 className="text-4xl font-bold mb-4">Urgent General Appeals</h2>
+                    </div>
+
+                    <div className="grid grid-cols-1 md:grid-cols-3 gap-0 border-t border-l border-[#111111]">
+                        {/* Card 1 */}
+                        <div className="bg-white p-8 border-r border-b border-[#111111]">
+                            <div className="w-10 h-10 bg-[#95E18A] border border-[#111111] mb-6 flex items-center justify-center">
+                                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="square" strokeLinejoin="miter">
+                                    <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5" />
+                                </svg>
+                            </div>
+                            <h3 className="text-xl font-bold mb-4 min-h-[56px]">Empower Vulnerable Youth Through Education</h3>
+
+                            <div className="flex justify-between text-xs font-bold uppercase mb-2 text-[#111111]">
+                                <span>Fund Raised</span>
+                                <span>76%</span>
+                            </div>
+                            <div className="w-full h-2 bg-gray-200 border border-[#111111] mb-2 p-px">
+                                <div className="h-full bg-[#95E18A]" style={{ width: '76%' }}></div>
+                            </div>
+                            <div className="flex justify-between text-xs font-medium text-gray-500 mb-8">
+                                <span>$75,000</span>
+                                <span>$100,000</span>
+                            </div>
+
+                            <Link href="/donate" className="block w-full py-3 bg-white border border-[#111111] text-center font-bold text-sm hover:bg-[#111111] hover:text-white">
+                                Donate Now
+                            </Link>
+                        </div>
+
+                        {/* Card 2 */}
+                        <div className="bg-[#95E18A] p-8 border-r border-b border-[#111111]">
+                            <div className="w-10 h-10 bg-[#111111] border border-[#111111] mb-6 flex items-center justify-center text-white">
+                                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="square" strokeLinejoin="miter">
+                                    <path d="M4.5 12.5l5 5L20 7" />
+                                </svg>
+                            </div>
+                            <h3 className="text-xl font-bold mb-4 min-h-[56px] text-[#111111]">Support Local Families in Crisis Today</h3>
+
+                            <div className="flex justify-between text-xs font-bold uppercase mb-2 text-[#111111]">
+                                <span>Fund Raised</span>
+                                <span>45%</span>
+                            </div>
+                            <div className="w-full h-2 bg-white/50 border border-[#111111] mb-2 p-px">
+                                <div className="h-full bg-[#111111]" style={{ width: '45%' }}></div>
+                            </div>
+                            <div className="flex justify-between text-xs font-medium text-[#111111] mb-8">
+                                <span>$45,000</span>
+                                <span>$100,000</span>
+                            </div>
+
+                            <Link href="/donate" className="block w-full py-3 bg-[#111111] text-white border border-[#111111] text-center font-bold text-sm hover:bg-white hover:text-[#111111]">
+                                Donate Now
+                            </Link>
+                        </div>
+
+                        {/* Card 3 */}
+                        <div className="bg-white p-8 border-r border-b border-[#111111]">
+                            <div className="w-10 h-10 bg-[#95E18A] border border-[#111111] mb-6 flex items-center justify-center">
+                                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="square" strokeLinejoin="miter">
+                                    <path d="M3 18v-6a9 9 0 0118 0v6M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4M7 21v-2a2 2 0 10-4 0v2z" />
+                                </svg>
+                            </div>
+                            <h3 className="text-xl font-bold mb-4 min-h-[56px]">Provide Nutritious Meals to Hungry Children</h3>
+
+                            <div className="flex justify-between text-xs font-bold uppercase mb-2 text-[#111111]">
+                                <span>Fund Raised</span>
+                                <span>63%</span>
+                            </div>
+                            <div className="w-full h-2 bg-gray-200 border border-[#111111] mb-2 p-px">
+                                <div className="h-full bg-[#95E18A]" style={{ width: '63%' }}></div>
+                            </div>
+                            <div className="flex justify-between text-xs font-medium text-gray-500 mb-8">
+                                <span>$63,000</span>
+                                <span>$100,000</span>
+                            </div>
+
+                            <Link href="/donate" className="block w-full py-3 bg-white border border-[#111111] text-center font-bold text-sm hover:bg-[#111111] hover:text-white">
+                                Donate Now
+                            </Link>
+                        </div>
+                    </div>
+
+                    <div className="text-center mt-12">
+                        <Link href="/donate" className="inline-flex items-center gap-2 text-xs font-bold uppercase tracking-wider hover:opacity-70">
+                            Join the Movement, and Change the Life
+                            <span className="bg-[#111111] text-white w-5 h-5 flex items-center justify-center text-[10px] border border-[#111111]">➜</span>
+                        </Link>
+                    </div>
+                </div>
       </section>
     </main>
   );

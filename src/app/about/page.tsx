@@ -1,6 +1,5 @@
 "use client";
 import React from "react";
-import { motion } from "motion/react";
 import HeroSection from "@/components/hero";
 import { team } from "@/constants/data";
 import { HeartHandshake, Scale, Star } from "lucide-react";
@@ -14,7 +13,7 @@ export default function About() {
   ];
 
   return (
-    <main className="min-h-screen">
+    <main className="min-h-screen bg-[#FFFBF2] text-[#111111]">
       {/* Hero Section */}
       <HeroSection
         title="About Mina Foundation"
@@ -30,17 +29,12 @@ export default function About() {
       <section className="py-20 bg-white">
         <div className="container mx-auto px-6">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
-            <motion.div
-              initial={{ opacity: 0, x: -50 }}
-              whileInView={{ opacity: 1, x: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.8 }}
-            >
-              <h2 className="text-3xl font-bold text-green-800 mb-4">
+            <div>
+              <h2 className="text-3xl font-bold text-[#111111] mb-4">
                 Our Story
               </h2>
-              <div className="w-20 h-1 bg-green-500 mb-6"></div>
-              <p className="text-gray-700 mb-6">
+              <div className="w-20 h-1 bg-[#111111] mb-6"></div>
+              <p className="text-gray-700 mb-6 font-medium">
                 Mina Foundation was established in 2021 with a vision to create
                 a supportive ecosystem for families. What started as a small
                 community initiative has grown into a comprehensive foundation
@@ -57,56 +51,44 @@ export default function About() {
                 community while staying true to our core values of compassion,
                 integrity, and excellence.
               </p>
-            </motion.div>
-            <motion.div
-              initial={{ opacity: 0, x: 50 }}
-              whileInView={{ opacity: 1, x: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.8 }}
-              className="relative"
-            >
-              <div className="relative z-10 rounded-lg overflow-hidden shadow-lg">
+            </div>
+            <div className="relative">
+              <div className="relative z-10 rounded-sm overflow-hidden border border-black/5">
                 <Image
                   src="/images/6.jpg"
                   alt="Our foundation's journey"
                   width={600}
                   height={400}
-                  className="w-full h-auto"
+                  className="w-full h-auto grayscale hover:grayscale-0 transition-all duration-500"
                 />
               </div>
-              <div className="absolute -bottom-6 -right-6 w-2/3 h-2/3 z-0 rounded-lg overflow-hidden shadow-lg">
+              <div className="absolute -bottom-6 -right-6 w-2/3 h-2/3 z-0 rounded-sm overflow-hidden border border-black/5">
                 <Image
                   src="/images/8.jpg"
                   alt="Community support"
                   width={400}
                   height={300}
-                  className="w-full h-full object-cover"
+                  className="w-full h-full object-cover grayscale hover:grayscale-0 transition-all duration-500"
                 />
               </div>
-            </motion.div>
+            </div>
           </div>
         </div>
       </section>
 
       {/* Our Values */}
-      <section className="py-20 bg-green-50">
+      <section className="py-20 bg-[#FFFBF2]">
         <div className="container mx-auto px-6">
-          <motion.div
-            initial={{ opacity: 0, y: 30 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.8 }}
-            className="text-center mb-16"
-          >
-            <h2 className="text-3xl font-bold text-green-800 mb-4">
+          <div className="text-center mb-16">
+            <h2 className="text-3xl font-bold text-[#111111] mb-4">
               Our Core Values
             </h2>
-            <div className="w-20 h-1 bg-green-500 mx-auto mb-6"></div>
+            <div className="w-20 h-1 bg-[#111111] mx-auto mb-6"></div>
             <p className="max-w-3xl mx-auto text-lg text-gray-700">
               These principles guide everything we do and every decision we make
               as an organization.
             </p>
-          </motion.div>
+          </div>
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
             {[
@@ -129,33 +111,29 @@ export default function About() {
                 image: "/images/20.jpg",
               },
             ].map((item, index) => (
-              <motion.div
+              <div
                 key={index}
-                initial={{ opacity: 0, y: 30 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ duration: 0.6, delay: index * 0.2 }}
-                className="bg-white p-8 rounded-lg border border-green-200 text-center relative overflow-hidden"
+                className="bg-white p-8 rounded-sm border border-black/5 text-center relative overflow-hidden"
               >
                 <div className="absolute inset-0 opacity-10">
                   <Image
                     src={item.image}
                     alt={`${item.value} value`}
                     fill
-                    className="object-cover"
+                    className="object-cover grayscale"
                   />
                 </div>
                 <div className="relative z-10">
                   <item.Icon
-                    className="mx-auto mb-4 text-green-600"
+                    className="mx-auto mb-4 text-[#111111]"
                     size={40}
                   />
-                  <h3 className="text-xl font-semibold text-green-700 mb-3">
+                  <h3 className="text-xl font-bold text-[#111111] mb-3">
                     {item.value}
                   </h3>
                   <p className="text-gray-600">{item.desc}</p>
                 </div>
-              </motion.div>
+              </div>
             ))}
           </div>
         </div>
@@ -164,92 +142,65 @@ export default function About() {
       {/* Team Section */}
       <section className="py-20 bg-white">
         <div className="container mx-auto px-6">
-          <motion.div
-            initial={{ opacity: 0, y: 30 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.8 }}
-            className="text-center mb-16"
-          >
-            <h2 className="text-3xl font-bold text-green-800 mb-4">Our Team</h2>
-            <div className="w-20 h-1 bg-green-500 mx-auto mb-6"></div>
+          <div className="text-center mb-16">
+            <h2 className="text-3xl font-bold text-[#111111] mb-4">Our Team</h2>
+            <div className="w-20 h-1 bg-[#111111] mx-auto mb-6"></div>
             <p className="max-w-3xl mx-auto text-lg text-gray-700">
               Meet the dedicated individuals who work tirelessly to fulfill our
               mission.
             </p>
-          </motion.div>
+          </div>
 
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
             {team.map((member, index) => (
-              <motion.div
+              <div
                 key={index}
-                initial={{ opacity: 0, scale: 0.9 }}
-                whileInView={{ opacity: 1, scale: 1 }}
-                viewport={{ once: true }}
-                transition={{ duration: 0.6, delay: index * 0.1 }}
-                className="bg-green-50 rounded-lg overflow-hidden border border-green-200"
+                className="bg-[#FFFBF2] rounded-sm overflow-hidden border border-black/5"
               >
-                <div className="aspect-square bg-green-200 flex items-center justify-center">
-                  <div className="w-24 h-24 rounded-full bg-green-600 flex items-center justify-center text-white text-3xl font-semibold">
+                <div className="aspect-square bg-gray-100 flex items-center justify-center border-b border-black/5">
+                  <div className="w-24 h-24 rounded-full bg-[#111111] flex items-center justify-center text-white text-3xl font-semibold">
                     {member.name.charAt(0)}
                     {member.name.split(" ")[1]?.charAt(0)}
                   </div>
                 </div>
                 <div className="p-6 text-center">
-                  <h3 className="font-semibold text-xl text-green-800">
+                  <h3 className="font-bold text-xl text-[#111111]">
                     {member.name}
                   </h3>
-                  <p className="text-green-600 mt-1">{member.role}</p>
+                  <p className="text-gray-600 mt-1 font-medium">{member.role}</p>
                 </div>
-              </motion.div>
+              </div>
             ))}
           </div>
         </div>
       </section>
 
       {/* Call to Action */}
-      <section className="py-16 relative text-white">
+      <section className="py-24 relative text-white">
         <div className="absolute inset-0">
           <Image
             src="/images/25.jpg"
             alt="Call to action background"
             fill
-            className="object-cover brightness-50"
+            className="object-cover brightness-50 grayscale"
           />
         </div>
         <div className="container mx-auto px-6 text-center relative z-10">
-          <motion.h2
-            initial={{ opacity: 0, y: 30 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.7 }}
-            className="text-3xl font-bold mb-4"
-          >
+          <h2 className="text-3xl md:text-5xl font-bold mb-4">
             Join Our Community
-          </motion.h2>
-          <motion.p
-            initial={{ opacity: 0, y: 30 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.7, delay: 0.2 }}
-            className="text-lg text-green-100 max-w-2xl mx-auto mb-8"
-          >
+          </h2>
+          <p className="text-lg text-white/90 max-w-2xl mx-auto mb-8 font-light">
             Be part of our mission to strengthen families and build resilient
             communities.
-          </motion.p>
-          <motion.div
-            initial={{ opacity: 0, y: 30 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.7, delay: 0.4 }}
-          >
+          </p>
+          <div>
             <a
               href="/contact"
-              className="px-8 py-4 bg-white text-green-800 hover:bg-green-100 rounded-md font-medium text-lg inline-block shadow-md hover:shadow-lg transition-all"
+              className="px-8 py-4 bg-white text-[#111111] hover:bg-gray-100 rounded-full font-bold text-lg inline-block transition-colors"
             >
               Contact Us Today
             </a>
-          </motion.div>
+          </div>
         </div>
       </section>
     </main>

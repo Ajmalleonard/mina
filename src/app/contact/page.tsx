@@ -1,6 +1,5 @@
 "use client";
 import React, { useState } from "react";
-import { motion } from "motion/react";
 import Image from "next/image";
 
 export default function ContactPage() {
@@ -41,91 +40,41 @@ export default function ContactPage() {
   };
 
   return (
-    <div className="w-full">
+    <div className="w-full bg-[#FFFBF2] text-[#111111]">
       {/* Hero Section */}
-      <motion.section
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        transition={{ duration: 0.8 }}
-        className="relative py-20"
-      >
+      <section className="relative py-24">
         <div className="absolute inset-0 z-0 overflow-hidden">
           <Image
             src="/images/4.jpg"
             alt="Contact page hero background"
             fill
-            className="object-cover brightness-[0.85]"
+            className="object-cover brightness-[0.6] grayscale"
           />
-          <motion.div
-            initial={{ opacity: 0.5 }}
-            animate={{ opacity: [0.5, 0.7, 0.5] }}
-            transition={{
-              duration: 8,
-              repeat: Infinity,
-              repeatType: "reverse",
-              ease: "easeInOut",
-            }}
-            className="absolute inset-0 bg-gradient-to-r from-green-600/40 to-green-800/50"
-          ></motion.div>
         </div>
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 text-center py-12">
-          <motion.h1
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, delay: 0.2 }}
-            className="text-4xl md:text-5xl font-bold text-white mb-6"
-          >
+          <h1 className="text-4xl md:text-5xl font-bold text-white mb-6">
             Contact Us
-          </motion.h1>
-          <motion.div
-            initial={{ scale: 0, opacity: 0 }}
-            animate={{ scale: 1, opacity: 1 }}
-            transition={{ duration: 0.6, delay: 0.4 }}
-            className="w-24 h-1 bg-green-500 mx-auto mb-8"
-          ></motion.div>
-          <motion.p
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, delay: 0.6 }}
-            className="text-xl text-white mb-8 max-w-3xl mx-auto"
-          >
+          </h1>
+          <div className="w-24 h-1 bg-white mx-auto mb-8"></div>
+          <p className="text-xl text-white/90 mb-8 max-w-3xl mx-auto">
             We&apos;d love to hear from you. Reach out with questions, feedback,
             or to learn more about our work.
-          </motion.p>
+          </p>
         </div>
-      </motion.section>
+      </section>
 
       {/* Contact Form Section */}
-      <motion.section
-        initial={{ opacity: 0, y: 30 }}
-        whileInView={{ opacity: 1, y: 0 }}
-        viewport={{ once: true }}
-        transition={{ duration: 0.8 }}
-        className="py-16 bg-white"
-      >
+      <section className="py-20 bg-white">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
             {/* Contact Information */}
-            <motion.div
-              initial={{ opacity: 0, x: -30 }}
-              whileInView={{ opacity: 1, x: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.8, delay: 0.2 }}
-              className="relative z-10"
-            >
-              <div className="absolute -z-10 top-0 left-0 w-full h-full overflow-hidden opacity-10 rounded-lg">
-                <Image
-                  src="/images/9.jpg"
-                  alt="Contact information background"
-                  fill
-                  className="object-cover"
-                />
-              </div>
+            <div className="relative z-10">
+              <div className="absolute -z-10 top-0 left-0 w-full h-full overflow-hidden opacity-5 rounded-sm bg-gray-100"></div>
 
-              <h2 className="text-2xl mx-4 md:text-3xl font-bold text-green-800 mb-6">
+              <h2 className="text-2xl mx-4 md:text-3xl font-bold text-[#111111] mb-6">
                 Get in Touch
               </h2>
-              <div className="w-20 mx-4 h-1 bg-green-500 mb-8"></div>
+              <div className="w-20 mx-4 h-1 bg-[#111111] mb-8"></div>
 
               <div className="space-y-6 px-4">
                 {[
@@ -151,18 +100,11 @@ export default function ContactPage() {
                       "Monday - Saturday: 9:00 AM - 5:00 PM, Friday : 8:00 AM - \nSaturday: Closed\nSunday: Closed",
                   },
                 ].map((item, index) => (
-                  <motion.div
-                    key={index}
-                    initial={{ opacity: 0, y: 20 }}
-                    whileInView={{ opacity: 1, y: 0 }}
-                    viewport={{ once: true }}
-                    transition={{ duration: 0.5, delay: index * 0.1 + 0.3 }}
-                    className="flex items-start"
-                  >
-                    <div className="shrink-0 w-10 h-10 bg-green-100 rounded-full flex items-center justify-center mr-4">
+                  <div key={index} className="flex items-start">
+                    <div className="shrink-0 w-10 h-10 bg-[#FFFBF2] border border-black/5 rounded-full flex items-center justify-center mr-4">
                       <svg
                         xmlns="http://www.w3.org/2000/svg"
-                        className="h-5 w-5 text-green-600"
+                        className="h-5 w-5 text-[#111111]"
                         viewBox="0 0 20 20"
                         fill="currentColor"
                       >
@@ -192,25 +134,19 @@ export default function ContactPage() {
                       </svg>
                     </div>
                     <div>
-                      <h3 className="text-lg font-semibold text-green-800 mb-1">
+                      <h3 className="text-lg font-bold text-[#111111] mb-1">
                         {item.title}
                       </h3>
-                      <p className="text-gray-700 whitespace-pre-line">
+                      <p className="text-gray-700 whitespace-pre-line font-medium">
                         {item.content}
                       </p>
                     </div>
-                  </motion.div>
+                  </div>
                 ))}
               </div>
 
-              <motion.div
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ duration: 0.8, delay: 0.8 }}
-                className="mt-10"
-              >
-                <h3 className="text-lg font-semibold text-green-800 mb-4">
+              <div className="mt-10 px-4">
+                <h3 className="text-lg font-bold text-[#111111] mb-4">
                   Follow Us
                 </h3>
                 <div className="flex space-x-4">
@@ -231,16 +167,10 @@ export default function ContactPage() {
                       path: "M8 0C5.829 0 5.556.01 4.703.048 3.85.088 3.269.222 2.76.42a3.917 3.917 0 0 0-1.417.923A3.927 3.927 0 0 0 .42 2.76C.222 3.268.087 3.85.048 4.7.01 5.555 0 5.827 0 8.001c0 2.172.01 2.444.048 3.297.04.852.174 1.433.372 1.942.205.526.478.972.923 1.417.444.445.89.719 1.416.923.51.198 1.09.333 1.942.372C5.555 15.99 5.827 16 8 16s2.444-.01 3.298-.048c.851-.04 1.434-.174 1.943-.372a3.916 3.916 0 0 0 1.416-.923c.445-.445.718-.891.923-1.417.197-.509.332-1.09.372-1.942C15.99 10.445 16 10.173 16 8s-.01-2.445-.048-3.299c-.04-.851-.175-1.433-.372-1.941a3.926 3.926 0 0 0-.923-1.417A3.911 3.911 0 0 0 13.24.42c-.51-.198-1.092-.333-1.943-.372C10.443.01 10.172 0 7.998 0h.003zm-.717 1.442h.718c2.136 0 2.389.007 3.232.046.78.035 1.204.166 1.486.275.373.145.64.319.92.599.28.28.453.546.598.92.11.281.24.705.275 1.485.039.843.047 1.096.047 3.231s-.008 2.389-.047 3.232c-.035.78-.166 1.203-.275 1.485a2.47 2.47 0 0 1-.599.919c-.28.28-.546.453-.92.598-.28.11-.704.24-1.485.276-.843.038-1.096.047-3.232.047s-2.39-.009-3.233-.047c-.78-.036-1.203-.166-1.485-.276a2.478 2.478 0 0 1-.92-.598 2.48 2.48 0 0 1-.6-.92c-.109-.281-.24-.705-.275-1.485-.038-.843-.046-1.096-.046-3.233 0-2.136.008-2.388.046-3.231.036-.78.166-1.204.276-1.486.145-.373.319-.64.599-.92.28-.28.546-.453.92-.598.282-.11.705-.24 1.485-.276.738-.034 1.024-.044 2.515-.045v.002zm4.988 1.328a.96.96 0 1 0 0 1.92.96.96 0 0 0 0-1.92zm-4.27 1.122a4.109 4.109 0 1 0 0 8.217 4.109 4.109 0 0 0 0-8.217zm0 1.441a2.667 2.667 0 1 1 0 5.334 2.667 2.667 0 0 1 0-5.334z",
                     },
                   ].map((social, index) => (
-                    <motion.a
+                    <a
                       key={index}
-                      href="#"
-                      whileHover={{ scale: 1.1, y: -5 }}
-                      transition={{
-                        type: "spring",
-                        stiffness: 400,
-                        damping: 10,
-                      }}
-                      className="w-10 h-10 bg-green-600 text-white rounded-full flex items-center justify-center hover:bg-green-700 transition-all"
+                      href={social.link || "#"}
+                      className="w-10 h-10 bg-[#111111] text-white rounded-full flex items-center justify-center hover:bg-black transition-all"
                     >
                       <svg
                         xmlns="http://www.w3.org/2000/svg"
@@ -251,43 +181,23 @@ export default function ContactPage() {
                       >
                         <path d={social.path} />
                       </svg>
-                    </motion.a>
+                    </a>
                   ))}
                 </div>
-              </motion.div>
-            </motion.div>
+              </div>
+            </div>
 
             {/* Contact Form */}
-            <motion.div
-              initial={{ opacity: 0, x: 30 }}
-              whileInView={{ opacity: 1, x: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.8, delay: 0.4 }}
-              className="bg-green-50 p-8 rounded-lg border border-green-200 relative overflow-hidden"
-            >
-              <div className="absolute -z-10 inset-0 opacity-5">
-                <Image
-                  src="/images/11.jpg"
-                  alt="Contact form background"
-                  fill
-                  className="object-cover"
-                />
-              </div>
-
+            <div className="bg-[#FFFBF2] p-8 rounded-sm border border-black/5 relative overflow-hidden">
               <div className="relative z-10">
-                <h2 className="text-2xl md:text-3xl font-bold text-green-800 mb-6">
+                <h2 className="text-2xl md:text-3xl font-bold text-[#111111] mb-6">
                   Send a Message
                 </h2>
-                <div className="w-20 h-1 bg-green-500 mb-8"></div>
+                <div className="w-20 h-1 bg-[#111111] mb-8"></div>
 
                 {/* Success Message */}
                 {isSubmitted && (
-                  <motion.div
-                    initial={{ opacity: 0, y: -20 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    exit={{ opacity: 0, y: -20 }}
-                    className="bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded mb-6 flex items-center"
-                  >
+                  <div className="bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded mb-6 flex items-center">
                     <svg
                       className="w-5 h-5 mr-2"
                       fill="currentColor"
@@ -300,7 +210,7 @@ export default function ContactPage() {
                       />
                     </svg>
                     <span>Your message has been sent successfully!</span>
-                  </motion.div>
+                  </div>
                 )}
 
                 {/* Form */}
@@ -320,7 +230,7 @@ export default function ContactPage() {
                         value={formData.name}
                         onChange={handleChange}
                         required
-                        className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-green-500 transition-all"
+                        className="w-full px-4 py-3 border border-gray-300 rounded-sm focus:outline-none focus:ring-1 focus:ring-[#111111] focus:border-[#111111] transition-all bg-white text-black"
                         placeholder="Enter your name"
                       />
                     </div>
@@ -338,7 +248,7 @@ export default function ContactPage() {
                         value={formData.email}
                         onChange={handleChange}
                         required
-                        className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-green-500 transition-all"
+                        className="w-full px-4 py-3 border border-gray-300 rounded-sm focus:outline-none focus:ring-1 focus:ring-[#111111] focus:border-[#111111] transition-all bg-white text-black"
                         placeholder="Enter your email"
                       />
                     </div>
@@ -356,7 +266,7 @@ export default function ContactPage() {
                         value={formData.subject}
                         onChange={handleChange}
                         required
-                        className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-green-500 transition-all"
+                        className="w-full px-4 py-3 border border-gray-300 rounded-sm focus:outline-none focus:ring-1 focus:ring-[#111111] focus:border-[#111111] transition-all bg-white text-black"
                         placeholder="Enter subject"
                       />
                     </div>
@@ -374,25 +284,23 @@ export default function ContactPage() {
                         onChange={handleChange}
                         required
                         rows={5}
-                        className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-green-500 transition-all resize-none"
+                        className="w-full px-4 py-3 border border-gray-300 rounded-sm focus:outline-none focus:ring-1 focus:ring-[#111111] focus:border-[#111111] transition-all resize-none bg-white text-black"
                         placeholder="Type your message here..."
                       ></textarea>
                     </div>
-                    <motion.button
-                      whileHover={{ scale: 1.02 }}
-                      whileTap={{ scale: 0.98 }}
+                    <button
                       type="submit"
-                      className="w-full bg-green-600 text-white py-3 px-6 rounded-md hover:bg-green-700 transition-all font-medium"
+                      className="w-full bg-[#111111] text-white py-4 px-6 rounded-full hover:bg-black transition-all font-bold text-lg"
                     >
                       Send Message
-                    </motion.button>
+                    </button>
                   </div>
                 </form>
               </div>
-            </motion.div>
+            </div>
           </div>
         </div>
-      </motion.section>
+      </section>
 
       {/* Map Section */}
       <section className="relative h-96">
@@ -402,20 +310,14 @@ export default function ContactPage() {
               src="/images/27.jpg"
               alt="Our location"
               fill
-              className="object-cover"
+              className="object-cover grayscale"
             />
-            <div className="absolute inset-0 bg-green-900 opacity-40"></div>
+            <div className="absolute inset-0 bg-black/40"></div>
             <div className="absolute inset-0 flex items-center justify-center">
-              <motion.div
-                initial={{ opacity: 0, scale: 0.5 }}
-                whileInView={{ opacity: 1, scale: 1 }}
-                viewport={{ once: true }}
-                transition={{ type: "spring", stiffness: 100, damping: 20 }}
-                className="bg-white p-4 rounded-full shadow-lg"
-              >
+              <div className="bg-white p-4 rounded-full shadow-lg">
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
-                  className="h-12 w-12 text-green-600"
+                  className="h-12 w-12 text-[#111111]"
                   viewBox="0 0 20 20"
                   fill="currentColor"
                 >
@@ -425,7 +327,7 @@ export default function ContactPage() {
                     clipRule="evenodd"
                   />
                 </svg>
-              </motion.div>
+              </div>
             </div>
           </div>
         </div>

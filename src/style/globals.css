@@ -1,13 +1,14 @@
 @import "tailwindcss";
 
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
-  --primary: #10b981; /* Green-500 */
-  --primary-dark: #047857; /* Green-700 */
-  --primary-light: #d1fae5; /* Green-100 */
+  --background: #FFFBF2; /* Cream/Off-white from reference */
+  --foreground: #111111; /* Sharp Black */
+  --primary: #95E18A; /* Light Bright Green from reference */
+  --primary-dark: #7ac770; /* Slightly darker version */
+  --primary-light: #e6f7e4; /* Very light green */
   --secondary: #ffffff;
-  --accent: #f59e0b; /* Amber-500 for accent elements */
+  --accent: #111111; /* Black for accent buttons/text */
+  --muted: #f4f1e8; /* Slightly darker cream for cards */
 }
 
 @theme inline {
@@ -18,15 +19,20 @@
   --color-primary-light: var(--primary-light);
   --color-secondary: var(--secondary);
   --color-accent: var(--accent);
+  --color-muted: var(--muted);
   --font-sans: var(--font-geist-sans);
   --font-mono: var(--font-geist-mono);
 }
 
 @media (prefers-color-scheme: dark) {
+  /* Keeping the same light theme for now as the reference is light, 
+     but overriding if user strictly wants dark mode. 
+     For "stable" UI, usually enforcing the specific look is better. 
+     Let's stick to the reference style (Light) even in dark mode for consistency 
+     unless user asks for a dark version of this specific design. */
   :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-    --primary-light: #065f46; /* Darker green for dark mode */
+    --background: #FFFBF2;
+    --foreground: #111111;
   }
 }
 
@@ -34,39 +40,31 @@ body {
   background: var(--background);
   color: var(--foreground);
   font-family: var(--font-sans), Arial, Helvetica, sans-serif;
+  -webkit-font-smoothing: antialiased;
 }
 
+/* Stable UI Utilities */
 .btn-primary {
-  background-color: var(--primary);
+  background-color: var(--foreground); /* Black buttons in the reference */
   color: white;
   padding: 0.75rem 1.5rem;
-  border-radius: 0.375rem;
-  font-weight: 600;
-  transition: all 0.3s ease;
+  border-radius: 9999px; /* Pill shape checks out with 'Join the Movement' */
+  font-weight: 500;
+  transition: opacity 0.2s ease;
 }
 
 .btn-primary:hover {
-  background-color: var(--primary-dark);
+  opacity: 0.8;
+}
+
+.btn-accent {
+  background-color: var(--primary); /* Green buttons */
+  color: var(--foreground);
+  padding: 0.75rem 1.5rem;
+  border-radius: 0.375rem; /* Standard rounded */
+  font-weight: 600;
 }
 
 .section-padding {
   padding: 5rem 0;
-}
-
-.animate-fade-in {
-  animation: fadeIn 1s ease-in;
-}
-
-@keyframes fadeIn {
-  from { opacity: 0; }
-  to { opacity: 1; }
-}
-
-.animate-slide-up {
-  animation: slideUp 0.8s ease-out;
-}
-
-@keyframes slideUp {
-  from { transform: translateY(50px); opacity: 0; }
-  to { transform: translateY(0); opacity: 1; }
 }
