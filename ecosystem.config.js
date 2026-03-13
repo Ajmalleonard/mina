@@ -1,28 +1,28 @@
 module.exports = {
   apps: [
     {
-      name: 'minafoundationtz.org',
-      script: 'npm',
-      args: 'start',
-      cwd: '/home/apps/sq/mina/apps/web', 
+      name: "minafoundationtz.org",
+      script: "npm",
+      args: "start",
+      cwd: "/home/apps/sq/mina/apps/web",
       instances: 1,
-      exec_mode: 'fork',
+      exec_mode: "fork",
       env: {
-        NODE_ENV: 'production',
-        PORT: 3000, 
-      }
+        NODE_ENV: "production",
+        PORT: 3002,
+      },
     },
     {
-      name: 'minafoundationtz-backend',
-      script: 'npm',
-      args: 'dist/src/main.js', 
-      cwd: '/home/apps/sq/mina/apps/api', 
+      name: "minafoundationtz-backend",
+      script: "npm",
+      args: "dist/src/main.js",
+      cwd: "/home/apps/sq/mina/apps/api",
       instances: 1,
-      exec_mode: 'fork',
+      exec_mode: "fork",
       env: {
-        NODE_ENV: 'production',
-        PORT: 3001, 
-      }
-    }
-  ]
+        NODE_ENV: "production",
+        PORT: 3003,
+      },
+    },
+  ],
 };
