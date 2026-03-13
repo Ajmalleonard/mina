@@ -1,0 +1,44 @@
+generator client {
+  provider = "prisma-client"
+  output   = "./generated"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+model Activity {
+  id           String     @id @default(uuid())
+  title        String
+  description  String
+  image        String
+  goalAmount   Float?     // Optional goal amount
+  raisedAmount Float      @default(0)
+  slug         String     @unique // e.g., 'zakat', 'water-well'
+  isActive     Boolean    @default(true)
+  isCampaign   Boolean    @default(false) // e.g., Ramadan, Zakat, Eid
+  donations    Donation[]
+  createdAt    DateTime   @default(now())
+  updatedAt    DateTime   @updatedAt
+}
+
+model Donation {
+  id            String    @id @default(uuid())
+  amount        Float
+  currency      String    @default("EUR")
+  donorEmail    String
+  donorName     String
+  donorPhone    String?
+  message       String?
+  paymentMethod String    // "stripe", "pesapal", "paypal", "bank_transfer"
+  status        String    @default("pending") // "pending", "completed", "failed"
+  isMonthly     Boolean   @default(false)
+  trackingId    String?   @unique // From payment gateway
+  
+  // Relation to Activity
+  activityId    String?
+  activity      Activity? @relation(fields: [activityId], references: [id], onDelete: SetNull)
+
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime  @updatedAt
+}
