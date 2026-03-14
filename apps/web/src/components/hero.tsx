@@ -76,7 +76,7 @@ const HeroSection: React.FC<HeroSectionProps> = ({
         </div>
 
         {/* Green Stats Section matching the image */}
-        <div className="w-full bg-[#95E18A] rounded-xl p-0 grid grid-cols-1 md:grid-cols-12 min-h-[250px] relative shadow-lg overflow-hidden">
+        <div className="w-full bg-[#95E18A] rounded-xl p-0 grid grid-cols-1 md:grid-cols-12 min-h-62.5 relative overflow-hidden">
           {/* Left: Big Stat */}
           <div className="md:col-span-5 p-10 flex flex-col justify-center border-b md:border-b-0 md:border-r border-[#111111]/10">
             <h3 className="text-6xl font-bold text-[#111111] mb-2">80,000+</h3>
