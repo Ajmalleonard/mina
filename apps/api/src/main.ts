@@ -7,15 +7,16 @@ async function bootstrap() {
   const app = await NestFactory.create(AppModule);
 
   // Security
-  app.use(helmet());
+  app.use(helmet({ crossOriginResourcePolicy: { policy: "cross-origin" } }));
   app.enableCors({
     origin: [
-      'http://localhost:3000',
-      'http://localhost:3001',
-      'https://www.minafoundation.org',
-      'https://minafoundation.org',
+      "http://localhost:3000",
+      "http://localhost:3001",
+      "https://www.minafoundation.org",
+      "https://minafoundationtz.org",
+      "https://www.minafoundationtz.org",
     ],
-    methods: ['GET', 'POST'],
+    methods: ["GET", "POST", "PUT", "DELETE", "PATCH", "OPTIONS"],
     credentials: true,
   });
 
