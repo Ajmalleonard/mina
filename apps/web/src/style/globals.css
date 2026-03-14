@@ -48,21 +48,26 @@ body {
   background-color: var(--foreground); /* Black buttons in the reference */
   color: white;
   padding: 0.75rem 1.5rem;
-  border-radius: 9999px; /* Pill shape checks out with 'Join the Movement' */
+  border-radius: 0.75rem; /* Smooth rounded corners */
   font-weight: 500;
   transition: opacity 0.2s ease;
 }
 
 .btn-primary:hover {
-  opacity: 0.8;
+  opacity: 0.9;
 }
 
 .btn-accent {
   background-color: var(--primary); /* Green buttons */
   color: var(--foreground);
   padding: 0.75rem 1.5rem;
-  border-radius: 0.375rem; /* Standard rounded */
+  border-radius: 0.75rem; /* Smooth rounded corners */
   font-weight: 600;
+  transition: opacity 0.2s ease;
+}
+
+.btn-accent:hover {
+  opacity: 0.9;
 }
 
 .section-padding {

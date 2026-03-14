@@ -1,6 +1,7 @@
 "use client";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
+import { Button } from "@/components/ui/Button";
 
 type FormData = {
   name: string;
@@ -56,16 +57,16 @@ export default function ContactForm() {
   return (
     <form
       onSubmit={handleSubmit(onSubmit)}
-      className="space-y-6 bg-white p-8 rounded-sm border border-black/5"
+      className="space-y-6 bg-white p-8 rounded-2xl shadow-xl"
     >
       {submitSuccess && (
-        <div className="bg-green-50 text-green-800 p-4 rounded-sm border border-green-200">
+        <div className="bg-green-50 text-green-800 p-4 rounded-xl border border-green-200 shadow-sm">
           Thank you! Your message has been sent successfully.
         </div>
       )}
 
       {submitError && (
-        <div className="bg-red-50 text-red-800 p-4 rounded-sm border border-red-200">
+        <div className="bg-red-50 text-red-800 p-4 rounded-xl border border-red-200 shadow-sm">
           {submitError}
         </div>
       )}
@@ -80,7 +81,7 @@ export default function ContactForm() {
         <input
           id="name"
           type="text"
-          className="w-full px-4 py-3 border border-gray-300 rounded-sm focus:outline-none focus:ring-1 focus:ring-[#111111] focus:border-[#111111] transition-all"
+          className="w-full px-4 py-3 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-[#111111]/20 focus:border-[#111111] transition-all shadow-sm"
           {...register("name", { required: "Name is required" })}
         />
         {errors.name && (
@@ -98,7 +99,7 @@ export default function ContactForm() {
         <input
           id="email"
           type="email"
-          className="w-full px-4 py-3 border border-gray-300 rounded-sm focus:outline-none focus:ring-1 focus:ring-[#111111] focus:border-[#111111] transition-all"
+          className="w-full px-4 py-3 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-[#111111]/20 focus:border-[#111111] transition-all shadow-sm"
           {...register("email", {
             required: "Email is required",
             pattern: {
@@ -122,7 +123,7 @@ export default function ContactForm() {
         <input
           id="subject"
           type="text"
-          className="w-full px-4 py-3 border border-gray-300 rounded-sm focus:outline-none focus:ring-1 focus:ring-[#111111] focus:border-[#111111] transition-all"
+          className="w-full px-4 py-3 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-[#111111]/20 focus:border-[#111111] transition-all shadow-sm"
           {...register("subject")}
         />
       </div>
@@ -137,7 +138,7 @@ export default function ContactForm() {
         <textarea
           id="message"
           rows={5}
-          className="w-full px-4 py-3 border border-gray-300 rounded-sm focus:outline-none focus:ring-1 focus:ring-[#111111] focus:border-[#111111] transition-all resize-none"
+          className="w-full px-4 py-3 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-[#111111]/20 focus:border-[#111111] transition-all resize-none shadow-sm"
           {...register("message", { required: "Message is required" })}
         ></textarea>
         {errors.message && (
@@ -145,13 +146,14 @@ export default function ContactForm() {
         )}
       </div>
 
-      <button
+      <Button
         type="submit"
         disabled={isSubmitting}
-        className="w-full px-4 py-4 bg-[#111111] text-white rounded-full hover:bg-black focus:outline-none focus:ring-2 focus:ring-black focus:ring-offset-2 disabled:opacity-50 disabled:cursor-not-allowed transition-colors font-bold text-lg"
+        size="lg"
+        className="w-full rounded-xl py-6 text-lg font-bold shadow-md hover:shadow-lg hover:scale-[1.01] transition-all"
       >
         {isSubmitting ? "Sending..." : "Send Message"}
-      </button>
+      </Button>
     </form>
   );
 }

@@ -2,9 +2,13 @@ import React, { useState, useEffect, useRef } from 'react';
 import { loadStripe } from '@stripe/stripe-js';
 import { Elements, CardElement, useStripe, useElements } from '@stripe/react-stripe-js';
 import { gsap } from 'gsap';
+import { Button } from "@/components/ui/Button";
 
 // Use a real test publishable key for development
-const stripePromise = loadStripe(process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY || 'pk_test_51OxCQXSJnCnXYVZYHVQnJgTXDTXXwQjgxRvQzBVuuBNsNwXtgSvjdkjLMnJgTXDTXXwQjgxRvQzBVuuBNsNwXtgSvjdkjLM');
+const stripePromise = loadStripe(
+  process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY ||
+    "pk_test_51OxCQXSJnCnXYVZYHVQnJgTXDTXXwQjgxRvQzBVuuBNsNwXtgSvjdkjLMnJgTXDTXXwQjgxRvQzBVuuBNsNwXtgSvjdkjLM"
+);
 
 interface PaymentFormProps {
   amount: string;
@@ -13,7 +17,12 @@ interface PaymentFormProps {
   onError: (message: string) => void;
 }
 
-const PaymentForm: React.FC<PaymentFormProps> = ({ amount, isMonthly, onSuccess, onError }) => {
+const PaymentForm: React.FC<PaymentFormProps> = ({
+  amount,
+  isMonthly,
+  onSuccess,
+  onError,
+}) => {
   const stripe = useStripe();
   const elements = useElements();
   const [isProcessing, setIsProcessing] = useState(false);
@@ -27,7 +36,7 @@ const PaymentForm: React.FC<PaymentFormProps> = ({ amount, isMonthly, onSuccess,
 
     const cardElement = elements.getElement(CardElement);
     if (!cardElement) {
-      onError('Card element not found');
+      onError("Card element not found");
       return;
     }
 
@@ -35,11 +44,11 @@ const PaymentForm: React.FC<PaymentFormProps> = ({ amount, isMonthly, onSuccess,
 
     try {
       // Create a payment intent on the server
-      const apiUrl = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:4000';
+      const apiUrl = process.env.NEXT_PUBLIC_API_URL || "http://localhost:4000";
       const response = await fetch(`${apiUrl}/payments/stripe/create-intent`, {
-        method: 'POST',
+        method: "POST",
         headers: {
-          'Content-Type': 'application/json',
+          "Content-Type": "application/json",
         },
         body: JSON.stringify({
           amount: amount,
@@ -49,36 +58,41 @@ const PaymentForm: React.FC<PaymentFormProps> = ({ amount, isMonthly, onSuccess,
 
       const data = await response.json();
       if (!response.ok) {
-        throw new Error(data.error || 'Failed to create payment intent');
+        throw new Error(data.error || "Failed to create payment intent");
       }
 
       const { clientSecret } = data;
 
       // Confirm the payment with Stripe.js
-      const { error, paymentIntent } = await stripe.confirmCardPayment(clientSecret, {
-        payment_method: {
-          card: cardElement as any,
-        },
-      });
+      const { error, paymentIntent } = await stripe.confirmCardPayment(
+        clientSecret,
+        {
+          payment_method: {
+            card: cardElement as any,
+          },
+        }
+      );
 
       if (error) {
-        throw new Error(error.message || 'Payment failed');
+        throw new Error(error.message || "Payment failed");
       }
 
-      if (paymentIntent.status === 'succeeded') {
+      if (paymentIntent.status === "succeeded") {
         onSuccess();
       } else {
         throw new Error(`Payment status: ${paymentIntent.status}`);
       }
     } catch (error) {
-      onError(error instanceof Error ? error.message : 'An unexpected error occurred');
+      onError(
+        error instanceof Error ? error.message : "An unexpected error occurred"
+      );
     } finally {
       setIsProcessing(false);
     }
   };
   return (
     <form onSubmit={handleSubmit} className="mt-6 space-y-4">
-      <div className="p-4 border border-green-200 rounded-md bg-white">
+      <div className="p-4 border border-green-200 rounded-xl bg-white shadow-sm">
         <label className="block text-sm font-medium text-green-700 mb-2">
           Card Details
         </label>
@@ -86,29 +100,34 @@ const PaymentForm: React.FC<PaymentFormProps> = ({ amount, isMonthly, onSuccess,
           options={{
             style: {
               base: {
-                fontSize: '16px',
-                color: '#32325d',
-                '::placeholder': {
-                  color: '#aab7c4',
+                fontSize: "16px",
+                color: "#32325d",
+                "::placeholder": {
+                  color: "#aab7c4",
                 },
               },
               invalid: {
-                color: '#fa755a',
-                iconColor: '#fa755a',
+                color: "#fa755a",
+                iconColor: "#fa755a",
               },
             },
           }}
-          className="p-3 border border-gray-300 rounded-md"
+          className="p-3 border border-gray-200 rounded-xl shadow-sm"
         />
       </div>
 
-      <button
+      <Button
         type="submit"
         disabled={!stripe || isProcessing}
-        className="w-full bg-green-600 hover:bg-green-700 text-white font-bold py-3 px-4 rounded-md transition-all focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500 disabled:opacity-50"
+        variant="secondary"
+        className="w-full rounded-xl py-6 font-bold shadow-md hover:shadow-lg transition-all"
       >
-        {isProcessing ? 'Processing...' : isMonthly ? 'Start Monthly Donation' : 'Donate Now'}
-      </button>
+        {isProcessing
+          ? "Processing..."
+          : isMonthly
+          ? "Start Monthly Donation"
+          : "Donate Now"}
+      </Button>
     </form>
   );
 };
@@ -170,7 +189,10 @@ const StripePayment: React.FC<StripePaymentProps> = ({ amount, isMonthly }) => {
 
   if (paymentStatus === 'success') {
     return (
-      <div ref={successRef} className="text-center p-6 bg-green-50 rounded-lg">
+      <div
+        ref={successRef}
+        className="text-center p-6 bg-green-50 rounded-xl shadow-sm"
+      >
         <svg
           xmlns="http://www.w3.org/2000/svg"
           className="h-12 w-12 mx-auto text-green-600 mb-4"
@@ -185,9 +207,12 @@ const StripePayment: React.FC<StripePaymentProps> = ({ amount, isMonthly }) => {
             d="M5 13l4 4L19 7"
           />
         </svg>
-        <h3 className="text-xl font-bold text-green-800 mb-2">Thank You for Your Donation!</h3>
+        <h3 className="text-xl font-bold text-green-800 mb-2">
+          Thank You for Your Donation!
+        </h3>
         <p className="text-gray-700">
-          Your {isMonthly ? 'monthly' : 'one-time'} donation of ${amount} has been processed successfully.
+          Your {isMonthly ? "monthly" : "one-time"} donation of ${amount} has
+          been processed successfully.
         </p>
         <p className="text-sm text-green-600 mt-4">
           A receipt has been sent to your email address.
@@ -198,18 +223,22 @@ const StripePayment: React.FC<StripePaymentProps> = ({ amount, isMonthly }) => {
 
   return (
     <Elements stripe={stripePromise}>
-      {paymentStatus === 'error' ? (
-        <div ref={errorRef} className="text-center p-6 bg-red-50 rounded-lg mb-4">
+      {paymentStatus === "error" ? (
+        <div
+          ref={errorRef}
+          className="text-center p-6 bg-red-50 rounded-xl mb-4 shadow-sm"
+        >
           <p className="text-red-700 font-medium">{errorMessage}</p>
-          <button
-            onClick={() => setPaymentStatus('idle')}
-            className="mt-4 text-green-700 hover:text-green-900 font-medium"
+          <Button
+            variant="link"
+            onClick={() => setPaymentStatus("idle")}
+            className="mt-4 text-green-700 hover:text-green-900 font-medium h-auto p-0"
           >
             Try Again
-          </button>
+          </Button>
         </div>
       ) : null}
-      
+
       <div ref={formRef}>
         <PaymentForm
           amount={amount}

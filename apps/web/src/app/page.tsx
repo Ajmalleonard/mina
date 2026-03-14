@@ -5,6 +5,7 @@ import Link from "next/link";
 import HeroSection from "@/components/hero";
 import Image from "next/image";
 import CheckoutOverlay from "@/components/CheckoutOverlay";
+import { Button } from "@/components/ui/Button";
 
 interface Activity {
     id: string;
@@ -189,19 +190,19 @@ export default function Home() {
                 {[1, 2, 3, 4, 5, 6].map((idx) => (
                   <div
                     key={idx}
-                    className="bg-white border border-[#111111] flex flex-col h-full opacity-60"
+                    className="bg-white rounded-2xl border border-black/5 flex flex-col h-full overflow-hidden"
                   >
-                    <div className="aspect-video relative overflow-hidden border-b border-[#111111] bg-gray-200"></div>
-                    <div className="p-8 flex flex-col grow">
-                      <div className="h-6 bg-gray-200 w-3/4 mb-4"></div>
-                      <div className="space-y-2 mb-8 grow">
-                        <div className="h-3 bg-gray-200 w-full"></div>
-                        <div className="h-3 bg-gray-200 w-full"></div>
-                        <div className="h-3 bg-gray-200 w-5/6"></div>
-                        <div className="h-3 bg-gray-200 w-4/6"></div>
+                    <div className="aspect-video relative overflow-hidden bg-gray-100"></div>
+                    <div className="p-6 flex flex-col grow">
+                      <div className="h-8 bg-gray-100 rounded-lg w-3/4 mb-4"></div>
+                      <div className="space-y-3 mb-8 grow">
+                        <div className="h-4 bg-gray-100 rounded w-full"></div>
+                        <div className="h-4 bg-gray-100 rounded w-full"></div>
+                        <div className="h-4 bg-gray-100 rounded w-5/6"></div>
+                        <div className="h-4 bg-gray-100 rounded w-4/6"></div>
                       </div>
-                      <div className="h-14 bg-gray-200 mb-4 border border-[#111111] w-full"></div>
-                      <div className="h-14 bg-[#111111] bg-opacity-10 border border-[#111111] w-full"></div>
+                      <div className="h-14 bg-gray-100 rounded-xl mb-4 w-full"></div>
+                      <div className="h-14 bg-gray-100 rounded-xl w-full"></div>
                     </div>
                   </div>
                 ))}
@@ -212,12 +213,12 @@ export default function Home() {
                   Unable to load activities. Please ensure the API server is
                   running.
                 </p>
-                <button
+                <Button
                   onClick={() => window.location.reload()}
-                  className="bg-[#111111] text-white px-8 py-3 text-sm font-medium hover:bg-gray-800"
+                  variant="primary"
                 >
                   Retry
-                </button>
+                </Button>
               </div>
             ) : (
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
@@ -228,9 +229,9 @@ export default function Home() {
                       idx === activities.length - 1
                         ? "bg-[#95E18A]"
                         : "bg-white"
-                    } border border-[#111111] flex flex-col group h-full`}
+                    } rounded-2xl border border-black/5 flex flex-col group h-full overflow-hidden`}
                   >
-                    <div className="aspect-video relative overflow-hidden border-b border-[#111111]">
+                    <div className="aspect-video relative overflow-hidden">
                       <Image
                         src={activity.image}
                         alt={activity.title}
@@ -238,7 +239,7 @@ export default function Home() {
                         className="object-cover"
                       />
                     </div>
-                    <div className="p-8 flex flex-col grow">
+                    <div className="p-6 flex flex-col grow">
                       <h3
                         className={`text-2xl font-bold mb-3 ${
                           idx === activities.length - 1 ? "text-[#111111]" : ""
@@ -247,7 +248,7 @@ export default function Home() {
                         {activity.title}
                       </h3>
                       <p
-                        className={`text-sm mb-8 grow leading-relaxed ${
+                        className={`text-sm mb-6 grow leading-relaxed ${
                           idx === activities.length - 1
                             ? "text-[#111111] font-medium"
                             : "text-gray-600"
@@ -257,14 +258,14 @@ export default function Home() {
                       </p>
 
                       {/* Amount Selector */}
-                      <div className="flex items-center justify-between mb-4 border border-[#111111] bg-white">
+                      <div className="flex items-center justify-between mb-4 bg-white/50 rounded-xl border border-black/5 p-1">
                         <button
                           onClick={() => updateAmount(activity.id, -5)}
-                          className="px-4 py-3 font-bold text-lg hover:bg-gray-100 border-r border-[#111111]"
+                          className="w-10 h-10 flex items-center justify-center font-bold text-lg hover:bg-black/5 rounded-lg transition-colors"
                         >
                           -
                         </button>
-                        <div className="flex items-center gap-1 font-bold">
+                        <div className="flex items-center gap-1 font-bold text-lg">
                           <span>$</span>
                           <input
                             type="number"
@@ -281,24 +282,27 @@ export default function Home() {
                         </div>
                         <button
                           onClick={() => updateAmount(activity.id, 5)}
-                          className="px-4 py-3 font-bold text-lg hover:bg-gray-100 border-l border-[#111111]"
+                          className="w-10 h-10 flex items-center justify-center font-bold text-lg hover:bg-black/5 rounded-lg transition-colors"
                         >
                           +
                         </button>
                       </div>
 
-                      <button
+                      <Button
                         onClick={() =>
                           handleConfirm(activity.id, activity.title)
                         }
-                        className={`inline-block w-full py-4 border border-[#111111] text-center font-bold text-xs uppercase tracking-widest transition-colors ${
+                        variant={
+                          idx === activities.length - 1 ? "primary" : "outline"
+                        }
+                        className={`w-full py-6 font-bold text-xs uppercase tracking-widest ${
                           idx === activities.length - 1
-                            ? "bg-[#111111] text-white hover:bg-white hover:text-[#111111]"
-                            : "bg-white text-[#111111] hover:bg-[#111111] hover:text-white"
+                            ? "bg-[#111111] text-white hover:bg-black/90 border-0"
+                            : "bg-white text-[#111111] border-black/10 hover:bg-[#111111] hover:text-white"
                         }`}
                       >
                         Confirm
-                      </button>
+                      </Button>
                     </div>
                   </div>
                 ))}

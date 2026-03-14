@@ -3,6 +3,7 @@ import React, { useState, useEffect } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { HamburgerMenu, CloseCircle } from "iconsax-reactjs";
+import { Button } from "@/components/ui/Button";
 
 const Navbar = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -48,7 +49,9 @@ const Navbar = () => {
                   alt="Mina Foundation"
                   className="object-contain"
                 />
-                <span className="font-bold text-xl tracking-tight">Mina Foundation</span>
+                <span className="font-bold text-xl tracking-tight">
+                  Mina Foundation
+                </span>
               </Link>
             </div>
 
@@ -64,12 +67,9 @@ const Navbar = () => {
                 </Link>
               ))}
               {/* Donate Button - Black Pill */}
-              <Link
-                href="/donate"
-                className="bg-[#111111] text-white px-6 py-2.5 rounded-full text-sm font-medium hover:opacity-80 transition-opacity"
-              >
+              <Button href="/donate" className="rounded-full">
                 Donate Now
-              </Link>
+              </Button>
             </div>
 
             {/* Mobile Menu Button */}
@@ -77,6 +77,7 @@ const Navbar = () => {
               <button
                 onClick={toggleMenu}
                 className="p-2 text-[#111111] focus:outline-none"
+                aria-label="Toggle menu"
               >
                 <HamburgerMenu size="32" color="#111111" variant="Bulk" />
               </button>
@@ -88,14 +89,18 @@ const Navbar = () => {
       {/* Mobile Menu */}
       {isMenuOpen && (
         <div className="fixed inset-0 z-[10000] md:hidden">
-          <div className="absolute inset-0 bg-black/20" onClick={() => setIsMenuOpen(false)}></div>
+          <div
+            className="absolute inset-0 bg-black/20"
+            onClick={() => setIsMenuOpen(false)}
+          ></div>
           <div className="absolute top-0 right-0 w-full max-w-sm h-full bg-[#FFFBF2] border-l border-black/5 overflow-y-auto">
             <div className="p-6">
               <div className="flex justify-between items-center mb-8">
-                 <span className="font-bold text-xl">Menu</span>
+                <span className="font-bold text-xl">Menu</span>
                 <button
                   onClick={toggleMenu}
                   className="p-2 text-[#111111]"
+                  aria-label="Close menu"
                 >
                   <CloseCircle size="32" color="#111111" variant="Bulk" />
                 </button>
