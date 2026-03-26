@@ -7,38 +7,184 @@ datasource db {
   provider = "postgresql"
 }
 
+model User {
+  id        String   @id @default(uuid())
+  email     String   @unique
+  password  String
+  firstName String?
+  lastName  String?
+  phone     String?
+  role      Role     @default(USER)
+  mfaEnabled Boolean @default(false)
+  mfaSecret  String?
+  lastLoginAt DateTime?
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  orders Order[]
+  cart   Cart?
+  createdPromotions Promotion[] @relation("PromotionCreator")
+  updatedPromotions Promotion[] @relation("PromotionUpdater")
+}
+
+enum Role {
+  USER
+  ADMIN
+}
+
+model Cart {
+  id        String     @id @default(uuid())
+  userId    String     @unique
+  user      User       @relation(fields: [userId], references: [id])
+  items     CartItem[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model CartItem {
+  id         String   @id @default(uuid())
+  cartId     String
+  cart       Cart     @relation(fields: [cartId], references: [id], onDelete: Cascade)
+  activityId String
+  activity   Activity @relation(fields: [activityId], references: [id])
+
+  quantity Int   @default(1)
+  amount   Float // Amount per item
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model Order {
+  id          String      @id @default(uuid())
+  orderNumber String      @unique @default(cuid())
+  userId      String?
+  user        User?       @relation(fields: [userId], references: [id])
+
+  totalAmount   Float
+  currency      String      @default("EUR")
+  status        OrderStatus @default(PENDING)
+  paymentMethod String // stripe, paypal, etc.
+  paymentId     String? // External payment ID
+
+  donorEmail     String
+  donorName      String
+  donorPhone     String?
+  billingAddress Json?
+
+  items Donation[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+enum OrderStatus {
+  PENDING
+  COMPLETED
+  FAILED
+  CANCELLED
+  REFUNDED
+}
+
 model Activity {
-  id           String     @id @default(uuid())
+  id           String       @id @default(uuid())
   title        String
   description  String
   image        String
-  goalAmount   Float?     // Optional goal amount
-  raisedAmount Float      @default(0)
-  slug         String     @unique // e.g., 'zakat', 'water-well'
-  isActive     Boolean    @default(true)
-  isCampaign   Boolean    @default(false) // e.g., Ramadan, Zakat, Eid
-  donations    Donation[]
-  createdAt    DateTime   @default(now())
-  updatedAt    DateTime   @updatedAt
+  goalAmount   Float? // Optional goal amount
+  raisedAmount Float        @default(0)
+  slug         String           @unique // e.g., 'zakat', 'water-well'
+  isActive     Boolean          @default(true)
+  category     ActivityCategory @default(GENERAL_HELPS)
+  priority     Int              @default(0)
+  type         ActivityType     @default(DONATION)
+  price        Float? // Fixed price if applicable
+
+  donations Donation[]
+  cartItems CartItem[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+enum ActivityType {
+  DONATION
+  FIXED_PRICE
+}
+
+enum ActivityCategory {
+  PROMOTIONS
+  EMERGENCY_AID
+  RAMADAN_CAMPAIGN
+  NAFL_OFFERING
+  MINA_MEAL
+  ORPHAN
+  WE_ARE_TOGETHER_WITH_OUR_ORPHANS
+  WATER_WELL_PROJECT
+  ZAKAT_AND_SADAKA
+  EDUCATION_AID
+  HEALTH
+  TANZANIA_AIDS
+  INCOME_SUPPORT
+  GENERAL_HELPS
+  CONSTRUCTION_PROJECTS
+}
+
+model Promotion {
+  id          String          @id @default(uuid())
+  title       String
+  slug        String          @unique
+  summary     String
+  description String?
+  imageUrl    String?
+  ctaLabel    String?
+  ctaHref     String?
+  status      PromotionStatus @default(DRAFT)
+  featured    Boolean         @default(false)
+  sortOrder   Int             @default(0)
+  startsAt    DateTime?
+  endsAt      DateTime?
+  createdById String?
+  createdBy   User?           @relation("PromotionCreator", fields: [createdById], references: [id], onDelete: SetNull)
+  updatedById String?
+  updatedBy   User?           @relation("PromotionUpdater", fields: [updatedById], references: [id], onDelete: SetNull)
+  createdAt   DateTime        @default(now())
+  updatedAt   DateTime        @updatedAt
+
+  @@index([status, sortOrder, createdAt])
+}
+
+enum PromotionStatus {
+  DRAFT
+  SCHEDULED
+  LIVE
+  ARCHIVED
 }
 
 model Donation {
-  id            String    @id @default(uuid())
+  id            String  @id @default(uuid())
   amount        Float
-  currency      String    @default("EUR")
-  donorEmail    String
-  donorName     String
+  currency      String  @default("EUR")
+  
+  // Legacy fields made optional
+  donorEmail    String?
+  donorName     String?
   donorPhone    String?
   message       String?
-  paymentMethod String    // "stripe", "pesapal", "paypal", "bank_transfer"
-  status        String    @default("pending") // "pending", "completed", "failed"
-  isMonthly     Boolean   @default(false)
-  trackingId    String?   @unique // From payment gateway
-  
-  // Relation to Activity
-  activityId    String?
-  activity      Activity? @relation(fields: [activityId], references: [id], onDelete: SetNull)
+  paymentMethod String? // "stripe", "pesapal", "paypal", "bank_transfer"
+  status        String? @default("pending") // "pending", "completed", "failed"
+  isMonthly     Boolean @default(false)
+  trackingId    String? @unique // From payment gateway
 
-  createdAt     DateTime  @default(now())
-  updatedAt     DateTime  @updatedAt
+  // New relation to Order
+  orderId String?
+  order   Order?  @relation(fields: [orderId], references: [id])
+
+  // Relation to Activity
+  activityId String?
+  activity   Activity? @relation(fields: [activityId], references: [id], onDelete: SetNull)
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 }

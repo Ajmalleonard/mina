@@ -9,7 +9,59 @@
 * 🟢 You can import this file directly.
 */
 
+export const Role = {
+  USER: 'USER',
+  ADMIN: 'ADMIN'
+} as const
+
+export type Role = (typeof Role)[keyof typeof Role]
 
 
-// This file is empty because there are no enums in the schema.
-export {}
+export const OrderStatus = {
+  PENDING: 'PENDING',
+  COMPLETED: 'COMPLETED',
+  FAILED: 'FAILED',
+  CANCELLED: 'CANCELLED',
+  REFUNDED: 'REFUNDED'
+} as const
+
+export type OrderStatus = (typeof OrderStatus)[keyof typeof OrderStatus]
+
+
+export const ActivityType = {
+  DONATION: 'DONATION',
+  FIXED_PRICE: 'FIXED_PRICE'
+} as const
+
+export type ActivityType = (typeof ActivityType)[keyof typeof ActivityType]
+
+
+export const ActivityCategory = {
+  PROMOTIONS: 'PROMOTIONS',
+  EMERGENCY_AID: 'EMERGENCY_AID',
+  RAMADAN_CAMPAIGN: 'RAMADAN_CAMPAIGN',
+  NAFL_OFFERING: 'NAFL_OFFERING',
+  MINA_MEAL: 'MINA_MEAL',
+  ORPHAN: 'ORPHAN',
+  WE_ARE_TOGETHER_WITH_OUR_ORPHANS: 'WE_ARE_TOGETHER_WITH_OUR_ORPHANS',
+  WATER_WELL_PROJECT: 'WATER_WELL_PROJECT',
+  ZAKAT_AND_SADAKA: 'ZAKAT_AND_SADAKA',
+  EDUCATION_AID: 'EDUCATION_AID',
+  HEALTH: 'HEALTH',
+  TANZANIA_AIDS: 'TANZANIA_AIDS',
+  INCOME_SUPPORT: 'INCOME_SUPPORT',
+  GENERAL_HELPS: 'GENERAL_HELPS',
+  CONSTRUCTION_PROJECTS: 'CONSTRUCTION_PROJECTS'
+} as const
+
+export type ActivityCategory = (typeof ActivityCategory)[keyof typeof ActivityCategory]
+
+
+export const PromotionStatus = {
+  DRAFT: 'DRAFT',
+  SCHEDULED: 'SCHEDULED',
+  LIVE: 'LIVE',
+  ARCHIVED: 'ARCHIVED'
+} as const
+
+export type PromotionStatus = (typeof PromotionStatus)[keyof typeof PromotionStatus]

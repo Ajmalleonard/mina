@@ -21,26 +21,28 @@ export class StripeService {
    * Create a Stripe PaymentIntent.
    * @param amount Amount in dollars
    * @param isMonthly Whether this is a recurring donation
-   * @returns The client secret for the frontend to confirm payment
+   * @param metadata Additional metadata
+   * @returns The client secret and id
    */
-  async createPaymentIntent(amount: number, isMonthly?: boolean): Promise<string> {
+  async createPaymentIntent(amount: number, isMonthly?: boolean, metadata: Record<string, string> = {}): Promise<{ clientSecret: string; id: string }> {
     const amountInCents = Math.round(amount * 100);
 
-    if (amountInCents < 100) {
-      throw new Error('Minimum donation is $1');
+    if (amountInCents < 50) { // Stripe minimum is usually 50 cents
+      throw new Error('Minimum donation is $0.50');
     }
 
     this.logger.log(`Creating PaymentIntent for $${amount} (${amountInCents} cents)`);
 
     const paymentIntent = await this.stripe.paymentIntents.create({
       amount: amountInCents,
-      currency: 'usd',
+      currency: 'usd', // Should be dynamic based on order currency
       metadata: {
         isMonthly: isMonthly ? 'true' : 'false',
         source: 'mina-foundation',
+        ...metadata,
       },
     });
 
-    return paymentIntent.client_secret!;
+    return { clientSecret: paymentIntent.client_secret!, id: paymentIntent.id };
   }
 }

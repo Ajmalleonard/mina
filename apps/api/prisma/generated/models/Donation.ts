@@ -46,6 +46,7 @@ export type DonationMinAggregateOutputType = {
   status: string | null
   isMonthly: boolean | null
   trackingId: string | null
+  orderId: string | null
   activityId: string | null
   createdAt: Date | null
   updatedAt: Date | null
@@ -63,6 +64,7 @@ export type DonationMaxAggregateOutputType = {
   status: string | null
   isMonthly: boolean | null
   trackingId: string | null
+  orderId: string | null
   activityId: string | null
   createdAt: Date | null
   updatedAt: Date | null
@@ -80,6 +82,7 @@ export type DonationCountAggregateOutputType = {
   status: number
   isMonthly: number
   trackingId: number
+  orderId: number
   activityId: number
   createdAt: number
   updatedAt: number
@@ -107,6 +110,7 @@ export type DonationMinAggregateInputType = {
   status?: true
   isMonthly?: true
   trackingId?: true
+  orderId?: true
   activityId?: true
   createdAt?: true
   updatedAt?: true
@@ -124,6 +128,7 @@ export type DonationMaxAggregateInputType = {
   status?: true
   isMonthly?: true
   trackingId?: true
+  orderId?: true
   activityId?: true
   createdAt?: true
   updatedAt?: true
@@ -141,6 +146,7 @@ export type DonationCountAggregateInputType = {
   status?: true
   isMonthly?: true
   trackingId?: true
+  orderId?: true
   activityId?: true
   createdAt?: true
   updatedAt?: true
@@ -237,14 +243,15 @@ export type DonationGroupByOutputType = {
   id: string
   amount: number
   currency: string
-  donorEmail: string
-  donorName: string
+  donorEmail: string | null
+  donorName: string | null
   donorPhone: string | null
   message: string | null
-  paymentMethod: string
-  status: string
+  paymentMethod: string | null
+  status: string | null
   isMonthly: boolean
   trackingId: string | null
+  orderId: string | null
   activityId: string | null
   createdAt: Date
   updatedAt: Date
@@ -277,17 +284,19 @@ export type DonationWhereInput = {
   id?: Prisma.StringFilter<"Donation"> | string
   amount?: Prisma.FloatFilter<"Donation"> | number
   currency?: Prisma.StringFilter<"Donation"> | string
-  donorEmail?: Prisma.StringFilter<"Donation"> | string
-  donorName?: Prisma.StringFilter<"Donation"> | string
+  donorEmail?: Prisma.StringNullableFilter<"Donation"> | string | null
+  donorName?: Prisma.StringNullableFilter<"Donation"> | string | null
   donorPhone?: Prisma.StringNullableFilter<"Donation"> | string | null
   message?: Prisma.StringNullableFilter<"Donation"> | string | null
-  paymentMethod?: Prisma.StringFilter<"Donation"> | string
-  status?: Prisma.StringFilter<"Donation"> | string
+  paymentMethod?: Prisma.StringNullableFilter<"Donation"> | string | null
+  status?: Prisma.StringNullableFilter<"Donation"> | string | null
   isMonthly?: Prisma.BoolFilter<"Donation"> | boolean
   trackingId?: Prisma.StringNullableFilter<"Donation"> | string | null
+  orderId?: Prisma.StringNullableFilter<"Donation"> | string | null
   activityId?: Prisma.StringNullableFilter<"Donation"> | string | null
   createdAt?: Prisma.DateTimeFilter<"Donation"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"Donation"> | Date | string
+  order?: Prisma.XOR<Prisma.OrderNullableScalarRelationFilter, Prisma.OrderWhereInput> | null
   activity?: Prisma.XOR<Prisma.ActivityNullableScalarRelationFilter, Prisma.ActivityWhereInput> | null
 }
 
@@ -295,17 +304,19 @@ export type DonationOrderByWithRelationInput = {
   id?: Prisma.SortOrder
   amount?: Prisma.SortOrder
   currency?: Prisma.SortOrder
-  donorEmail?: Prisma.SortOrder
-  donorName?: Prisma.SortOrder
+  donorEmail?: Prisma.SortOrderInput | Prisma.SortOrder
+  donorName?: Prisma.SortOrderInput | Prisma.SortOrder
   donorPhone?: Prisma.SortOrderInput | Prisma.SortOrder
   message?: Prisma.SortOrderInput | Prisma.SortOrder
-  paymentMethod?: Prisma.SortOrder
-  status?: Prisma.SortOrder
+  paymentMethod?: Prisma.SortOrderInput | Prisma.SortOrder
+  status?: Prisma.SortOrderInput | Prisma.SortOrder
   isMonthly?: Prisma.SortOrder
   trackingId?: Prisma.SortOrderInput | Prisma.SortOrder
+  orderId?: Prisma.SortOrderInput | Prisma.SortOrder
   activityId?: Prisma.SortOrderInput | Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
+  order?: Prisma.OrderOrderByWithRelationInput
   activity?: Prisma.ActivityOrderByWithRelationInput
 }
 
@@ -317,16 +328,18 @@ export type DonationWhereUniqueInput = Prisma.AtLeast<{
   NOT?: Prisma.DonationWhereInput | Prisma.DonationWhereInput[]
   amount?: Prisma.FloatFilter<"Donation"> | number
   currency?: Prisma.StringFilter<"Donation"> | string
-  donorEmail?: Prisma.StringFilter<"Donation"> | string
-  donorName?: Prisma.StringFilter<"Donation"> | string
+  donorEmail?: Prisma.StringNullableFilter<"Donation"> | string | null
+  donorName?: Prisma.StringNullableFilter<"Donation"> | string | null
   donorPhone?: Prisma.StringNullableFilter<"Donation"> | string | null
   message?: Prisma.StringNullableFilter<"Donation"> | string | null
-  paymentMethod?: Prisma.StringFilter<"Donation"> | string
-  status?: Prisma.StringFilter<"Donation"> | string
+  paymentMethod?: Prisma.StringNullableFilter<"Donation"> | string | null
+  status?: Prisma.StringNullableFilter<"Donation"> | string | null
   isMonthly?: Prisma.BoolFilter<"Donation"> | boolean
+  orderId?: Prisma.StringNullableFilter<"Donation"> | string | null
   activityId?: Prisma.StringNullableFilter<"Donation"> | string | null
   createdAt?: Prisma.DateTimeFilter<"Donation"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"Donation"> | Date | string
+  order?: Prisma.XOR<Prisma.OrderNullableScalarRelationFilter, Prisma.OrderWhereInput> | null
   activity?: Prisma.XOR<Prisma.ActivityNullableScalarRelationFilter, Prisma.ActivityWhereInput> | null
 }, "id" | "trackingId">
 
@@ -334,14 +347,15 @@ export type DonationOrderByWithAggregationInput = {
   id?: Prisma.SortOrder
   amount?: Prisma.SortOrder
   currency?: Prisma.SortOrder
-  donorEmail?: Prisma.SortOrder
-  donorName?: Prisma.SortOrder
+  donorEmail?: Prisma.SortOrderInput | Prisma.SortOrder
+  donorName?: Prisma.SortOrderInput | Prisma.SortOrder
   donorPhone?: Prisma.SortOrderInput | Prisma.SortOrder
   message?: Prisma.SortOrderInput | Prisma.SortOrder
-  paymentMethod?: Prisma.SortOrder
-  status?: Prisma.SortOrder
+  paymentMethod?: Prisma.SortOrderInput | Prisma.SortOrder
+  status?: Prisma.SortOrderInput | Prisma.SortOrder
   isMonthly?: Prisma.SortOrder
   trackingId?: Prisma.SortOrderInput | Prisma.SortOrder
+  orderId?: Prisma.SortOrderInput | Prisma.SortOrder
   activityId?: Prisma.SortOrderInput | Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
@@ -359,14 +373,15 @@ export type DonationScalarWhereWithAggregatesInput = {
   id?: Prisma.StringWithAggregatesFilter<"Donation"> | string
   amount?: Prisma.FloatWithAggregatesFilter<"Donation"> | number
   currency?: Prisma.StringWithAggregatesFilter<"Donation"> | string
-  donorEmail?: Prisma.StringWithAggregatesFilter<"Donation"> | string
-  donorName?: Prisma.StringWithAggregatesFilter<"Donation"> | string
+  donorEmail?: Prisma.StringNullableWithAggregatesFilter<"Donation"> | string | null
+  donorName?: Prisma.StringNullableWithAggregatesFilter<"Donation"> | string | null
   donorPhone?: Prisma.StringNullableWithAggregatesFilter<"Donation"> | string | null
   message?: Prisma.StringNullableWithAggregatesFilter<"Donation"> | string | null
-  paymentMethod?: Prisma.StringWithAggregatesFilter<"Donation"> | string
-  status?: Prisma.StringWithAggregatesFilter<"Donation"> | string
+  paymentMethod?: Prisma.StringNullableWithAggregatesFilter<"Donation"> | string | null
+  status?: Prisma.StringNullableWithAggregatesFilter<"Donation"> | string | null
   isMonthly?: Prisma.BoolWithAggregatesFilter<"Donation"> | boolean
   trackingId?: Prisma.StringNullableWithAggregatesFilter<"Donation"> | string | null
+  orderId?: Prisma.StringNullableWithAggregatesFilter<"Donation"> | string | null
   activityId?: Prisma.StringNullableWithAggregatesFilter<"Donation"> | string | null
   createdAt?: Prisma.DateTimeWithAggregatesFilter<"Donation"> | Date | string
   updatedAt?: Prisma.DateTimeWithAggregatesFilter<"Donation"> | Date | string
@@ -376,16 +391,17 @@ export type DonationCreateInput = {
   id?: string
   amount: number
   currency?: string
-  donorEmail: string
-  donorName: string
+  donorEmail?: string | null
+  donorName?: string | null
   donorPhone?: string | null
   message?: string | null
-  paymentMethod: string
-  status?: string
+  paymentMethod?: string | null
+  status?: string | null
   isMonthly?: boolean
   trackingId?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
+  order?: Prisma.OrderCreateNestedOneWithoutItemsInput
   activity?: Prisma.ActivityCreateNestedOneWithoutDonationsInput
 }
 
@@ -393,14 +409,15 @@ export type DonationUncheckedCreateInput = {
   id?: string
   amount: number
   currency?: string
-  donorEmail: string
-  donorName: string
+  donorEmail?: string | null
+  donorName?: string | null
   donorPhone?: string | null
   message?: string | null
-  paymentMethod: string
-  status?: string
+  paymentMethod?: string | null
+  status?: string | null
   isMonthly?: boolean
   trackingId?: string | null
+  orderId?: string | null
   activityId?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -410,16 +427,17 @@ export type DonationUpdateInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   amount?: Prisma.FloatFieldUpdateOperationsInput | number
   currency?: Prisma.StringFieldUpdateOperationsInput | string
-  donorEmail?: Prisma.StringFieldUpdateOperationsInput | string
-  donorName?: Prisma.StringFieldUpdateOperationsInput | string
+  donorEmail?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  donorName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   donorPhone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   message?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  paymentMethod?: Prisma.StringFieldUpdateOperationsInput | string
-  status?: Prisma.StringFieldUpdateOperationsInput | string
+  paymentMethod?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  status?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   isMonthly?: Prisma.BoolFieldUpdateOperationsInput | boolean
   trackingId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  order?: Prisma.OrderUpdateOneWithoutItemsNestedInput
   activity?: Prisma.ActivityUpdateOneWithoutDonationsNestedInput
 }
 
@@ -427,14 +445,15 @@ export type DonationUncheckedUpdateInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   amount?: Prisma.FloatFieldUpdateOperationsInput | number
   currency?: Prisma.StringFieldUpdateOperationsInput | string
-  donorEmail?: Prisma.StringFieldUpdateOperationsInput | string
-  donorName?: Prisma.StringFieldUpdateOperationsInput | string
+  donorEmail?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  donorName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   donorPhone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   message?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  paymentMethod?: Prisma.StringFieldUpdateOperationsInput | string
-  status?: Prisma.StringFieldUpdateOperationsInput | string
+  paymentMethod?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  status?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   isMonthly?: Prisma.BoolFieldUpdateOperationsInput | boolean
   trackingId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  orderId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   activityId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -444,14 +463,15 @@ export type DonationCreateManyInput = {
   id?: string
   amount: number
   currency?: string
-  donorEmail: string
-  donorName: string
+  donorEmail?: string | null
+  donorName?: string | null
   donorPhone?: string | null
   message?: string | null
-  paymentMethod: string
-  status?: string
+  paymentMethod?: string | null
+  status?: string | null
   isMonthly?: boolean
   trackingId?: string | null
+  orderId?: string | null
   activityId?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -461,12 +481,12 @@ export type DonationUpdateManyMutationInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   amount?: Prisma.FloatFieldUpdateOperationsInput | number
   currency?: Prisma.StringFieldUpdateOperationsInput | string
-  donorEmail?: Prisma.StringFieldUpdateOperationsInput | string
-  donorName?: Prisma.StringFieldUpdateOperationsInput | string
+  donorEmail?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  donorName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   donorPhone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   message?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  paymentMethod?: Prisma.StringFieldUpdateOperationsInput | string
-  status?: Prisma.StringFieldUpdateOperationsInput | string
+  paymentMethod?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  status?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   isMonthly?: Prisma.BoolFieldUpdateOperationsInput | boolean
   trackingId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -477,14 +497,15 @@ export type DonationUncheckedUpdateManyInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   amount?: Prisma.FloatFieldUpdateOperationsInput | number
   currency?: Prisma.StringFieldUpdateOperationsInput | string
-  donorEmail?: Prisma.StringFieldUpdateOperationsInput | string
-  donorName?: Prisma.StringFieldUpdateOperationsInput | string
+  donorEmail?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  donorName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   donorPhone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   message?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  paymentMethod?: Prisma.StringFieldUpdateOperationsInput | string
-  status?: Prisma.StringFieldUpdateOperationsInput | string
+  paymentMethod?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  status?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   isMonthly?: Prisma.BoolFieldUpdateOperationsInput | boolean
   trackingId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  orderId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   activityId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -512,6 +533,7 @@ export type DonationCountOrderByAggregateInput = {
   status?: Prisma.SortOrder
   isMonthly?: Prisma.SortOrder
   trackingId?: Prisma.SortOrder
+  orderId?: Prisma.SortOrder
   activityId?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
@@ -533,6 +555,7 @@ export type DonationMaxOrderByAggregateInput = {
   status?: Prisma.SortOrder
   isMonthly?: Prisma.SortOrder
   trackingId?: Prisma.SortOrder
+  orderId?: Prisma.SortOrder
   activityId?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
@@ -550,6 +573,7 @@ export type DonationMinOrderByAggregateInput = {
   status?: Prisma.SortOrder
   isMonthly?: Prisma.SortOrder
   trackingId?: Prisma.SortOrder
+  orderId?: Prisma.SortOrder
   activityId?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
@@ -557,6 +581,48 @@ export type DonationMinOrderByAggregateInput = {
 
 export type DonationSumOrderByAggregateInput = {
   amount?: Prisma.SortOrder
+}
+
+export type DonationCreateNestedManyWithoutOrderInput = {
+  create?: Prisma.XOR<Prisma.DonationCreateWithoutOrderInput, Prisma.DonationUncheckedCreateWithoutOrderInput> | Prisma.DonationCreateWithoutOrderInput[] | Prisma.DonationUncheckedCreateWithoutOrderInput[]
+  connectOrCreate?: Prisma.DonationCreateOrConnectWithoutOrderInput | Prisma.DonationCreateOrConnectWithoutOrderInput[]
+  createMany?: Prisma.DonationCreateManyOrderInputEnvelope
+  connect?: Prisma.DonationWhereUniqueInput | Prisma.DonationWhereUniqueInput[]
+}
+
+export type DonationUncheckedCreateNestedManyWithoutOrderInput = {
+  create?: Prisma.XOR<Prisma.DonationCreateWithoutOrderInput, Prisma.DonationUncheckedCreateWithoutOrderInput> | Prisma.DonationCreateWithoutOrderInput[] | Prisma.DonationUncheckedCreateWithoutOrderInput[]
+  connectOrCreate?: Prisma.DonationCreateOrConnectWithoutOrderInput | Prisma.DonationCreateOrConnectWithoutOrderInput[]
+  createMany?: Prisma.DonationCreateManyOrderInputEnvelope
+  connect?: Prisma.DonationWhereUniqueInput | Prisma.DonationWhereUniqueInput[]
+}
+
+export type DonationUpdateManyWithoutOrderNestedInput = {
+  create?: Prisma.XOR<Prisma.DonationCreateWithoutOrderInput, Prisma.DonationUncheckedCreateWithoutOrderInput> | Prisma.DonationCreateWithoutOrderInput[] | Prisma.DonationUncheckedCreateWithoutOrderInput[]
+  connectOrCreate?: Prisma.DonationCreateOrConnectWithoutOrderInput | Prisma.DonationCreateOrConnectWithoutOrderInput[]
+  upsert?: Prisma.DonationUpsertWithWhereUniqueWithoutOrderInput | Prisma.DonationUpsertWithWhereUniqueWithoutOrderInput[]
+  createMany?: Prisma.DonationCreateManyOrderInputEnvelope
+  set?: Prisma.DonationWhereUniqueInput | Prisma.DonationWhereUniqueInput[]
+  disconnect?: Prisma.DonationWhereUniqueInput | Prisma.DonationWhereUniqueInput[]
+  delete?: Prisma.DonationWhereUniqueInput | Prisma.DonationWhereUniqueInput[]
+  connect?: Prisma.DonationWhereUniqueInput | Prisma.DonationWhereUniqueInput[]
+  update?: Prisma.DonationUpdateWithWhereUniqueWithoutOrderInput | Prisma.DonationUpdateWithWhereUniqueWithoutOrderInput[]
+  updateMany?: Prisma.DonationUpdateManyWithWhereWithoutOrderInput | Prisma.DonationUpdateManyWithWhereWithoutOrderInput[]
+  deleteMany?: Prisma.DonationScalarWhereInput | Prisma.DonationScalarWhereInput[]
+}
+
+export type DonationUncheckedUpdateManyWithoutOrderNestedInput = {
+  create?: Prisma.XOR<Prisma.DonationCreateWithoutOrderInput, Prisma.DonationUncheckedCreateWithoutOrderInput> | Prisma.DonationCreateWithoutOrderInput[] | Prisma.DonationUncheckedCreateWithoutOrderInput[]
+  connectOrCreate?: Prisma.DonationCreateOrConnectWithoutOrderInput | Prisma.DonationCreateOrConnectWithoutOrderInput[]
+  upsert?: Prisma.DonationUpsertWithWhereUniqueWithoutOrderInput | Prisma.DonationUpsertWithWhereUniqueWithoutOrderInput[]
+  createMany?: Prisma.DonationCreateManyOrderInputEnvelope
+  set?: Prisma.DonationWhereUniqueInput | Prisma.DonationWhereUniqueInput[]
+  disconnect?: Prisma.DonationWhereUniqueInput | Prisma.DonationWhereUniqueInput[]
+  delete?: Prisma.DonationWhereUniqueInput | Prisma.DonationWhereUniqueInput[]
+  connect?: Prisma.DonationWhereUniqueInput | Prisma.DonationWhereUniqueInput[]
+  update?: Prisma.DonationUpdateWithWhereUniqueWithoutOrderInput | Prisma.DonationUpdateWithWhereUniqueWithoutOrderInput[]
+  updateMany?: Prisma.DonationUpdateManyWithWhereWithoutOrderInput | Prisma.DonationUpdateManyWithWhereWithoutOrderInput[]
+  deleteMany?: Prisma.DonationScalarWhereInput | Prisma.DonationScalarWhereInput[]
 }
 
 export type DonationCreateNestedManyWithoutActivityInput = {
@@ -601,38 +667,117 @@ export type DonationUncheckedUpdateManyWithoutActivityNestedInput = {
   deleteMany?: Prisma.DonationScalarWhereInput | Prisma.DonationScalarWhereInput[]
 }
 
-export type NullableStringFieldUpdateOperationsInput = {
-  set?: string | null
+export type DonationCreateWithoutOrderInput = {
+  id?: string
+  amount: number
+  currency?: string
+  donorEmail?: string | null
+  donorName?: string | null
+  donorPhone?: string | null
+  message?: string | null
+  paymentMethod?: string | null
+  status?: string | null
+  isMonthly?: boolean
+  trackingId?: string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  activity?: Prisma.ActivityCreateNestedOneWithoutDonationsInput
+}
+
+export type DonationUncheckedCreateWithoutOrderInput = {
+  id?: string
+  amount: number
+  currency?: string
+  donorEmail?: string | null
+  donorName?: string | null
+  donorPhone?: string | null
+  message?: string | null
+  paymentMethod?: string | null
+  status?: string | null
+  isMonthly?: boolean
+  trackingId?: string | null
+  activityId?: string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+}
+
+export type DonationCreateOrConnectWithoutOrderInput = {
+  where: Prisma.DonationWhereUniqueInput
+  create: Prisma.XOR<Prisma.DonationCreateWithoutOrderInput, Prisma.DonationUncheckedCreateWithoutOrderInput>
+}
+
+export type DonationCreateManyOrderInputEnvelope = {
+  data: Prisma.DonationCreateManyOrderInput | Prisma.DonationCreateManyOrderInput[]
+  skipDuplicates?: boolean
+}
+
+export type DonationUpsertWithWhereUniqueWithoutOrderInput = {
+  where: Prisma.DonationWhereUniqueInput
+  update: Prisma.XOR<Prisma.DonationUpdateWithoutOrderInput, Prisma.DonationUncheckedUpdateWithoutOrderInput>
+  create: Prisma.XOR<Prisma.DonationCreateWithoutOrderInput, Prisma.DonationUncheckedCreateWithoutOrderInput>
+}
+
+export type DonationUpdateWithWhereUniqueWithoutOrderInput = {
+  where: Prisma.DonationWhereUniqueInput
+  data: Prisma.XOR<Prisma.DonationUpdateWithoutOrderInput, Prisma.DonationUncheckedUpdateWithoutOrderInput>
+}
+
+export type DonationUpdateManyWithWhereWithoutOrderInput = {
+  where: Prisma.DonationScalarWhereInput
+  data: Prisma.XOR<Prisma.DonationUpdateManyMutationInput, Prisma.DonationUncheckedUpdateManyWithoutOrderInput>
+}
+
+export type DonationScalarWhereInput = {
+  AND?: Prisma.DonationScalarWhereInput | Prisma.DonationScalarWhereInput[]
+  OR?: Prisma.DonationScalarWhereInput[]
+  NOT?: Prisma.DonationScalarWhereInput | Prisma.DonationScalarWhereInput[]
+  id?: Prisma.StringFilter<"Donation"> | string
+  amount?: Prisma.FloatFilter<"Donation"> | number
+  currency?: Prisma.StringFilter<"Donation"> | string
+  donorEmail?: Prisma.StringNullableFilter<"Donation"> | string | null
+  donorName?: Prisma.StringNullableFilter<"Donation"> | string | null
+  donorPhone?: Prisma.StringNullableFilter<"Donation"> | string | null
+  message?: Prisma.StringNullableFilter<"Donation"> | string | null
+  paymentMethod?: Prisma.StringNullableFilter<"Donation"> | string | null
+  status?: Prisma.StringNullableFilter<"Donation"> | string | null
+  isMonthly?: Prisma.BoolFilter<"Donation"> | boolean
+  trackingId?: Prisma.StringNullableFilter<"Donation"> | string | null
+  orderId?: Prisma.StringNullableFilter<"Donation"> | string | null
+  activityId?: Prisma.StringNullableFilter<"Donation"> | string | null
+  createdAt?: Prisma.DateTimeFilter<"Donation"> | Date | string
+  updatedAt?: Prisma.DateTimeFilter<"Donation"> | Date | string
 }
 
 export type DonationCreateWithoutActivityInput = {
   id?: string
   amount: number
   currency?: string
-  donorEmail: string
-  donorName: string
+  donorEmail?: string | null
+  donorName?: string | null
   donorPhone?: string | null
   message?: string | null
-  paymentMethod: string
-  status?: string
+  paymentMethod?: string | null
+  status?: string | null
   isMonthly?: boolean
   trackingId?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
+  order?: Prisma.OrderCreateNestedOneWithoutItemsInput
 }
 
 export type DonationUncheckedCreateWithoutActivityInput = {
   id?: string
   amount: number
   currency?: string
-  donorEmail: string
-  donorName: string
+  donorEmail?: string | null
+  donorName?: string | null
   donorPhone?: string | null
   message?: string | null
-  paymentMethod: string
-  status?: string
+  paymentMethod?: string | null
+  status?: string | null
   isMonthly?: boolean
   trackingId?: string | null
+  orderId?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
 }
@@ -663,38 +808,87 @@ export type DonationUpdateManyWithWhereWithoutActivityInput = {
   data: Prisma.XOR<Prisma.DonationUpdateManyMutationInput, Prisma.DonationUncheckedUpdateManyWithoutActivityInput>
 }
 
-export type DonationScalarWhereInput = {
-  AND?: Prisma.DonationScalarWhereInput | Prisma.DonationScalarWhereInput[]
-  OR?: Prisma.DonationScalarWhereInput[]
-  NOT?: Prisma.DonationScalarWhereInput | Prisma.DonationScalarWhereInput[]
-  id?: Prisma.StringFilter<"Donation"> | string
-  amount?: Prisma.FloatFilter<"Donation"> | number
-  currency?: Prisma.StringFilter<"Donation"> | string
-  donorEmail?: Prisma.StringFilter<"Donation"> | string
-  donorName?: Prisma.StringFilter<"Donation"> | string
-  donorPhone?: Prisma.StringNullableFilter<"Donation"> | string | null
-  message?: Prisma.StringNullableFilter<"Donation"> | string | null
-  paymentMethod?: Prisma.StringFilter<"Donation"> | string
-  status?: Prisma.StringFilter<"Donation"> | string
-  isMonthly?: Prisma.BoolFilter<"Donation"> | boolean
-  trackingId?: Prisma.StringNullableFilter<"Donation"> | string | null
-  activityId?: Prisma.StringNullableFilter<"Donation"> | string | null
-  createdAt?: Prisma.DateTimeFilter<"Donation"> | Date | string
-  updatedAt?: Prisma.DateTimeFilter<"Donation"> | Date | string
+export type DonationCreateManyOrderInput = {
+  id?: string
+  amount: number
+  currency?: string
+  donorEmail?: string | null
+  donorName?: string | null
+  donorPhone?: string | null
+  message?: string | null
+  paymentMethod?: string | null
+  status?: string | null
+  isMonthly?: boolean
+  trackingId?: string | null
+  activityId?: string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+}
+
+export type DonationUpdateWithoutOrderInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  amount?: Prisma.FloatFieldUpdateOperationsInput | number
+  currency?: Prisma.StringFieldUpdateOperationsInput | string
+  donorEmail?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  donorName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  donorPhone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  message?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  paymentMethod?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  status?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  isMonthly?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  trackingId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  activity?: Prisma.ActivityUpdateOneWithoutDonationsNestedInput
+}
+
+export type DonationUncheckedUpdateWithoutOrderInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  amount?: Prisma.FloatFieldUpdateOperationsInput | number
+  currency?: Prisma.StringFieldUpdateOperationsInput | string
+  donorEmail?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  donorName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  donorPhone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  message?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  paymentMethod?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  status?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  isMonthly?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  trackingId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  activityId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+}
+
+export type DonationUncheckedUpdateManyWithoutOrderInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  amount?: Prisma.FloatFieldUpdateOperationsInput | number
+  currency?: Prisma.StringFieldUpdateOperationsInput | string
+  donorEmail?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  donorName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  donorPhone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  message?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  paymentMethod?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  status?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  isMonthly?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  trackingId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  activityId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
 export type DonationCreateManyActivityInput = {
   id?: string
   amount: number
   currency?: string
-  donorEmail: string
-  donorName: string
+  donorEmail?: string | null
+  donorName?: string | null
   donorPhone?: string | null
   message?: string | null
-  paymentMethod: string
-  status?: string
+  paymentMethod?: string | null
+  status?: string | null
   isMonthly?: boolean
   trackingId?: string | null
+  orderId?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
 }
@@ -703,30 +897,32 @@ export type DonationUpdateWithoutActivityInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   amount?: Prisma.FloatFieldUpdateOperationsInput | number
   currency?: Prisma.StringFieldUpdateOperationsInput | string
-  donorEmail?: Prisma.StringFieldUpdateOperationsInput | string
-  donorName?: Prisma.StringFieldUpdateOperationsInput | string
+  donorEmail?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  donorName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   donorPhone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   message?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  paymentMethod?: Prisma.StringFieldUpdateOperationsInput | string
-  status?: Prisma.StringFieldUpdateOperationsInput | string
+  paymentMethod?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  status?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   isMonthly?: Prisma.BoolFieldUpdateOperationsInput | boolean
   trackingId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  order?: Prisma.OrderUpdateOneWithoutItemsNestedInput
 }
 
 export type DonationUncheckedUpdateWithoutActivityInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   amount?: Prisma.FloatFieldUpdateOperationsInput | number
   currency?: Prisma.StringFieldUpdateOperationsInput | string
-  donorEmail?: Prisma.StringFieldUpdateOperationsInput | string
-  donorName?: Prisma.StringFieldUpdateOperationsInput | string
+  donorEmail?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  donorName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   donorPhone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   message?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  paymentMethod?: Prisma.StringFieldUpdateOperationsInput | string
-  status?: Prisma.StringFieldUpdateOperationsInput | string
+  paymentMethod?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  status?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   isMonthly?: Prisma.BoolFieldUpdateOperationsInput | boolean
   trackingId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  orderId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -735,14 +931,15 @@ export type DonationUncheckedUpdateManyWithoutActivityInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   amount?: Prisma.FloatFieldUpdateOperationsInput | number
   currency?: Prisma.StringFieldUpdateOperationsInput | string
-  donorEmail?: Prisma.StringFieldUpdateOperationsInput | string
-  donorName?: Prisma.StringFieldUpdateOperationsInput | string
+  donorEmail?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  donorName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   donorPhone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   message?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  paymentMethod?: Prisma.StringFieldUpdateOperationsInput | string
-  status?: Prisma.StringFieldUpdateOperationsInput | string
+  paymentMethod?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  status?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   isMonthly?: Prisma.BoolFieldUpdateOperationsInput | boolean
   trackingId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  orderId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -761,9 +958,11 @@ export type DonationSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs
   status?: boolean
   isMonthly?: boolean
   trackingId?: boolean
+  orderId?: boolean
   activityId?: boolean
   createdAt?: boolean
   updatedAt?: boolean
+  order?: boolean | Prisma.Donation$orderArgs<ExtArgs>
   activity?: boolean | Prisma.Donation$activityArgs<ExtArgs>
 }, ExtArgs["result"]["donation"]>
 
@@ -779,9 +978,11 @@ export type DonationSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Exte
   status?: boolean
   isMonthly?: boolean
   trackingId?: boolean
+  orderId?: boolean
   activityId?: boolean
   createdAt?: boolean
   updatedAt?: boolean
+  order?: boolean | Prisma.Donation$orderArgs<ExtArgs>
   activity?: boolean | Prisma.Donation$activityArgs<ExtArgs>
 }, ExtArgs["result"]["donation"]>
 
@@ -797,9 +998,11 @@ export type DonationSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Exte
   status?: boolean
   isMonthly?: boolean
   trackingId?: boolean
+  orderId?: boolean
   activityId?: boolean
   createdAt?: boolean
   updatedAt?: boolean
+  order?: boolean | Prisma.Donation$orderArgs<ExtArgs>
   activity?: boolean | Prisma.Donation$activityArgs<ExtArgs>
 }, ExtArgs["result"]["donation"]>
 
@@ -815,39 +1018,45 @@ export type DonationSelectScalar = {
   status?: boolean
   isMonthly?: boolean
   trackingId?: boolean
+  orderId?: boolean
   activityId?: boolean
   createdAt?: boolean
   updatedAt?: boolean
 }
 
-export type DonationOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "amount" | "currency" | "donorEmail" | "donorName" | "donorPhone" | "message" | "paymentMethod" | "status" | "isMonthly" | "trackingId" | "activityId" | "createdAt" | "updatedAt", ExtArgs["result"]["donation"]>
+export type DonationOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "amount" | "currency" | "donorEmail" | "donorName" | "donorPhone" | "message" | "paymentMethod" | "status" | "isMonthly" | "trackingId" | "orderId" | "activityId" | "createdAt" | "updatedAt", ExtArgs["result"]["donation"]>
 export type DonationInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  order?: boolean | Prisma.Donation$orderArgs<ExtArgs>
   activity?: boolean | Prisma.Donation$activityArgs<ExtArgs>
 }
 export type DonationIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  order?: boolean | Prisma.Donation$orderArgs<ExtArgs>
   activity?: boolean | Prisma.Donation$activityArgs<ExtArgs>
 }
 export type DonationIncludeUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  order?: boolean | Prisma.Donation$orderArgs<ExtArgs>
   activity?: boolean | Prisma.Donation$activityArgs<ExtArgs>
 }
 
 export type $DonationPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   name: "Donation"
   objects: {
+    order: Prisma.$OrderPayload<ExtArgs> | null
     activity: Prisma.$ActivityPayload<ExtArgs> | null
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: string
     amount: number
     currency: string
-    donorEmail: string
-    donorName: string
+    donorEmail: string | null
+    donorName: string | null
     donorPhone: string | null
     message: string | null
-    paymentMethod: string
-    status: string
+    paymentMethod: string | null
+    status: string | null
     isMonthly: boolean
     trackingId: string | null
+    orderId: string | null
     activityId: string | null
     createdAt: Date
     updatedAt: Date
@@ -1245,6 +1454,7 @@ readonly fields: DonationFieldRefs;
  */
 export interface Prisma__DonationClient<T, Null = never, ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
   readonly [Symbol.toStringTag]: "PrismaPromise"
+  order<T extends Prisma.Donation$orderArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Donation$orderArgs<ExtArgs>>): Prisma.Prisma__OrderClient<runtime.Types.Result.GetResult<Prisma.$OrderPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
   activity<T extends Prisma.Donation$activityArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Donation$activityArgs<ExtArgs>>): Prisma.Prisma__ActivityClient<runtime.Types.Result.GetResult<Prisma.$ActivityPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
@@ -1286,6 +1496,7 @@ export interface DonationFieldRefs {
   readonly status: Prisma.FieldRef<"Donation", 'String'>
   readonly isMonthly: Prisma.FieldRef<"Donation", 'Boolean'>
   readonly trackingId: Prisma.FieldRef<"Donation", 'String'>
+  readonly orderId: Prisma.FieldRef<"Donation", 'String'>
   readonly activityId: Prisma.FieldRef<"Donation", 'String'>
   readonly createdAt: Prisma.FieldRef<"Donation", 'DateTime'>
   readonly updatedAt: Prisma.FieldRef<"Donation", 'DateTime'>
@@ -1682,6 +1893,25 @@ export type DonationDeleteManyArgs<ExtArgs extends runtime.Types.Extensions.Inte
    * Limit how many Donations to delete.
    */
   limit?: number
+}
+
+/**
+ * Donation.order
+ */
+export type Donation$orderArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the Order
+   */
+  select?: Prisma.OrderSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the Order
+   */
+  omit?: Prisma.OrderOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.OrderInclude<ExtArgs> | null
+  where?: Prisma.OrderWhereInput
 }
 
 /**

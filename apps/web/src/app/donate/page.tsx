@@ -109,15 +109,7 @@ export default function DonatePage() {
       />
 
       {/* Hero Section with Image */}
-      <HeroSection
-        title="Support Our Mission"
-        description="Your generous donations help us provide essential support to families in need."
-        primaryButtonText="Donate Now"
-        primaryButtonLink="#payment-section"
-        secondaryButtonText="Learn More"
-        secondaryButtonLink="/about"
-        backgroundImages={heroImages}
-      />
+
 
       {/* Donation Form Section */}
       <section className="py-16 bg-[#FFFBF2]" id="payment-section">

@@ -6,12 +6,18 @@ const nextConfig = {
     imageSizes: [16, 32, 48, 64, 96, 128, 256, 384],
     remotePatterns: [
       // Add any external image sources if needed
-      // {
-      //   protocol: 'https',
-      //   hostname: 'example.com',
-      //   port: '',
-      //   pathname: '/images/**',
-      // },
+      {
+        protocol: 'https',
+        hostname: 'images.unsplash.com',
+        port: '',
+        pathname: '/**',
+      },
+      {
+        protocol: 'https',
+        hostname: 'sni-prod.s3.eu-north-1.amazonaws.com',
+        port: '',
+        pathname: '/**',
+      }
     ],
     minimumCacheTTL: 60, // 60 seconds
     dangerouslyAllowSVG: false,
@@ -21,6 +27,16 @@ const nextConfig = {
     // Remove console.log in production
     removeConsole: process.env.NODE_ENV === "production",
   },
+  // Optimize images
+  experimental: {
+    optimizeCss: true,
+  },
+  // Compression
+  compress: true,
+  // Generate ETags
+  generateEtags: true,
+  // Enable production optimizations
+  productionBrowserSourceMaps: false,
 };
 
 export default nextConfig;

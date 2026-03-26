@@ -135,7 +135,7 @@ export default function Home() {
 
           {/* Donation Type Tabs */}
           <div className="max-w-md mx-auto mb-8">
-            <div className="bg-white p-1 rounded-xl shadow-sm flex">
+            <div className="bg-white p-1 rounded-xl flex">
               {["oneTime", "monthly"].map((tab) => (
                 <motion.button
                   key={tab}

@@ -10,8 +10,14 @@ export class PaypalService {
   constructor(private configService: ConfigService) {
     this.clientId = this.configService.get<string>('PAYPAL_APP_ID') || '';
     this.clientSecret = this.configService.get<string>('PAYPAL_APP_SECRET') || '';
-    // Assuming Sandbox for now; change to prod URL when ready
-    this.baseUrl = 'https://api-m.sandbox.paypal.com';
+    const env = this.configService.get<string>('PAYPAL_ENV', 'sandbox');
+    this.baseUrl = env === 'production'
+      ? 'https://api-m.paypal.com'
+      : 'https://api-m.sandbox.paypal.com';
+
+    if (!this.clientId || !this.clientSecret) {
+      console.warn('PayPal credentials are missing — PayPal payments will fail.');
+    }
   }
 
   private async generateAccessToken(): Promise<string> {
@@ -38,8 +44,11 @@ export class PaypalService {
     }
   }
 
-  async createOrder(amount: number, currency: string = 'USD'): Promise<any> {
+  async createOrder(amount: number, currency: string = 'EUR', orderId?: string): Promise<any> {
     const accessToken = await this.generateAccessToken();
+    const frontendUrl = this.configService.get<string>('FRONTEND_URL') || 'https://minafoundationtz.org';
+    const returnUrl = `${frontendUrl}/checkout/paypal-return?orderId=${orderId || ''}`;
+    const cancelUrl = `${frontendUrl}/checkout?cancelled=true`;
 
     try {
       const response = await fetch(`${this.baseUrl}/v2/checkout/orders`, {
@@ -52,17 +61,26 @@ export class PaypalService {
           intent: 'CAPTURE',
           purchase_units: [
             {
+              reference_id: orderId || 'donation',
               amount: {
                 currency_code: currency,
                 value: amount.toFixed(2),
               },
             },
           ],
+          application_context: {
+            return_url: returnUrl,
+            cancel_url: cancelUrl,
+            brand_name: 'Mina Foundation',
+            landing_page: 'NO_PREFERENCE',
+            user_action: 'PAY_NOW',
+          },
         }),
       });
 
       if (!response.ok) {
-        throw new Error('Failed to create PayPal order');
+        const errBody = await response.text();
+        throw new Error(`Failed to create PayPal order: ${errBody}`);
       }
 
       return response.json();

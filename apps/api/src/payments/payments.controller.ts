@@ -101,6 +101,49 @@ export class PaymentsController {
     return this.paypalService.createOrder(amount, currency);
   }
 
+  @Post('paypal/capture')
+  async capturePaypalPayment(
+    @Body('paypalOrderId') paypalOrderId: string,
+    @Body('orderId') orderId: string,
+  ) {
+    this.logger.log(`Capturing PayPal order: ${paypalOrderId} for DB order: ${orderId}`);
+    
+    const captureResult = await this.paypalService.captureOrder(paypalOrderId);
+    this.logger.log(`PayPal capture result: ${JSON.stringify(captureResult)}`);
+
+    if (captureResult.status === 'COMPLETED') {
+      // Update DB order to COMPLETED
+      await this.prisma.order.update({
+        where: { id: orderId },
+        data: { status: 'COMPLETED' },
+      });
+
+      // Send confirmation email
+      const order = await this.prisma.order.findUnique({
+        where: { id: orderId },
+        include: { items: { include: { activity: true } } },
+      });
+
+      if (order?.donorEmail) {
+        this.mailService.sendDonationConfirmationEmail(
+          order.donorEmail,
+          order.donorName,
+          order.totalAmount,
+          order.currency,
+          order.items.map((item: any) => ({
+            title: item.activity?.title || 'Donation',
+            amount: item.amount,
+            quantity: 1,
+          })),
+        ).catch((err) => this.logger.error('Email error:', err));
+      }
+
+      return { success: true, status: 'COMPLETED', orderId };
+    } else {
+      return { success: false, status: captureResult.status };
+    }
+  }
+
   @Post('paypal/capture-order')
   async capturePaypalOrder(@Body('orderID') orderID: string) {
     return this.paypalService.captureOrder(orderID);
@@ -113,7 +156,7 @@ export class PaymentsController {
   @Post('stripe/create-intent')
   async createStripeIntent(@Body() dto: CreateStripeIntentDto) {
     this.logger.log(`Creating Stripe intent: $${dto.amount}`);
-    const clientSecret = await this.stripeService.createPaymentIntent(
+    const { clientSecret } = await this.stripeService.createPaymentIntent(
       dto.amount,
       dto.isMonthly,
     );

@@ -60,13 +60,13 @@ export default function ContactForm() {
       className="space-y-6 bg-white p-8 rounded-2xl shadow-xl"
     >
       {submitSuccess && (
-        <div className="bg-green-50 text-green-800 p-4 rounded-xl border border-green-200 shadow-sm">
+        <div className="bg-green-50 text-green-800 p-4 rounded-xl border border-green-200">
           Thank you! Your message has been sent successfully.
         </div>
       )}
 
       {submitError && (
-        <div className="bg-red-50 text-red-800 p-4 rounded-xl border border-red-200 shadow-sm">
+        <div className="bg-red-50 text-red-800 p-4 rounded-xl border border-red-200">
           {submitError}
         </div>
       )}
@@ -81,7 +81,7 @@ export default function ContactForm() {
         <input
           id="name"
           type="text"
-          className="w-full px-4 py-3 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-[#111111]/20 focus:border-[#111111] transition-all shadow-sm"
+          className="w-full px-4 py-3 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-[#111111]/20 focus:border-[#111111] transition-all"
           {...register("name", { required: "Name is required" })}
         />
         {errors.name && (
@@ -99,7 +99,7 @@ export default function ContactForm() {
         <input
           id="email"
           type="email"
-          className="w-full px-4 py-3 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-[#111111]/20 focus:border-[#111111] transition-all shadow-sm"
+          className="w-full px-4 py-3 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-[#111111]/20 focus:border-[#111111] transition-all"
           {...register("email", {
             required: "Email is required",
             pattern: {
@@ -123,7 +123,7 @@ export default function ContactForm() {
         <input
           id="subject"
           type="text"
-          className="w-full px-4 py-3 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-[#111111]/20 focus:border-[#111111] transition-all shadow-sm"
+          className="w-full px-4 py-3 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-[#111111]/20 focus:border-[#111111] transition-all"
           {...register("subject")}
         />
       </div>
@@ -138,7 +138,7 @@ export default function ContactForm() {
         <textarea
           id="message"
           rows={5}
-          className="w-full px-4 py-3 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-[#111111]/20 focus:border-[#111111] transition-all resize-none shadow-sm"
+          className="w-full px-4 py-3 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-[#111111]/20 focus:border-[#111111] transition-all resize-none"
           {...register("message", { required: "Message is required" })}
         ></textarea>
         {errors.message && (

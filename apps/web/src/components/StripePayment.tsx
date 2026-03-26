@@ -92,7 +92,7 @@ const PaymentForm: React.FC<PaymentFormProps> = ({
   };
   return (
     <form onSubmit={handleSubmit} className="mt-6 space-y-4">
-      <div className="p-4 border border-green-200 rounded-xl bg-white shadow-sm">
+      <div className="p-4 border border-green-200 rounded-xl bg-white">
         <label className="block text-sm font-medium text-green-700 mb-2">
           Card Details
         </label>
@@ -112,7 +112,7 @@ const PaymentForm: React.FC<PaymentFormProps> = ({
               },
             },
           }}
-          className="p-3 border border-gray-200 rounded-xl shadow-sm"
+          className="p-3 border border-gray-200 rounded-xl"
         />
       </div>
 
@@ -191,7 +191,7 @@ const StripePayment: React.FC<StripePaymentProps> = ({ amount, isMonthly }) => {
     return (
       <div
         ref={successRef}
-        className="text-center p-6 bg-green-50 rounded-xl shadow-sm"
+        className="text-center p-6 bg-green-50 rounded-xl"
       >
         <svg
           xmlns="http://www.w3.org/2000/svg"
@@ -226,7 +226,7 @@ const StripePayment: React.FC<StripePaymentProps> = ({ amount, isMonthly }) => {
       {paymentStatus === "error" ? (
         <div
           ref={errorRef}
-          className="text-center p-6 bg-red-50 rounded-xl mb-4 shadow-sm"
+          className="text-center p-6 bg-red-50 rounded-xl mb-4"
         >
           <p className="text-red-700 font-medium">{errorMessage}</p>
           <Button
