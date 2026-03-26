@@ -14,7 +14,7 @@ module.exports = {
     },
     {
       name: "minafoundationtz-backend",
-      script: "npm",
+      script: "node",
       args: "dist/src/main.js",
       cwd: "/home/apps/sq/mina/apps/api",
       instances: 1,
