@@ -11,6 +11,9 @@ type HeroSectionProps = {
   description?: string;
   primaryButtonText?: string;
   primaryButtonLink?: string;
+  secondaryButtonText?: string;
+  secondaryButtonLink?: string;
+  backgroundImages?: { src: string; alt: string }[];
 };
 
 const SLIDES = [
@@ -27,7 +30,13 @@ const SLIDES = [
 ];
 
 const HeroSection: React.FC<HeroSectionProps> = ({
+  title,
+  description,
   primaryButtonText = "Donate Now",
+  primaryButtonLink = "/donate",
+  secondaryButtonText,
+  secondaryButtonLink,
+  backgroundImages,
 }) => {
   const router = useRouter();
   const { addToCart } = useCart();
@@ -89,23 +98,28 @@ const HeroSection: React.FC<HeroSectionProps> = ({
 
   return (
     <div className="relative w-full h-[95vh] min-h-[850px] overflow-hidden bg-black flex items-center justify-center">
-      {SLIDES.map((slide, index) => {
+      {(backgroundImages || SLIDES).map((slide: any, index: number) => {
         // Merge local image with real database content if available
-        const dbActivity = activities.find(a => a.slug === slide.slug);
-        const displayTitle = dbActivity ? dbActivity.title : slide.title;
-        const displayDescription = dbActivity ? dbActivity.description : slide.description;
+        const isCustom = !!backgroundImages;
+        const dbActivity = !isCustom ? activities.find((a) => a.slug === slide.slug) : null;
+        const displayTitle = title || (dbActivity ? dbActivity.title : slide.title);
+        const displayDescription =
+          description || (dbActivity ? dbActivity.description : slide.description);
+        const displayImage = isCustom ? slide.src : slide.image;
+        const displayCategory = isCustom ? "About Us" : slide.category;
 
         return (
           <div
-            key={slide.id}
-            className={`absolute inset-0 transition-opacity duration-1000 ease-in-out ${currentSlide === index ? "opacity-100 z-10" : "opacity-0 z-0"
-              }`}
+            key={isCustom ? index : slide.id}
+            className={`absolute inset-0 transition-opacity duration-1000 ease-in-out ${
+              currentSlide === index ? "opacity-100 z-10" : "opacity-0 z-0"
+            }`}
           >
             {/* Background Image */}
             <div className="absolute inset-0">
               <Image
-                src={slide.image}
-                alt={displayTitle}
+                src={displayImage}
+                alt={isCustom ? slide.alt : displayTitle}
                 fill
                 className="object-cover"
                 priority={index === 0}
@@ -117,22 +131,43 @@ const HeroSection: React.FC<HeroSectionProps> = ({
             {/* Slide Content */}
             <div className="absolute inset-0 flex flex-col items-start justify-center text-left px-8 sm:px-16 lg:px-24 pb-48">
               <span className="text-[#95E18A] font-bold tracking-widest uppercase text-sm mb-4 drop-shadow-md">
-                {slide.category}
+                {displayCategory}
               </span>
-              <h1 className="text-2xl md:text-3xl lg:text-2xl font-extrabold text-white mb-6 drop-shadow-xl max-w-5xl leading-tight tracking-tight">
+              <h1 className="text-2xl md:text-3xl lg:text-5xl font-extrabold text-white mb-6 drop-shadow-xl max-w-5xl leading-tight tracking-tight uppercase">
                 {displayTitle}
               </h1>
               <p className="text-xl md:text-2xl text-gray-200 mb-10 max-w-3xl drop-shadow-md font-light">
                 {displayDescription}
               </p>
 
+              {(primaryButtonLink || secondaryButtonLink) && (
+                <div className="flex flex-wrap gap-4 mt-4">
+                  {primaryButtonLink && (
+                    <Link
+                      href={primaryButtonLink}
+                      className="px-8 py-4 bg-[#95E18A] text-[#111111] hover:bg-white rounded-full font-bold text-lg transition-colors inline-block"
+                    >
+                      {primaryButtonText}
+                    </Link>
+                  )}
+                  {secondaryButtonLink && secondaryButtonText && (
+                    <Link
+                      href={secondaryButtonLink}
+                      className="px-8 py-4 bg-white/10 backdrop-blur-md border border-white/20 text-white hover:bg-white hover:text-[#111111] rounded-full font-bold text-lg transition-colors inline-block"
+                    >
+                      {secondaryButtonText}
+                    </Link>
+                  )}
+                </div>
+              )}
             </div>
           </div>
         );
       })}
 
-      {/* Floating Donation Card */}
-      <div className="absolute bottom-16 left-1/2 -translate-x-1/2 z-40 w-11/12 max-w-5xl bg-[#F5A623] rounded-3xl p-6 md:p-8 shadow-2xl flex flex-col md:flex-row items-center gap-8">
+      {/* Floating Donation Card - Only show if not a custom background images hero (likely About/etc pages) */}
+      {!backgroundImages && (
+        <div className="absolute bottom-16 left-1/2 -translate-x-1/2 z-40 w-11/12 max-w-5xl bg-[#F5A623] rounded-3xl p-6 md:p-8 shadow-2xl flex flex-col md:flex-row items-center gap-8">
         {/* Left text */}
         <div className="w-full md:w-1/3 text-[#111111]">
           <h2 className="text-2xl font-bold uppercase mb-2">Make a Donation</h2>
@@ -194,6 +229,7 @@ const HeroSection: React.FC<HeroSectionProps> = ({
           </div>
         </div>
       </div>
+      )}
 
       {/* Dots Indicator */}
       <div className="absolute bottom-6 left-0 right-0 z-30 flex justify-center items-center gap-3">

@@ -20,6 +20,7 @@ interface Cart {
 
 interface CartContextType {
   cart: Cart;
+  loading: boolean;
   addToCart: (activity: any, amount: number, quantity?: number) => void;
   removeFromCart: (itemId: string) => void;
   clearCart: () => void;
@@ -106,6 +107,7 @@ export const CartProvider = ({ children }: { children: ReactNode }) => {
   return (
     <CartContext.Provider value={{ 
       cart, 
+      loading: !isInitialized,
       addToCart, 
       removeFromCart, 
       clearCart, 

@@ -29,7 +29,7 @@ const nextConfig = {
   },
   // Optimize images
   experimental: {
-    optimizeCss: true,
+    optimizeCss: false,
   },
   // Compression
   compress: true,
