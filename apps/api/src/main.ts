@@ -12,16 +12,25 @@ async function bootstrap() {
 
   // Security
   app.use(helmet({ crossOriginResourcePolicy: { policy: "cross-origin" } }));
+  
   app.enableCors({
-    origin: [
-      "http://localhost:3000",
-      "http://localhost:3001",
-      "http://localhost:3002",
-      "https://www.minafoundation.org",
-      "https://minafoundationtz.org",
-      "https://www.minafoundationtz.org",
-      ...configuredOrigins,
-    ],
+    origin: (origin, callback) => {
+      const allowedOrigins = [
+        "http://localhost:3000",
+        "http://localhost:3001",
+        "http://localhost:3002",
+        "https://www.minafoundation.org",
+        "https://minafoundationtz.org",
+        "https://www.minafoundationtz.org",
+        ...configuredOrigins,
+      ];
+      
+      if (!origin || allowedOrigins.includes(origin) || origin.endsWith(".minafoundationtz.org")) {
+        callback(null, true);
+      } else {
+        callback(new Error('Not allowed by CORS'));
+      }
+    },
     methods: ["GET", "POST", "PUT", "DELETE", "PATCH", "OPTIONS"],
     credentials: true,
   });
