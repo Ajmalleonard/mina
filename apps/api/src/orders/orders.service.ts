@@ -1,7 +1,6 @@
 import { Injectable, BadRequestException, NotFoundException } from '@nestjs/common';
 import { PrismaService } from '../prisma/prisma.service';
 import { CartService } from '../cart/cart.service';
-import { StripeService } from '../payments/stripe.service';
 import { PesapalService } from '../payments/pesapal.service';
 import { PaypalService } from '../payments/paypal.service';
 import { MailService } from '../mail/mail.service';
@@ -12,7 +11,6 @@ export class OrdersService {
   constructor(
     private prisma: PrismaService,
     private cartService: CartService,
-    private stripeService: StripeService,
     private pesapalService: PesapalService,
     private paypalService: PaypalService,
     private mailService: MailService,
@@ -60,16 +58,20 @@ export class OrdersService {
     // Process Payment
     let paymentResponse: any = {};
     
-    if (paymentMethod === 'stripe') {
-      const intent = await this.stripeService.createPaymentIntent(totalAmount, false, { orderId: order.id });
-      paymentResponse.clientSecret = intent.clientSecret;
-      
-      // Update order with payment ID
+    if (paymentMethod === 'pesapal') {
+      const pesapalOrder = await this.pesapalService.createOrder({
+        amount: totalAmount,
+        email: donorDetails.email,
+        firstName: donorDetails.name.split(' ')[0] || 'Generous',
+        lastName: donorDetails.name.split(' ').slice(1).join(' ') || 'Donor',
+        description: `Donation Order ${order.id}`,
+      });
       await this.prisma.order.update({
         where: { id: order.id },
-        data: { paymentId: intent.id },
+        data: { paymentId: pesapalOrder.order_tracking_id },
       });
-    } else if (paymentMethod === 'pesapal') {
+      paymentResponse.redirectUrl = pesapalOrder.redirect_url;
+    } else if (paymentMethod === 'paypal') {
       const pesapalOrder = await this.pesapalService.createOrder({
         amount: totalAmount,
         email: donorDetails.email,

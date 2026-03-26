@@ -1,18 +1,16 @@
 import { Controller, Post, Body, Get, Query, Req, Res, Logger, HttpException, HttpStatus } from '@nestjs/common';
 import { Request, Response } from 'express';
-import { StripeService } from './stripe.service';
 import { PesapalService } from './pesapal.service';
 import { PaypalService } from './paypal.service';
 import { PrismaService } from '../prisma/prisma.service';
 import { MailService } from '../mail/mail.service';
-import { CreateStripeIntentDto, CreatePesapalOrderDto } from './dto/payment.dto';
+import { CreatePesapalOrderDto } from './dto/payment.dto';
 
 @Controller('payments')
 export class PaymentsController {
   private readonly logger = new Logger(PaymentsController.name);
 
   constructor(
-    private readonly stripeService: StripeService,
     private readonly pesapalService: PesapalService,
     private readonly paypalService: PaypalService,
     private readonly prisma: PrismaService,
@@ -147,20 +145,6 @@ export class PaymentsController {
   @Post('paypal/capture-order')
   async capturePaypalOrder(@Body('orderID') orderID: string) {
     return this.paypalService.captureOrder(orderID);
-  }
-
-  /**
-   * POST /payments/stripe/create-intent
-   * Creates a Stripe PaymentIntent and returns the client secret.
-   */
-  @Post('stripe/create-intent')
-  async createStripeIntent(@Body() dto: CreateStripeIntentDto) {
-    this.logger.log(`Creating Stripe intent: $${dto.amount}`);
-    const { clientSecret } = await this.stripeService.createPaymentIntent(
-      dto.amount,
-      dto.isMonthly,
-    );
-    return { clientSecret };
   }
 
   /**
