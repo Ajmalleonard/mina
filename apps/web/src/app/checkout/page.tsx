@@ -264,17 +264,22 @@ function PaymentStep({
         Total:{' '}
         <span className="font-bold text-[#111111]">€{totalAmount.toFixed(2)}</span>
       </p>
-
+      <hr className='border-[#bababa] my-2 border-dashed border-[0.5px]' />
       <div className="space-y-3">
         {/* PayPal */}
         <button
           onClick={() => processPayment('paypal')}
           disabled={isLoading}
-          className="w-full flex items-center justify-between px-5 py-4 bg-[#f8f8f8] hover:bg-[#f0f0f0] transition-colors disabled:opacity-50 rounded-xl"
+          className="w-full flex items-center justify-between px-5 py-4  bg-white transition-colors disabled:opacity-50 rounded-xl"
         >
           <div className="flex items-center gap-4">
-            <div className="w-10 h-10 bg-[#003087] flex items-center justify-center rounded-lg">
-              <span className="text-white text-xs font-bold tracking-wide">PP</span>
+            <div className="flex">
+              <Image
+                src="/paypal.png"
+                alt="PayPal"
+                width={100}
+                height={100}
+              />
             </div>
             <div className="text-left">
               <p className="text-sm font-semibold text-[#111111]">PayPal</p>
@@ -290,16 +295,21 @@ function PaymentStep({
             ) : '→'}
           </span>
         </button>
-
+        <hr className='border-[#bababa] my-2 border-dashed border-[0.5px]' />
         {/* Pesapal */}
         <button
           onClick={() => processPayment('pesapal')}
           disabled={isLoading}
-          className="w-full flex items-center justify-between px-5 py-4 bg-[#f8f8f8] hover:bg-[#f0f0f0] transition-colors disabled:opacity-50 rounded-xl"
+          className="w-full flex items-center justify-between px-5 py-4 bg-white transition-colors disabled:opacity-50 rounded-xl"
         >
           <div className="flex items-center gap-4">
-            <div className="w-10 h-10 bg-[#ff6b00] flex items-center justify-center rounded-lg">
-              <span className="text-white text-xs font-bold tracking-wide">PS</span>
+            <div className="  flex items-center justify-center rounded-lg">
+              <Image
+                src="/pesapal.png"
+                alt="Pesapal"
+                width={100}
+                height={100}
+              />
             </div>
             <div className="text-left">
               <p className="text-sm font-semibold text-[#111111]">Pesapal</p>
@@ -316,7 +326,7 @@ function PaymentStep({
           </span>
         </button>
       </div>
-
+      <hr className='border-[#bababa] my-2 border-dashed border-[0.5px]' />
       <button
         type="button"
         onClick={onBack}
@@ -406,34 +416,36 @@ export default function CheckoutPage() {
   };
 
   return (
-    <div className="max-w-xl mx-auto px-4 sm:px-6 py-12 sm:py-16">
-      {step < 4 && <StepIndicator current={step} />}
+    <div className="min-h-screen bg-white">
+      <div className="max-w-xl mx-auto px-4 sm:px-6 py-12 sm:py-16">
+        {step < 4 && <StepIndicator current={step} />}
 
-      {step === 1 && <CartReview onNext={() => setStep(2)} />}
+        {step === 1 && <CartReview onNext={() => setStep(2)} />}
 
-      {step === 2 && (
-        saving ? (
-          <div className="bg-white rounded-2xl p-8 text-center">
-            <div className="w-8 h-8 border-2 border-[#111111] border-t-transparent rounded-full animate-spin mx-auto mb-4" />
-            <p className="text-sm text-[#888]">Saving your info…</p>
-          </div>
-        ) : (
-          <DonorForm onNext={handleDonorNext} onBack={() => setStep(1)} />
-        )
-      )}
+        {step === 2 && (
+          saving ? (
+            <div className="bg-white rounded-2xl p-8 text-center">
+              <div className="w-8 h-8 border-2 border-[#111111] border-t-transparent rounded-full animate-spin mx-auto mb-4" />
+              <p className="text-sm text-[#888]">Saving your info…</p>
+            </div>
+          ) : (
+            <DonorForm onNext={handleDonorNext} onBack={() => setStep(1)} />
+          )
+        )}
 
-      {step === 3 && donorDetails && (
-        <PaymentStep
-          donorDetails={donorDetails}
-          tempOrderId={tempOrderId}
-          onBack={() => setStep(2)}
-          onSuccess={() => setStep(4)}
-        />
-      )}
+        {step === 3 && donorDetails && (
+          <PaymentStep
+            donorDetails={donorDetails}
+            tempOrderId={tempOrderId}
+            onBack={() => setStep(2)}
+            onSuccess={() => setStep(4)}
+          />
+        )}
 
-      {step === 4 && donorDetails && (
-        <DoneStep name={`${donorDetails.firstName} ${donorDetails.lastName}`} />
-      )}
+        {step === 4 && donorDetails && (
+          <DoneStep name={`${donorDetails.firstName} ${donorDetails.lastName}`} />
+        )}
+      </div>
     </div>
   );
 }
