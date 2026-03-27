@@ -6,7 +6,7 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { useCart } from '@/context/CartContext';
 import { useAuth } from '@/context/AuthContext';
-import { toast } from 'react-hot-toast';
+import { toast } from 'sonner';
 import api from '@/lib/api';
 
 // ─── Types ───────────────────────────────────────────────────────────────────
@@ -229,7 +229,11 @@ function PaymentStep({
     setLoading(method);
     try {
       const { data } = await api.post('/orders/checkout', {
-        items: cart.items,
+        items: cart.items.map(item => ({
+          activityId: item.activityId,
+          amount: item.amount,
+          quantity: item.quantity,
+        })),
         paymentMethod: method,
         donorDetails: {
           name: `${donorDetails.firstName} ${donorDetails.lastName}`.trim(),
@@ -240,17 +244,24 @@ function PaymentStep({
         tempOrderId,
       });
 
-      if (data.redirectUrl) {
+      console.log('Checkout response:', data);
+
+      // Both PayPal and PesaPal MUST return a redirect URL
+      const redirectUrl = data.redirectUrl || data.payment?.url;
+      
+      if (redirectUrl) {
         clearCart();
-        window.location.href = data.redirectUrl;
-      } else if (data.order) {
-        clearCart();
-        onSuccess();
+        window.location.href = redirectUrl;
       } else {
-        throw new Error('No payment URL returned');
+        console.error('No redirect URL in response:', data);
+        throw new Error('Payment gateway did not return a redirect URL. Please try again.');
       }
     } catch (err: any) {
-      toast.error(err?.response?.data?.message || err.message || 'Payment failed. Please try again.');
+      console.error('Payment error:', err?.response?.data || err);
+      const message = err?.response?.data?.message;
+      toast.error(
+        Array.isArray(message) ? message.join(', ') : (message || err.message || 'Payment failed. Please try again.')
+      );
       setLoading(null);
     }
   };

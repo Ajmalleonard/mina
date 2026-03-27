@@ -1,4 +1,4 @@
-import { Injectable, BadRequestException, NotFoundException } from '@nestjs/common';
+import { Injectable, BadRequestException, NotFoundException, Logger } from '@nestjs/common';
 import { PrismaService } from '../prisma/prisma.service';
 import { CartService } from '../cart/cart.service';
 import { PesapalService } from '../payments/pesapal.service';
@@ -8,6 +8,8 @@ import { Prisma, Order } from '../../prisma/generated/client';
 
 @Injectable()
 export class OrdersService {
+  private readonly logger = new Logger(OrdersService.name);
+
   constructor(
     private prisma: PrismaService,
     private cartService: CartService,
@@ -58,20 +60,9 @@ export class OrdersService {
     // Process Payment
     let paymentResponse: any = {};
     
+    this.logger.log(`Processing payment method: '${paymentMethod}' for order ${order.id}`);
+    
     if (paymentMethod === 'pesapal') {
-      const pesapalOrder = await this.pesapalService.createOrder({
-        amount: totalAmount,
-        email: donorDetails.email,
-        firstName: donorDetails.name.split(' ')[0] || 'Generous',
-        lastName: donorDetails.name.split(' ').slice(1).join(' ') || 'Donor',
-        description: `Donation Order ${order.id}`,
-      });
-      await this.prisma.order.update({
-        where: { id: order.id },
-        data: { paymentId: pesapalOrder.order_tracking_id },
-      });
-      paymentResponse.redirectUrl = pesapalOrder.redirect_url;
-    } else if (paymentMethod === 'paypal') {
       const pesapalOrder = await this.pesapalService.createOrder({
         amount: totalAmount,
         email: donorDetails.email,
@@ -93,7 +84,12 @@ export class OrdersService {
       });
       paymentResponse.redirectUrl = approveLink?.href;
       paymentResponse.paypalOrderId = paypalOrder.id;
+      this.logger.log(`PayPal response - approveLink: ${approveLink?.href}, orderId: ${paypalOrder.id}`);
+    } else {
+      this.logger.warn(`Unknown payment method: '${paymentMethod}'`);
     }
+
+    this.logger.log(`Final paymentResponse: ${JSON.stringify(paymentResponse)}`);
 
     // Send confirmation email (non-blocking)
     if (donorDetails.email) {
