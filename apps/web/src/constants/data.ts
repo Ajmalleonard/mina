@@ -1,6 +1,6 @@
 export const team = [
   {
-    name: "Iddy Abdul Saleh ",
+    name: "Iddy Abdul Saleh",
     role: "General Secretary",
   },
   {
@@ -10,13 +10,9 @@ export const team = [
   {
     name: "Sumaiyah Farouk Hamad",
     role: "Treasurer",
-  },{
-    name : "Ian Rashid Msonga",
-    role:"Vice General Secretary"
-  }
+  },
+  {
+    name: "Ian Rashid Msonga",
+    role: "Vice General Secretary",
+  },
 ];
-
-
-export const programs = [{
-    name: ""
-}]

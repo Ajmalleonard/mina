@@ -1,11 +1,9 @@
 "use client";
 
 import React, { useState, useRef } from "react";
-
 import Link from "next/link";
-import HeroSection from "@/components/hero";
-import Image from "next/image";
 import PaymentModal from "@/components/PaymentModal";
+import OptimizedImage from "@/components/OptimizedImage";
 
 export default function DonatePage() {
   const [donationAmount, setDonationAmount] = useState("25");
@@ -70,11 +68,6 @@ export default function DonatePage() {
       alert("An error occurred. Please check your connection and try again.");
     }
   };
-
-  const heroImages = [
-    { src: "/images/IMG_9003 2.jpg", alt: "Supporting our community" },
-    { src: "/images/IMG_8983 2.jpg", alt: "Making a difference together" },
-  ];
 
   // Impact story images
   const impactImages = [
@@ -365,11 +358,12 @@ export default function DonatePage() {
                 className="bg-white rounded-sm overflow-hidden border border-black/5 h-full"
               >
                 <div className="relative h-48">
-                  <Image
+                  <OptimizedImage
                     src={impact.src}
                     alt={impact.title}
                     fill
                     className="object-cover"
+                    sizes="(max-width: 768px) 100vw, 33vw"
                   />
                 </div>
                 <div className="p-6">
@@ -429,11 +423,12 @@ export default function DonatePage() {
                 className="bg-[#FFFBF2] p-8 rounded-sm border border-black/5 relative overflow-hidden"
               >
                 <div className="absolute inset-0 opacity-10 grayscale">
-                  <Image
+                  <OptimizedImage
                     src={testimonial.image}
                     alt="Testimonial background"
                     fill
                     className="object-cover"
+                    sizes="(max-width: 768px) 100vw, 50vw"
                   />
                 </div>
                 <div className="relative z-10">
@@ -526,11 +521,12 @@ export default function DonatePage() {
       {/* Call to Action with Background Image */}
       <section className="relative py-24 overflow-hidden">
         <div className="absolute inset-0">
-          <Image
-            src="/images/IMG_9014 2.jpg"
+          <OptimizedImage
+            src="/images/IMG_9014_2.jpg"
             alt="Donate call to action background"
             fill
             className="object-cover brightness-50 grayscale"
+            sizes="100vw"
           />
         </div>
         <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
@@ -554,4 +550,3 @@ export default function DonatePage() {
     </div>
   );
 }
-

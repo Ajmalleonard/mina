@@ -34,9 +34,9 @@ export default function Home() {
 
   // Images for hero slider from images folder
   const heroImages = [
-    { src: "/images/IMG_2479 2.jpg", alt: "Community gathering" },
-    { src: "/images/IMG_9003 2.jpg", alt: "Community event" },
-    { src: "/images/IMG_8967 2.jpg", alt: "Foundation activities" },
+    { src: "/images/IMG_2479_2.jpg", alt: "Community gathering" },
+    { src: "/images/IMG_9003_2.jpg", alt: "Community event" },
+    { src: "/images/IMG_8967_2.jpg", alt: "Foundation activities" },
   ];
 
   // Random selection of images for gallery
@@ -515,7 +515,7 @@ export default function Home() {
       <section className="py-20 relative text-white">
         <div className="absolute inset-0">
           <Image
-            src="/images/IMG_2512 2.jpg"
+            src="/images/IMG_2512_2.jpg"
             alt="Call to action background"
             fill
             className="object-cover brightness-50"

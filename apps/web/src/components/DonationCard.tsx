@@ -1,9 +1,9 @@
 "use client";
 
 import React from "react";
-import Image from "next/image";
 import { Button } from "@/components/ui/Button";
 import { Activity as ActivityIcon } from "lucide-react";
+import OptimizedImage from "@/components/OptimizedImage";
 
 interface Activity {
   id: string;
@@ -35,11 +35,12 @@ export function DonationCard({
       {/* Image Section - Squared Aspect Ratio */}
       <div className="relative aspect-square w-full">
         {activity.image ? (
-          <Image
+          <OptimizedImage
             src={activity.image}
             alt={activity.title}
             fill
             className="object-cover"
+            sizes="(max-width: 768px) 100vw, (max-width: 1280px) 50vw, 33vw"
           />
         ) : (
           <div className="w-full h-full flex items-center justify-center bg-gray-100">

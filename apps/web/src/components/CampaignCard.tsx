@@ -1,6 +1,6 @@
 import { useState } from "react";
-import Image from "next/image";
 import { Button } from "@/components/ui/Button";
+import OptimizedImage from "@/components/OptimizedImage";
 
 export interface Activity {
   id: string;
@@ -12,6 +12,7 @@ export interface Activity {
   slug: string;
   category: string;
   price?: number;
+  isActive?: boolean;
 }
 
 interface CampaignCardProps {
@@ -34,11 +35,12 @@ export function CampaignCard({ activity, onAddToCart }: CampaignCardProps) {
     <div className="bg-[#f0f2f5] flex flex-col h-full overflow-hidden">
       <div className="aspect-4/3 relative overflow-hidden bg-gray-200 shrink-0">
         {activity.image ? (
-          <Image
+          <OptimizedImage
             src={activity.image}
             alt={activity.title}
             fill
             className="object-cover"
+            sizes="(max-width: 768px) 100vw, (max-width: 1280px) 50vw, 33vw"
           />
         ) : (
           <div className="w-full h-full flex items-center justify-center text-gray-400">

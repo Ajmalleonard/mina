@@ -2,10 +2,10 @@
 
 import React from 'react';
 import Link from 'next/link';
-import Image from 'next/image';
 import { useCart } from '@/context/CartContext';
 import { Button } from '@/components/ui/Button';
 import { Trash } from 'iconsax-reactjs';
+import OptimizedImage from '@/components/OptimizedImage';
 
 export default function CartPage() {
   const { cart, loading, removeFromCart, totalAmount, itemCount } = useCart();
@@ -43,11 +43,12 @@ export default function CartPage() {
               {cart.items.map((item) => (
                 <li key={item.id} className="p-6 flex flex-col sm:flex-row items-center gap-6">
                   <div className="relative h-24 w-24 flex-shrink-0 overflow-hidden rounded-xl bg-gray-100">
-                    <Image
-                      src={item.activity.image || '/placeholder.jpg'}
+                    <OptimizedImage
+                      src={item.activity.image || '/images/placeholder.jpg'}
                       alt={item.activity.title}
                       fill
                       className="object-cover"
+                      sizes="96px"
                     />
                   </div>
                   

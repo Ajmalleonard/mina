@@ -3,7 +3,7 @@
 import React, { useEffect, useRef, useState } from 'react';
 import maplibregl from 'maplibre-gl';
 import { impactLocations, ProjectLocation } from '../../data/impact-locations';
-import Image from 'next/image';
+import { getOptimizedImageEntry } from '@/lib/images';
 
 const ImpactMap = () => {
   const mapContainer = useRef<HTMLDivElement>(null);
@@ -27,6 +27,8 @@ const ImpactMap = () => {
 
     // Add markers
     impactLocations.forEach((location) => {
+      const locationImage = getOptimizedImageEntry(location.image);
+
       // Create a DOM element for the marker
       const el = document.createElement('div');
       el.className = 'custom-marker';
@@ -57,7 +59,7 @@ const ImpactMap = () => {
       const popupContent = `
         <div class="w-72 overflow-hidden bg-white border-none">
           <div class="relative h-40 w-full overflow-hidden">
-            <img src="${location.image}" class="object-cover w-full h-full" alt="${location.title}" />
+            <img src="${locationImage.src}" class="object-cover w-full h-full" alt="${location.title}" loading="lazy" />
             <div class="absolute top-4 left-4">
                <span class="px-3 py-1 bg-white/95 rounded-full text-[10px] font-black uppercase tracking-widest text-[#111111]">
                 ${location.status === 'completed' ? '✓ Contributed' : '○ Planned'}

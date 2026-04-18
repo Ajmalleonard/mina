@@ -64,7 +64,7 @@ export const CartProvider = ({ children }: { children: ReactNode }) => {
         (item) => item.activityId === activity.id && item.amount === amount
       );
 
-      let newItems = [...prev.items];
+      const newItems = [...prev.items];
       
       if (existingItemIndex >= 0) {
         newItems[existingItemIndex].quantity += quantity;

@@ -19,7 +19,7 @@ const nextConfig = {
         pathname: '/**',
       }
     ],
-    minimumCacheTTL: 60, // 60 seconds
+    minimumCacheTTL: 86400,
     dangerouslyAllowSVG: false,
   },
   // Configure compiler options

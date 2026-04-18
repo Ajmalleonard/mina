@@ -174,6 +174,15 @@ export class PesapalService {
     }
 
     const result = await response.json();
+
+    if (result.error) {
+      this.logger.error(`Pesapal order creation failed: ${JSON.stringify(result.error)}`);
+      throw new HttpException(
+        result.error.message || 'Pesapal gateway error',
+        HttpStatus.BAD_REQUEST,
+      );
+    }
+
     this.logger.log(`Order ${orderId} created successfully`);
 
     return {

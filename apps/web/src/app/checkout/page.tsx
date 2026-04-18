@@ -2,12 +2,12 @@
 
 import React, { useState } from 'react';
 import { useForm } from 'react-hook-form';
-import Image from 'next/image';
 import Link from 'next/link';
 import { useCart } from '@/context/CartContext';
 import { useAuth } from '@/context/AuthContext';
 import { toast } from 'sonner';
 import api from '@/lib/api';
+import OptimizedImage from '@/components/OptimizedImage';
 
 // ─── Types ───────────────────────────────────────────────────────────────────
 
@@ -79,11 +79,12 @@ function CartReview({ onNext }: { onNext: () => void }) {
         {cart.items.map((item) => (
           <div key={item.id} className="flex items-center gap-4 py-4 border-b border-[#f0f0f0]">
             <div className="relative w-14 h-14 bg-[#f5f5f5] shrink-0 overflow-hidden rounded-lg">
-              <Image
-                src={item.activity.image || '/placeholder.jpg'}
+              <OptimizedImage
+                src={item.activity.image || '/images/placeholder.jpg'}
                 alt={item.activity.title}
                 fill
                 className="object-cover"
+                sizes="56px"
               />
             </div>
             <div className="flex-1 min-w-0">
@@ -285,11 +286,12 @@ function PaymentStep({
         >
           <div className="flex items-center gap-4">
             <div className="flex">
-              <Image
+              <OptimizedImage
                 src="/paypal.png"
                 alt="PayPal"
                 width={100}
                 height={100}
+                sizes="100px"
               />
             </div>
             <div className="text-left">
@@ -315,11 +317,12 @@ function PaymentStep({
         >
           <div className="flex items-center gap-4">
             <div className="  flex items-center justify-center rounded-lg">
-              <Image
+              <OptimizedImage
                 src="/pesapal.png"
                 alt="Pesapal"
                 width={100}
                 height={100}
+                sizes="100px"
               />
             </div>
             <div className="text-left">

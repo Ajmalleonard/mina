@@ -1,6 +1,6 @@
 "use client";
 import React, { useMemo } from "react";
-import Image from "next/image";
+import OptimizedImage from "@/components/OptimizedImage";
 
 export default function GalleryPage() {
   // Gallery items with focus on varying shapes for the masonry grid
@@ -30,7 +30,7 @@ export default function GalleryPage() {
       id: 4,
       title: "Medical Camp",
       category: "Health",
-      image: "/assets/KATARAKT/JQ0G3807.JPG",
+      image: "/assets/KATARAKT/JQ0G3807.jpg",
       className: "md:col-span-1 aspect-square",
     },
     {
@@ -86,7 +86,7 @@ export default function GalleryPage() {
               key={item.id}
               className={`group relative rounded-3xl overflow-hidden bg-gray-50 transition-all duration-700 hover:shadow-2xl hover:shadow-black/5 ${item.className}`}
             >
-              <Image
+              <OptimizedImage
                 src={item.image}
                 alt={item.title}
                 fill

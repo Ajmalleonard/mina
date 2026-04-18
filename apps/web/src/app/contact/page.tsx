@@ -1,6 +1,6 @@
 "use client";
 import React, { useState } from "react";
-import Image from "next/image";
+import OptimizedImage from "@/components/OptimizedImage";
 
 export default function ContactPage() {
   const [formData, setFormData] = useState({
@@ -44,11 +44,12 @@ export default function ContactPage() {
       {/* Hero Section */}
       <section className="relative py-24">
         <div className="absolute inset-0 z-0 overflow-hidden">
-          <Image
+          <OptimizedImage
             src="/images/4.jpg"
             alt="Contact page hero background"
             fill
             className="object-cover brightness-[0.6] grayscale"
+            sizes="100vw"
           />
         </div>
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 text-center py-12">
@@ -306,11 +307,12 @@ export default function ContactPage() {
       <section className="relative h-96">
         <div className="absolute inset-0 bg-gray-200">
           <div className="relative h-full w-full overflow-hidden">
-            <Image
+            <OptimizedImage
               src="/images/27.jpg"
               alt="Our location"
               fill
               className="object-cover grayscale"
+              sizes="100vw"
             />
             <div className="absolute inset-0 bg-black/40"></div>
             <div className="absolute inset-0 flex items-center justify-center">

@@ -2,9 +2,9 @@
 
 import React from 'react';
 import Link from 'next/link';
-import Image from 'next/image';
 import { useCart } from '@/context/CartContext';
 import { CloseCircle, Trash } from 'iconsax-reactjs';
+import OptimizedImage from '@/components/OptimizedImage';
 
 export default function CartDrawer() {
   const { cart, isDrawerOpen, closeDrawer, removeFromCart, totalAmount, itemCount } = useCart();
@@ -51,11 +51,12 @@ export default function CartDrawer() {
               {cart.items.map((item) => (
                 <li key={item.id} className="flex gap-4 items-center py-4 border-b border-[#f5f5f5]">
                   <div className="relative h-14 w-14 bg-[#f5f5f5] shrink-0 overflow-hidden">
-                    <Image
-                      src={item.activity.image || '/placeholder.jpg'}
+                    <OptimizedImage
+                      src={item.activity.image || '/images/placeholder.jpg'}
                       alt={item.activity.title}
                       fill
                       className="object-cover"
+                      sizes="56px"
                     />
                   </div>
                   <div className="flex-1 min-w-0">

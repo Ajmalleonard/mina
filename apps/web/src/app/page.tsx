@@ -3,13 +3,13 @@
 import { useState, useEffect } from "react";
 import Link from "next/link";
 import HeroSection from "@/components/hero";
-import Image from "next/image";
 import CheckoutOverlay from "@/components/CheckoutOverlay";
 import { ArrowRight, Activity as ActivityIcon } from "lucide-react";
 import { useCart } from "@/context/CartContext";
 import { Button } from "@/components/ui/Button";
 import { DonationCard } from "@/components/DonationCard";
 import ImpactMapSection from "@/components/ImpactMapSection";
+import OptimizedImage from "@/components/OptimizedImage";
 
 interface Activity {
   id: string;
@@ -327,28 +327,31 @@ export default function Home() {
 
           <div className="grid grid-cols-2 gap-6">
             <div className="aspect-4/5 relative rounded-3xl overflow-hidden">
-              <Image
+              <OptimizedImage
                 src="/assets/MASJID/DJI_20250902124328_0005_D.JPG"
                 alt="Masjid Construction"
                 fill
                 className="object-cover"
+                sizes="(max-width: 768px) 100vw, 25vw"
               />
             </div>
             <div className="grid grid-rows-2 gap-6">
               <div className="relative rounded-3xl overflow-hidden">
-                <Image
+                <OptimizedImage
                   src="/assets/MASJID/IMG_4157.JPG"
                   alt="Masjid Workers"
                   fill
                   className="object-cover"
+                  sizes="(max-width: 768px) 100vw, 25vw"
                 />
               </div>
               <div className="relative rounded-3xl overflow-hidden">
-                <Image
+                <OptimizedImage
                   src="/assets/MASJID/DJI_20241221122624_0083_D.JPG"
                   alt="Masjid Drone View"
                   fill
                   className="object-cover"
+                  sizes="(max-width: 768px) 100vw, 25vw"
                 />
               </div>
             </div>
@@ -362,28 +365,31 @@ export default function Home() {
           <div className="grid grid-cols-2 gap-6 order-2 md:order-1">
             <div className="grid grid-rows-2 gap-6">
               <div className="relative rounded-3xl overflow-hidden">
-                <Image
-                  src="/assets/KATARAKT/JQ0G3807.JPG"
+                <OptimizedImage
+                  src="/assets/KATARAKT/JQ0G3807.jpg"
                   alt="Medical Exam"
                   fill
                   className="object-cover"
+                  sizes="(max-width: 768px) 100vw, 25vw"
                 />
               </div>
               <div className="relative rounded-3xl overflow-hidden">
-                <Image
+                <OptimizedImage
                   src="/assets/KATARAKT/JQ0G3753_1.JPG"
                   alt="Elderly Patient"
                   fill
                   className="object-cover"
+                  sizes="(max-width: 768px) 100vw, 25vw"
                 />
               </div>
             </div>
             <div className="aspect-4/5 relative rounded-3xl overflow-hidden">
-              <Image
+              <OptimizedImage
                 src="/assets/KATARAKT/JQ0G4907_1.JPG"
                 alt="Restored Sight"
                 fill
                 className="object-cover"
+                sizes="(max-width: 768px) 100vw, 25vw"
               />
             </div>
           </div>

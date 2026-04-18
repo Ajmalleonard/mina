@@ -4,7 +4,8 @@
   "private": true,
   "scripts": {
     "dev": "next dev --turbopack",
-    "build": "next build",
+    "images:prepare": "node scripts/generate-image-manifest.mjs",
+    "build": "node scripts/generate-image-manifest.mjs && next build",
     "start": "next start",
     "lint": "next lint"
   },

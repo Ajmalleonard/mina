@@ -3,7 +3,6 @@ import { ConfigModule } from '@nestjs/config';
 import { ThrottlerModule, ThrottlerGuard } from '@nestjs/throttler';
 import { APP_GUARD } from '@nestjs/core';
 import { PaymentsModule } from './payments/payments.module';
-import { DonationsModule } from './donations/donations.module';
 import { PrismaModule } from './prisma/prisma.module';
 import { ActivitiesModule } from './activities/activities.module';
 import { MailModule } from './mail/mail.module';
@@ -29,7 +28,6 @@ import { UploadsModule } from './uploads/uploads.module';
     PrismaModule,
     ActivitiesModule,
     PaymentsModule,
-    DonationsModule,
     MailModule,
     AuthModule,
     UsersModule,

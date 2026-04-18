@@ -3,13 +3,13 @@ import React from "react";
 import HeroSection from "@/components/hero";
 import { team } from "@/constants/data";
 import { HeartHandshake, Scale, Star } from "lucide-react";
-import Image from "next/image";
+import OptimizedImage from "@/components/OptimizedImage";
 
 export default function About() {
   // Images for hero slider from images folder
   const heroImages = [
-    { src: "/images/IMG_2525 2.jpg", alt: "Community gathering" },
-    { src: "/images/IMG_2530 2.jpg", alt: "Foundation activities" },
+    { src: "/images/IMG_2525_2.jpg", alt: "Community gathering" },
+    { src: "/images/IMG_2530_2.jpg", alt: "Foundation activities" },
   ];
 
   return (
@@ -54,21 +54,23 @@ export default function About() {
             </div>
             <div className="relative">
               <div className="relative z-10 rounded-sm overflow-hidden border border-black/5">
-                <Image
+                <OptimizedImage
                   src="/images/6.jpg"
                   alt="Our foundation's journey"
                   width={600}
                   height={400}
                   className="w-full h-auto grayscale hover:grayscale-0 transition-all duration-500"
+                  sizes="(max-width: 1024px) 100vw, 50vw"
                 />
               </div>
               <div className="absolute -bottom-6 -right-6 w-2/3 h-2/3 z-0 rounded-sm overflow-hidden border border-black/5">
-                <Image
+                <OptimizedImage
                   src="/images/8.jpg"
                   alt="Community support"
                   width={400}
                   height={300}
                   className="w-full h-full object-cover grayscale hover:grayscale-0 transition-all duration-500"
+                  sizes="(max-width: 1024px) 66vw, 33vw"
                 />
               </div>
             </div>
@@ -116,11 +118,12 @@ export default function About() {
                 className="bg-white p-8 rounded-sm border border-black/5 text-center relative overflow-hidden"
               >
                 <div className="absolute inset-0 opacity-10">
-                  <Image
+                  <OptimizedImage
                     src={item.image}
                     alt={`${item.value} value`}
                     fill
                     className="object-cover grayscale"
+                    sizes="(max-width: 768px) 100vw, 33vw"
                   />
                 </div>
                 <div className="relative z-10">
@@ -178,11 +181,12 @@ export default function About() {
       {/* Call to Action */}
       <section className="py-24 relative text-white">
         <div className="absolute inset-0">
-          <Image
+          <OptimizedImage
             src="/images/25.jpg"
             alt="Call to action background"
             fill
             className="object-cover brightness-50 grayscale"
+            sizes="100vw"
           />
         </div>
         <div className="container mx-auto px-6 text-center relative z-10">

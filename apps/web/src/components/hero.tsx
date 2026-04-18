@@ -1,10 +1,10 @@
 "use client";
 
 import React, { useState, useEffect } from "react";
-import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useCart } from "@/context/CartContext";
+import OptimizedImage from "@/components/OptimizedImage";
 
 type HeroSectionProps = {
   title?: string;
@@ -117,12 +117,13 @@ const HeroSection: React.FC<HeroSectionProps> = ({
           >
             {/* Background Image */}
             <div className="absolute inset-0">
-              <Image
+              <OptimizedImage
                 src={displayImage}
                 alt={isCustom ? slide.alt : displayTitle}
                 fill
                 className="object-cover"
                 priority={index === 0}
+                sizes="100vw"
               />
               {/* Dark overlay for text readability */}
               <div className="absolute inset-0 bg-linear-to-t from-black/90 via-black/40 to-transparent mix-blend-multiply" />

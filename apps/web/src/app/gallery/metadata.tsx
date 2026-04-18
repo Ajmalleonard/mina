@@ -10,6 +10,6 @@ export const metadata: Metadata = {
     title: "Gallery | Mina Foundation",
     description:
       "Browse photos from Mina Foundation's events, programs, and community impact initiatives.",
-    images: ["/images/gallery-og.jpg"],
+    images: ["/images/og-image.png"],
   },
 };
