@@ -91,7 +91,7 @@ export default function CampaignLandingPage({ config }: CampaignLandingPageProps
   return (
     <main className="min-h-screen bg-[#FFFBF2] text-[#111111]">
       {/* Hero Section */}
-      <section className="relative h-[70vh] min-h-[600px] flex items-center justify-center overflow-hidden">
+      <section className="relative h-[70vh] min-h-150 flex items-center justify-center overflow-hidden">
         <div className="absolute inset-0">
           <OptimizedImage
             src={config.heroImage}
@@ -101,7 +101,7 @@ export default function CampaignLandingPage({ config }: CampaignLandingPageProps
             priority
             sizes="100vw"
           />
-          <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/40 to-transparent" />
+          <div className="absolute inset-0 bg-linear-to-t from-black/80 via-black/40 to-transparent" />
         </div>
         <div className="relative z-10 text-center px-4 max-w-4xl mx-auto">
           <h1 className="text-4xl md:text-5xl lg:text-6xl font-extrabold text-white mb-6 uppercase tracking-tight drop-shadow-xl">
