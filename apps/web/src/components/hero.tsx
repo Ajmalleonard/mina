@@ -4,6 +4,7 @@ import React, { useState, useEffect } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useCart } from "@/context/CartContext";
+import { useI18n } from '@/lib/i18n';
 import OptimizedImage from "@/components/OptimizedImage";
 
 type HeroSectionProps = {
@@ -44,6 +45,7 @@ const HeroSection: React.FC<HeroSectionProps> = ({
   const [donationAmount, setDonationAmount] = useState<string>("100");
   const [customAmount, setCustomAmount] = useState<string>("");
   const [activities, setActivities] = useState<any[]>([]);
+  const { t } = useI18n();
 
   // Fetch campaigns from database to link slides
   useEffect(() => {
@@ -148,7 +150,7 @@ const HeroSection: React.FC<HeroSectionProps> = ({
                       href={primaryButtonLink}
                       className="px-8 py-4 bg-[#95E18A] text-[#111111] hover:bg-white rounded-full font-bold text-lg transition-colors inline-block"
                     >
-                      {primaryButtonText}
+                      {primaryButtonText || t('button.donate')}
                     </Link>
                   )}
                   {secondaryButtonLink && secondaryButtonText && (
@@ -171,9 +173,9 @@ const HeroSection: React.FC<HeroSectionProps> = ({
         <div className="absolute bottom-16 left-1/2 -translate-x-1/2 z-40 w-11/12 max-w-5xl bg-[#F5A623] rounded-3xl p-6 md:p-8 shadow-2xl flex flex-col md:flex-row items-center gap-8">
         {/* Left text */}
         <div className="w-full md:w-1/3 text-[#111111]">
-          <h2 className="text-2xl font-bold uppercase mb-2">Make a Donation</h2>
+          <h2 className="text-2xl font-bold uppercase mb-2">{t('donation.title')}</h2>
           <p className="text-sm font-medium opacity-80 leading-relaxed">
-            Your generous contribution to our campaigns ensures direct impact for those who need it most.
+            {t('donation.lead')}
           </p>
         </div>
 
@@ -200,7 +202,7 @@ const HeroSection: React.FC<HeroSectionProps> = ({
                 : "bg-transparent text-white border-white/40 hover:border-white/80 hover:bg-white/10"
                 }`}
             >
-              Custom Amount
+              {t('donation.custom_amount')}
             </button>
           </div>
 
@@ -218,14 +220,14 @@ const HeroSection: React.FC<HeroSectionProps> = ({
                   setCustomAmount(e.target.value);
                 }}
                 className="w-full pl-12 pr-4 py-3 bg-transparent border-2 border-[#111111] rounded-full text-[#111111] font-bold text-lg focus:outline-none focus:bg-white/10 transition-colors"
-                placeholder={donationAmount === "custom" ? "Enter amount" : currentDisplayAmount}
+                placeholder={donationAmount === "custom" ? t('donation.enter_amount') : currentDisplayAmount}
               />
             </div>
             <button
               onClick={handleDonate}
               className="w-full sm:w-1/2 flex items-center justify-center bg-[#111111] hover:bg-black text-white font-bold uppercase tracking-wider py-4 px-6 rounded-full transition-colors shadow-lg"
             >
-              {primaryButtonText}
+              {t('button.donate')}
             </button>
           </div>
         </div>

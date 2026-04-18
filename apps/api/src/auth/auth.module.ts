@@ -9,6 +9,8 @@ import { JwtModule } from '@nestjs/jwt';
 import { getJwtSecret } from './constants';
 import { AuthController } from './auth.controller';
 import { RolesGuard } from './roles.guard';
+import { MfaService } from './mfa.service';
+import { RefreshTokenService } from './refresh-token.service';
 
 @Module({
   imports: [
@@ -23,8 +25,8 @@ import { RolesGuard } from './roles.guard';
       }),
     }),
   ],
-  providers: [AuthService, LocalStrategy, JwtStrategy, RolesGuard],
+  providers: [AuthService, LocalStrategy, JwtStrategy, RolesGuard, MfaService, RefreshTokenService],
   controllers: [AuthController],
-  exports: [AuthService, RolesGuard],
+  exports: [AuthService, RolesGuard, MfaService, RefreshTokenService],
 })
 export class AuthModule {}

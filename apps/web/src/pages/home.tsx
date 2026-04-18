@@ -1,8 +1,10 @@
 "use client"
 import React from 'react';
 import Link from 'next/link';
+import { useI18n } from '@/lib/i18n';
 
 function Main() {
+  const { t } = useI18n();
   return (
     <main className="w-full">
       {/* Hero Section */}
@@ -12,11 +14,10 @@ function Main() {
         </div>
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 text-center">
           <h1 className="text-4xl md:text-6xl font-bold text-green-900 mb-6 animate-fade-in">
-            Supporting families Through Compassion
+            {t('home.hero.heading')}
           </h1>
           <p className="text-xl md:text-2xl text-green-800 mb-8 max-w-3xl mx-auto animate-slide-up">
-            Mina Foundation is dedicated to providing support, resources, and
-            community services to families in need.
+            {t('home.hero.lead')}
           </p>
           <div
             className="flex flex-col sm:flex-row justify-center gap-4 animate-slide-up"
@@ -26,13 +27,13 @@ function Main() {
               href="/donate"
               className="btn-primary bg-green-600 hover:bg-green-700 text-white px-8 py-3 rounded-md font-medium text-lg transition-all"
             >
-              Donate Now
+              {t('button.donate')}
             </Link>
             <Link
               href="/about"
               className="px-8 py-3 rounded-md font-medium text-lg border-2 border-green-600 text-green-700 hover:bg-green-600 hover:text-white transition-all"
             >
-              Learn More
+              {t('button.learnMore')}
             </Link>
           </div>
         </div>
@@ -43,17 +44,13 @@ function Main() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-12">
             <h2 className="text-3xl md:text-4xl font-bold text-green-800 mb-4">
-              Our Mission
+              {t('mission.title')}
             </h2>
             <div className="w-24 h-1 bg-green-500 mx-auto mb-6"></div>
-            <p className="text-lg text-gray-700 max-w-3xl mx-auto">
-              To provide support, resources, and community services to families
-              in need, fostering a sense of unity and compassion within our
-              community.
-            </p>
+            <p className="text-lg text-gray-700 max-w-3xl mx-auto">{t('mission.lead')}</p>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mt-12">
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mt-12">
             <div className="bg-green-50 p-6 rounded-lg shadow-md hover:shadow-lg transition-all">
               <div className="w-16 h-16 bg-green-600 rounded-full flex items-center justify-center mb-4 mx-auto">
                 <svg
@@ -71,13 +68,8 @@ function Main() {
                   />
                 </svg>
               </div>
-              <h3 className="text-xl font-semibold text-green-800 mb-2 text-center">
-                Financial Support
-              </h3>
-              <p className="text-gray-700 text-center">
-                Providing financial assistance to families facing economic
-                hardship.
-              </p>
+              <h3 className="text-xl font-semibold text-green-800 mb-2 text-center">{t('mission.financial.title')}</h3>
+              <p className="text-gray-700 text-center">{t('mission.financial.desc')}</p>
             </div>
 
             <div className="bg-green-50 p-6 rounded-lg shadow-md hover:shadow-lg transition-all">
@@ -97,13 +89,8 @@ function Main() {
                   />
                 </svg>
               </div>
-              <h3 className="text-xl font-semibold text-green-800 mb-2 text-center">
-                Educational Programs
-              </h3>
-              <p className="text-gray-700 text-center">
-                Offering educational resources and programs for children and
-                adults.
-              </p>
+              <h3 className="text-xl font-semibold text-green-800 mb-2 text-center">{t('mission.education.title')}</h3>
+              <p className="text-gray-700 text-center">{t('mission.education.desc')}</p>
             </div>
 
             <div className="bg-green-50 p-6 rounded-lg shadow-md hover:shadow-lg transition-all">
@@ -123,13 +110,8 @@ function Main() {
                   />
                 </svg>
               </div>
-              <h3 className="text-xl font-semibold text-green-800 mb-2 text-center">
-                Community Building
-              </h3>
-              <p className="text-gray-700 text-center">
-                Creating spaces and events that foster community connections and
-                support.
-              </p>
+              <h3 className="text-xl font-semibold text-green-800 mb-2 text-center">{t('mission.community.title')}</h3>
+              <p className="text-gray-700 text-center">{t('mission.community.desc')}</p>
             </div>
           </div>
         </div>
@@ -139,9 +121,7 @@ function Main() {
       <section className="py-16 bg-green-50">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-12">
-            <h2 className="text-3xl md:text-4xl font-bold text-green-800 mb-4">
-              Make a Difference Today
-            </h2>
+            <h2 className="text-3xl md:text-4xl font-bold text-green-800 mb-4">{t('donation.title')}</h2>
             <div className="w-24 h-1 bg-green-500 mx-auto mb-6"></div>
             <p className="text-lg text-gray-700 max-w-3xl mx-auto">
               Your generous donations help us support families in need. Every
@@ -151,18 +131,14 @@ function Main() {
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
             <div className="bg-white p-8 rounded-lg shadow-md">
-              <h3 className="text-2xl font-bold text-green-800 mb-4">
-                Donation Options
-              </h3>
+              <h3 className="text-2xl font-bold text-green-800 mb-4">{t('donation.options.title')}</h3>
               <div className="space-y-4">
                 <div className="flex items-center p-4 border border-green-200 rounded-md hover:bg-green-50 transition-all">
                   <div className="w-10 h-10 bg-green-100 rounded-full flex items-center justify-center mr-4">
                     <span className="text-green-700 font-bold">$25</span>
                   </div>
                   <div>
-                    <p className="font-medium text-gray-800">
-                      Provides meals for a family for a week
-                    </p>
+                    <p className="font-medium text-gray-800">{t('donation.options.25')}</p>
                   </div>
                 </div>
 
@@ -171,9 +147,7 @@ function Main() {
                     <span className="text-green-700 font-bold">$50</span>
                   </div>
                   <div>
-                    <p className="font-medium text-gray-800">
-                      Supports educational materials for children
-                    </p>
+                    <p className="font-medium text-gray-800">{t('donation.options.50')}</p>
                   </div>
                 </div>
 
@@ -182,9 +156,7 @@ function Main() {
                     <span className="text-green-700 font-bold">$100</span>
                   </div>
                   <div>
-                    <p className="font-medium text-gray-800">
-                      Helps with emergency housing assistance
-                    </p>
+                    <p className="font-medium text-gray-800">{t('donation.options.100')}</p>
                   </div>
                 </div>
               </div>
@@ -194,7 +166,7 @@ function Main() {
                   href="/donate"
                   className="btn-primary bg-green-600 hover:bg-green-700 text-white px-6 py-3 rounded-md font-medium text-lg transition-all w-full block text-center"
                 >
-                  Donate Now
+                  {t('button.donate')}
                 </Link>
               </div>
             </div>
@@ -203,18 +175,16 @@ function Main() {
               <div className="absolute inset-0 bg-green-800/20"></div>
               <div className="absolute inset-0 flex items-center justify-center">
                 <div className="text-center text-white p-6 bg-green-900/70 rounded-lg max-w-md">
-                  <h3 className="text-2xl font-bold mb-2">Impact Statistics</h3>
-                  <p className="mb-4">In the past year, with your support:</p>
+                  <h3 className="text-2xl font-bold mb-2">{t('donation.impact.title')}</h3>
+                  <p className="mb-4">{t('donation.impact.lead')}</p>
                   <div className="grid grid-cols-2 gap-4">
                     <div>
                       <p className="text-3xl font-bold text-green-300">500+</p>
-                      <p>Families Supported</p>
+                      <p>{t('donation.impact.families')}</p>
                     </div>
                     <div>
-                      <p className="text-3xl font-bold text-green-300">
-                        $100K+
-                      </p>
-                      <p>Donations Received</p>
+                      <p className="text-3xl font-bold text-green-300">$100K+</p>
+                      <p>{t('donation.impact.donations')}</p>
                     </div>
                   </div>
                 </div>
@@ -227,15 +197,10 @@ function Main() {
       {/* Gallery Preview */}
       <section className="py-16 bg-white">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-12">
-            <h2 className="text-3xl md:text-4xl font-bold text-green-800 mb-4">
-              Gallery
-            </h2>
+            <div className="text-center mb-12">
+            <h2 className="text-3xl md:text-4xl font-bold text-green-800 mb-4">{t('gallery.title')}</h2>
             <div className="w-24 h-1 bg-green-500 mx-auto mb-6"></div>
-            <p className="text-lg text-gray-700 max-w-3xl mx-auto">
-              See the impact of our work and community events through our
-              gallery.
-            </p>
+            <p className="text-lg text-gray-700 max-w-3xl mx-auto">{t('gallery.lead')}</p>
           </div>
 
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
@@ -243,8 +208,8 @@ function Main() {
             <div className="relative h-64 bg-green-100 rounded-lg overflow-hidden shadow-md hover:shadow-lg transition-all">
               <div className="absolute inset-0 bg-gradient-to-t from-green-900/70 to-transparent flex items-end">
                 <div className="p-4 text-white">
-                  <h3 className="text-lg font-semibold">Community Iftar</h3>
-                  <p className="text-sm">Annual Ramadan community gathering</p>
+                  <h3 className="text-lg font-semibold">{t('gallery.item.communityIftar')}</h3>
+                  <p className="text-sm">{t('gallery.item.communityIftarLead')}</p>
                 </div>
               </div>
             </div>
@@ -252,10 +217,8 @@ function Main() {
             <div className="relative h-64 bg-green-200 rounded-lg overflow-hidden shadow-md hover:shadow-lg transition-all">
               <div className="absolute inset-0 bg-gradient-to-t from-green-900/70 to-transparent flex items-end">
                 <div className="p-4 text-white">
-                  <h3 className="text-lg font-semibold">
-                    Educational Workshop
-                  </h3>
-                  <p className="text-sm">Children&apos;s education program</p>
+                  <h3 className="text-lg font-semibold">{t('gallery.item.educationalWorkshop')}</h3>
+                  <p className="text-sm">{t('gallery.item.educationalWorkshopLead')}</p>
                 </div>
               </div>
             </div>
@@ -263,8 +226,8 @@ function Main() {
             <div className="relative h-64 bg-green-300 rounded-lg overflow-hidden shadow-md hover:shadow-lg transition-all">
               <div className="absolute inset-0 bg-gradient-to-t from-green-900/70 to-transparent flex items-end">
                 <div className="p-4 text-white">
-                  <h3 className="text-lg font-semibold">Charity Drive</h3>
-                  <p className="text-sm">Winter clothing distribution event</p>
+                  <h3 className="text-lg font-semibold">{t('gallery.item.charityDrive')}</h3>
+                  <p className="text-sm">{t('gallery.item.charityDriveLead')}</p>
                 </div>
               </div>
             </div>
@@ -275,7 +238,7 @@ function Main() {
               href="/gallery"
               className="inline-flex items-center text-green-700 hover:text-green-900 font-medium"
             >
-              View Full Gallery
+              {t('gallery.viewFull')}
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 className="h-5 w-5 ml-2"

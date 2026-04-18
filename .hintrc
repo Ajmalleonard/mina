@@ -5,6 +5,13 @@
   "hints": {
     "axe/forms": "off",
     "no-inline-styles": "off",
-    "typescript-config/consistent-casing": "off"
+    "typescript-config/consistent-casing": "off",
+    "axe/aria": [
+      "default",
+      {
+        "aria-valid-attr-value": "off"
+      }
+    ],
+    "typescript-config/strict": "off"
   }
 }

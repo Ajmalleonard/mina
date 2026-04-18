@@ -1,0 +1,10 @@
+{
+  "auth": {
+    "invalid_credentials": "Credenciales inválidas",
+    "mfa_required": "Se requiere autenticación multifactor",
+    "mfa_invalid": "Código de un solo uso inválido"
+  },
+  "errors": {
+    "unknown": "Ocurrió un error desconocido"
+  }
+}

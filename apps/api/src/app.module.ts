@@ -2,6 +2,8 @@ import { Module } from '@nestjs/common';
 import { ConfigModule } from '@nestjs/config';
 import { ThrottlerModule, ThrottlerGuard } from '@nestjs/throttler';
 import { APP_GUARD } from '@nestjs/core';
+import { I18nModule, I18nJsonLoader } from 'nestjs-i18n';
+import * as path from 'path';
 import { PaymentsModule } from './payments/payments.module';
 import { PrismaModule } from './prisma/prisma.module';
 import { ActivitiesModule } from './activities/activities.module';
@@ -25,6 +27,14 @@ import { UploadsModule } from './uploads/uploads.module';
         limit: 20,
       },
     ]),
+    I18nModule.forRoot({
+      fallbackLanguage: 'en',
+      loader: I18nJsonLoader,
+      loaderOptions: {
+        path: path.join(__dirname, '/i18n/'),
+        watch: process.env.NODE_ENV !== 'production',
+      },
+    }),
     PrismaModule,
     ActivitiesModule,
     PaymentsModule,

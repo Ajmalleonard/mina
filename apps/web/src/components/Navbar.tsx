@@ -7,56 +7,63 @@ import { Package, Gift, UtensilsCrossed, HandHeart } from "lucide-react";
 import { Button } from "@/components/ui/Button";
 import { useAuth } from "@/context/AuthContext";
 import { useCart } from "@/context/CartContext";
+import LanguageSwitcher from '@/components/LanguageSwitcher';
+import ThemeToggle from '@/components/ThemeToggle';
+import { useI18n } from '@/lib/i18n';
 
 const MEGA_MENU_ITEMS = {
   projects: [
-    { label: "Water Wells", href: "/campaigns?category=WATER_WELL_PROJECT" },
-    { label: "Income Security", href: "/campaigns?category=INCOME_SUPPORT" },
-    { label: "Zakat", href: "/campaigns?category=ZAKAT_AND_SADAKA" },
-    { label: "Sadaka", href: "/campaigns?category=ZAKAT_AND_SADAKA" },
-    { label: "Education Support", href: "/campaigns?category=EDUCATION_AID" },
-    { label: "Emergency Support", href: "/campaigns?category=EMERGENCY_AID" },
-    { label: "Building Projects", href: "/campaigns?category=CONSTRUCTION_PROJECTS" },
+    { labelKey: "mega.projects.waterWells", label: "Water Wells", href: "/campaigns?category=WATER_WELL_PROJECT" },
+    { labelKey: "mega.projects.incomeSecurity", label: "Income Security", href: "/campaigns?category=INCOME_SUPPORT" },
+    { labelKey: "mega.projects.zakat", label: "Zakat", href: "/campaigns?category=ZAKAT_AND_SADAKA" },
+    { labelKey: "mega.projects.sadaka", label: "Sadaka", href: "/campaigns?category=ZAKAT_AND_SADAKA" },
+    { labelKey: "mega.projects.educationSupport", label: "Education Support", href: "/campaigns?category=EDUCATION_AID" },
+    { labelKey: "mega.projects.emergencySupport", label: "Emergency Support", href: "/campaigns?category=EMERGENCY_AID" },
+    { labelKey: "mega.projects.buildingProjects", label: "Building Projects", href: "/campaigns?category=CONSTRUCTION_PROJECTS" },
   ],
   campaigns: [
-    { label: "Ramadan", href: "/campaigns?category=RAMADAN_CAMPAIGN" },
-    { label: "Three Holy Months Campaign", href: "/campaigns" },
-    { label: "Qurban Campaign", href: "/campaigns" },
-    { label: "Winter Campaign", href: "/campaigns" },
+    { labelKey: "mega.campaigns.ramadan", label: "Ramadan", href: "/campaigns?category=RAMADAN_CAMPAIGN" },
+    { labelKey: "mega.campaigns.threeMonths", label: "Three Holy Months Campaign", href: "/campaigns" },
+    { labelKey: "mega.campaigns.qurban", label: "Qurban Campaign", href: "/campaigns" },
+    { labelKey: "mega.campaigns.winter", label: "Winter Campaign", href: "/campaigns" },
   ],
   healthSupport: [
-    { label: "Health Support for the Needy", href: "/campaigns?category=HEALTH" },
-    { label: "Male Circumcision Support", href: "/campaigns?category=HEALTH" },
-    { label: "Gray Star/Cataract", href: "/campaigns?category=HEALTH" },
-    { label: "Medical Support & Health Support", href: "/campaigns?category=HEALTH" },
+    { labelKey: "mega.health.support", label: "Health Support for the Needy", href: "/campaigns?category=HEALTH" },
+    { labelKey: "mega.health.circumcision", label: "Male Circumcision Support", href: "/campaigns?category=HEALTH" },
+    { labelKey: "mega.health.cataract", label: "Gray Star/Cataract", href: "/campaigns?category=HEALTH" },
+    { labelKey: "mega.health.medicalSupport", label: "Medical Support & Health Support", href: "/campaigns?category=HEALTH" },
   ],
   sponsorship: [
-    { label: "Sponsorship for Orphan Children", href: "/campaigns?category=ORPHAN" },
-    { label: "Orphan Fund", href: "/campaigns" },
-    { label: "We are with the Orphans", href: "/campaigns?category=WE_ARE_TOGETHER_WITH_OUR_ORPHANS" },
+    { labelKey: "mega.sponsorship.sponsorshipForOrphans", label: "Sponsorship for Orphan Children", href: "/campaigns?category=ORPHAN" },
+    { labelKey: "mega.sponsorship.orphanFund", label: "Orphan Fund", href: "/campaigns" },
+    { labelKey: "mega.sponsorship.weAreWithOrphans", label: "We are with the Orphans", href: "/campaigns?category=WE_ARE_TOGETHER_WITH_OUR_ORPHANS" },
   ]
 };
 
 const RIGHT_BANNERS = [
   {
+    titleKey: "banner.foodPackages",
     title: "FOOD PACKAGES",
     price: "40€",
     href: "/campaigns?category=RAMADAN_CAMPAIGN",
     icon: Package,
   },
   {
+    titleKey: "banner.eidGifts",
     title: "EID GIFTS",
     price: "38€",
     href: "/campaigns?category=WE_ARE_TOGETHER_WITH_OUR_ORPHANS",
     icon: Gift,
   },
   {
+    titleKey: "banner.iftarForOrphans",
     title: "IFTAR FOR ORPHANS",
     price: "5€",
     href: "/campaigns?category=RAMADAN_CAMPAIGN",
     icon: UtensilsCrossed,
   },
   {
+    titleKey: "banner.zakat",
     title: "ZAKAT",
     price: "%2.5",
     href: "/campaigns?category=ZAKAT_AND_SADAKA",
@@ -85,16 +92,18 @@ const Navbar = () => {
     setIsMenuOpen(!isMenuOpen);
   };
 
-  // Navigation links
+  // Navigation links (include English fallback labels)
   const navLinks = [
-    { href: "/", label: "Home" },
-    { href: "/about", label: "Who we are" },
-    { href: "/campaigns", label: "Projects & Campaigns", hasMegaMenu: true },
-    { href: "/gallery", label: "Gallery" },
-    { href: "/impact", label: "Impact Map" },
-    { href: "/donate", label: "Zakat Calculator" },
-    { href: "/contact", label: "Contact" },
+    { href: "/", labelKey: "nav.home", label: "Home" },
+    { href: "/about", labelKey: "nav.about", label: "Who we are" },
+    { href: "/campaigns", labelKey: "nav.projects", hasMegaMenu: true, label: "Projects & Campaigns" },
+    { href: "/gallery", labelKey: "nav.gallery", label: "Gallery" },
+    { href: "/impact", labelKey: "nav.impact", label: "Impact Map" },
+    { href: "/donate", labelKey: "nav.donate", label: "Zakat Calculator" },
+    { href: "/contact", labelKey: "nav.contact", label: "Contact" },
   ];
+  
+  const { t } = useI18n();
 
   return (
     <>
@@ -112,9 +121,7 @@ const Navbar = () => {
                   alt="Mina Foundation"
                   className="object-contain"
                 />
-                <span className="font-bold text-xl tracking-tight">
-                  Mina Foundation
-                </span>
+               
               </Link>
             </div>
 
@@ -127,23 +134,23 @@ const Navbar = () => {
                       href={link.href}
                       className="text-[#111111] hover:text-[#E84E34] px-2 py-6 text-sm font-medium transition-colors flex items-center gap-1"
                     >
-                      {link.label}
+                      {t(link.labelKey) || link.label}
                       <ArrowDown2 size="14" />
                     </Link>
                     {/* Mega Menu Dropdown */}
-                    <div className="absolute left-1/2 -translate-x-1/2 top-[60px] pt-4 hidden group-hover:block w-[900px]">
+                    <div className="absolute left-1/2 -translate-x-1/2 top-15 pt-4 hidden group-hover:block w-225">
                       <div className="bg-[#FFFBF2] rounded-xl shadow-2xl border border-gray-200 p-8 flex gap-8">
                         {/* Lists Section */}
                         <div className="flex-1 grid grid-cols-3 gap-8 text-[#111111]">
                           {/* Column 1 */}
                           <div>
-                            <h3 className="font-bold text-sm mb-4">Projects</h3>
+                            <h3 className="font-bold text-sm mb-4">{t('mega.projects')}</h3>
                             <ul className="space-y-4">
                               {MEGA_MENU_ITEMS.projects.map((item, i) => (
                                 <li key={i}>
                                   <Link href={item.href} className="text-xs text-gray-600 hover:text-[#E84E34] transition-colors flex items-center gap-2">
                                     <span className="w-1 h-1 bg-gray-300 rounded-full"></span>
-                                    {item.label}
+                                    {t(item.labelKey) || item.label}
                                   </Link>
                                 </li>
                               ))}
@@ -152,26 +159,26 @@ const Navbar = () => {
                           {/* Column 2 */}
                           <div className="space-y-8">
                             <div>
-                              <h3 className="font-bold text-sm mb-4">Campaigns</h3>
+                              <h3 className="font-bold text-sm mb-4">{t('mega.campaigns')}</h3>
                               <ul className="space-y-4">
                                 {MEGA_MENU_ITEMS.campaigns.map((item, i) => (
                                   <li key={i}>
                                     <Link href={item.href} className="text-xs text-gray-600 hover:text-[#E84E34] transition-colors flex items-center gap-2">
                                       <span className="w-1 h-1 bg-gray-300 rounded-full"></span>
-                                      {item.label}
+                                      {t(item.labelKey) || item.label}
                                     </Link>
                                   </li>
                                 ))}
                               </ul>
                             </div>
                             <div>
-                              <h3 className="font-bold text-sm mb-4">Health Support</h3>
+                              <h3 className="font-bold text-sm mb-4">{t('mega.healthSupport')}</h3>
                               <ul className="space-y-4">
                                 {MEGA_MENU_ITEMS.healthSupport.map((item, i) => (
                                   <li key={i}>
                                     <Link href={item.href} className="text-xs text-gray-600 hover:text-[#E84E34] transition-colors flex items-center gap-2">
                                       <span className="w-1 h-1 bg-gray-300 rounded-full"></span>
-                                      {item.label}
+                                      {t(item.labelKey) || item.label}
                                     </Link>
                                   </li>
                                 ))}
@@ -180,13 +187,13 @@ const Navbar = () => {
                           </div>
                           {/* Column 3 */}
                           <div>
-                            <h3 className="font-bold text-sm mb-4">Sponsorship</h3>
+                            <h3 className="font-bold text-sm mb-4">{t('mega.sponsorship')}</h3>
                             <ul className="space-y-4">
                               {MEGA_MENU_ITEMS.sponsorship.map((item, i) => (
                                 <li key={i}>
                                   <Link href={item.href} className="text-xs text-gray-600 hover:text-[#E84E34] transition-colors flex items-center gap-2">
                                     <span className="w-1 h-1 bg-gray-300 rounded-full"></span>
-                                    {item.label}
+                                    {t(item.labelKey) || item.label}
                                   </Link>
                                 </li>
                               ))}
@@ -195,7 +202,7 @@ const Navbar = () => {
                         </div>
 
                         {/* Interactive Banners Section */}
-                        <div className="w-[300px] border-l border-gray-200 pl-8 grid grid-cols-2 gap-y-6 gap-x-2">
+                        <div className="w-75 border-l border-gray-200 pl-8 grid grid-cols-2 gap-y-6 gap-x-2">
                           {RIGHT_BANNERS.map((banner, idx) => {
                             const Icon = banner.icon;
                             return (
@@ -208,7 +215,7 @@ const Navbar = () => {
                                   <Icon className="w-6 h-6" />
                                 </div>
                                 <span className="font-bold text-[#E84E34] text-[10px] leading-tight tracking-wider uppercase px-1">
-                                  {banner.title}
+                                  {t(banner.titleKey) || banner.title}
                                 </span>
                                 <span className="font-black text-[#E84E34] text-xl mt-0.5">
                                   {banner.price}
@@ -226,12 +233,17 @@ const Navbar = () => {
                     href={link.href}
                     className="text-[#111111] hover:text-[#E84E34] px-2 py-6 text-sm font-medium transition-colors"
                   >
-                    {link.label}
+                    {t(link.labelKey) || link.label}
                   </Link>
                 )
               ))}
 
               {/* Cart Icon */}
+              <div className="flex items-center gap-4">
+                <LanguageSwitcher />
+                <ThemeToggle />
+              </div>
+
               <button
                 onClick={openDrawer}
                 className="relative p-2 text-[#111111] hover:text-[#95E18A] transition-colors focus:outline-none"
@@ -258,12 +270,12 @@ const Navbar = () => {
                     variant="outline"
                     className="rounded-full px-4 py-2 text-sm"
                   >
-                    Logout
+                    {t('auth.logout')}
                   </Button>
                 </div>
               ) : (
                 <Button href="/auth/login" className="rounded-full">
-                  Login
+                  {t('auth.login')}
                 </Button>
               )}
             </div>
@@ -303,8 +315,8 @@ const Navbar = () => {
           ></div>
           <div className="absolute top-0 right-0 w-full max-w-sm h-full bg-[#FFFBF2] border-l border-black/5 overflow-y-auto">
             <div className="p-6">
-              <div className="flex justify-between items-center mb-8">
-                <span className="font-bold text-xl">Menu</span>
+                <div className="flex justify-between items-center mb-8">
+                <span className="font-bold text-xl">{t('nav.menu') || 'Menu'}</span>
                 <button
                   onClick={toggleMenu}
                   className="p-2 text-[#111111]"
@@ -322,7 +334,7 @@ const Navbar = () => {
                     className="text-[#111111] text-lg font-medium py-3 border-b border-gray-100 hover:text-[#95E18A]"
                     onClick={() => setIsMenuOpen(false)}
                   >
-                    {link.label}
+                    {t(link.labelKey) || link.label}
                   </Link>
                 ))}
               </div>
@@ -333,7 +345,7 @@ const Navbar = () => {
                   onClick={() => setIsMenuOpen(false)}
                   className="bg-[#111111] text-white w-full block text-center py-3 rounded-full font-medium active:scale-95 transition-transform"
                 >
-                  Donate Now
+                  {t('button.donate')}
                 </Link>
               </div>
             </div>

@@ -1,7 +1,9 @@
-import { Body, Controller, Get, Patch, Post, Request, UseGuards } from '@nestjs/common';
+import { Body, Controller, Get, Patch, Post, Request, UseGuards, UnauthorizedException } from '@nestjs/common';
 import { Role } from '../../prisma/generated/client';
 import { LocalAuthGuard } from './local-auth.guard';
 import { AuthService } from './auth.service';
+import { RefreshTokenService } from './refresh-token.service';
+import { UsersService } from '../users/users.service';
 import { CreateUserDto } from './dto/create-user.dto';
 import { AdminLoginDto } from './dto/admin-login.dto';
 import { VerifyAdminMfaDto } from './dto/verify-admin-mfa.dto';
@@ -12,7 +14,7 @@ import { RolesGuard } from './roles.guard';
 
 @Controller('auth')
 export class AuthController {
-  constructor(private authService: AuthService) {}
+  constructor(private authService: AuthService, private refreshTokenService: RefreshTokenService, private usersService: UsersService) {}
 
   @UseGuards(LocalAuthGuard)
   @Post('login')
@@ -39,6 +41,15 @@ export class AuthController {
   @Get('admin/me')
   async adminMe(@Request() req) {
     return this.authService.getAdminProfile(req.user.userId);
+  }
+
+  @Post('refresh')
+  async refresh(@Body('refresh_token') refreshToken: string) {
+    const payload = this.refreshTokenService.verifyToken(refreshToken);
+    if (!payload || !payload.sub) throw new UnauthorizedException('Invalid refresh token');
+    const user = await this.usersService.findById(payload.sub);
+    if (!user) throw new UnauthorizedException('User not found');
+    return this.authService.login({ id: user.id, email: user.email, role: user.role });
   }
 
   @UseGuards(JwtAuthGuard, RolesGuard)

@@ -1,0 +1,10 @@
+{
+  "auth": {
+    "invalid_credentials": "Invalid credentials",
+    "mfa_required": "Multi-factor authentication required",
+    "mfa_invalid": "Invalid one-time code"
+  },
+  "errors": {
+    "unknown": "An unknown error occurred"
+  }
+}

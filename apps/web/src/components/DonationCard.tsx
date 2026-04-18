@@ -1,6 +1,7 @@
 "use client";
 
 import React from "react";
+import { useI18n } from '@/lib/i18n';
 import { Button } from "@/components/ui/Button";
 import { Activity as ActivityIcon } from "lucide-react";
 import OptimizedImage from "@/components/OptimizedImage";
@@ -30,6 +31,7 @@ export function DonationCard({
   onSetExactAmount,
   onDonate,
 }: DonationCardProps) {
+  const { t } = useI18n();
   return (
     <div className="bg-white rounded-3xl flex flex-col group overflow-hidden h-full">
       {/* Image Section - Squared Aspect Ratio */}
@@ -94,7 +96,7 @@ export function DonationCard({
             onClick={() => onDonate(activity, amount)}
             className="w-full py-6 font-bold text-sm tracking-wide rounded-2xl bg-[#111111] text-white"
           >
-            Donate Now
+            {t('button.donate')}
           </Button>
         </div>
       </div>

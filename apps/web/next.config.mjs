@@ -1,4 +1,8 @@
+import withBundleAnalyzer from '@next/bundle-analyzer';
+
 /** @type {import('next').NextConfig} */
+const withBundle = withBundleAnalyzer({ enabled: process.env.ANALYZE === 'true' });
+
 const nextConfig = {
   images: {
     formats: ["image/avif", "image/webp"],
@@ -39,4 +43,4 @@ const nextConfig = {
   productionBrowserSourceMaps: false,
 };
 
-export default nextConfig;
+export default withBundle(nextConfig);

@@ -6,10 +6,12 @@
     "dev": "next dev --turbopack",
     "images:prepare": "node scripts/generate-image-manifest.mjs",
     "build": "node scripts/generate-image-manifest.mjs && next build",
+    "analyze": "ANALYZE=true npm run build",
     "start": "next start",
     "lint": "next lint"
   },
   "dependencies": {
+    "@next/bundle-analyzer": "^16.2.4",
     "@stripe/react-stripe-js": "^3.6.0",
     "@stripe/stripe-js": "^7.2.0",
     "@types/nodemailer": "^7.0.5",
@@ -23,6 +25,7 @@
     "maplibre-gl": "^5.21.0",
     "motion": "^12.9.0",
     "next": "^16.1.3",
+    "next-intl": "^4.9.1",
     "nodemailer": "^7.0.12",
     "radix-ui": "^1.4.3",
     "react": "^19.2.3",

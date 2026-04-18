@@ -1,8 +1,10 @@
 "use client";
 import React, { useMemo } from "react";
 import OptimizedImage from "@/components/OptimizedImage";
+import { useI18n } from "@/lib/i18n";
 
 export default function GalleryPage() {
+  const { t } = useI18n();
   // Gallery items with focus on varying shapes for the masonry grid
   const galleryItems = useMemo(() => [
     {
@@ -66,14 +68,14 @@ export default function GalleryPage() {
         <div className="flex flex-col md:flex-row md:items-end justify-between items-start gap-8">
           <div className="space-y-6">
             <span className="inline-block px-4 py-1 bg-gray-100 rounded-full text-[10px] uppercase font-black tracking-widest text-gray-500">
-              Our Stories
+              {t('gallery.ourStories')}
             </span>
             <h1 className="text-6xl md:text-9xl font-black text-[#111111] tracking-tighter leading-none">
-              Photo <br className="hidden md:block" /> Gallery
+              {t('gallery.title')} <br className="hidden md:block" />
             </h1>
           </div>
           <p className="max-w-xs text-sm font-medium text-gray-400 mb-4 md:text-right leading-relaxed">
-            Captured moments from our <br /> desert projects and scenic routes <br /> across the nation.
+            {t('gallery.description')}
           </p>
         </div>
       </section>

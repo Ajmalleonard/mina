@@ -1,44 +1,46 @@
+"use client";
+
 import Link from 'next/link'
 import React from 'react'
+import { useI18n } from '@/lib/i18n';
 
 function Footer() {
+  const { t } = useI18n();
   return (
     <footer className="bg-[#111111] text-white py-16 mt-0">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="grid grid-cols-1 md:grid-cols-4 gap-12">
           {/* Brand */}
           <div className="col-span-1 md:col-span-1">
-            <h3 className="text-2xl font-bold mb-6 tracking-tight">Mina Foundation</h3>
-            <p className="text-gray-400 text-sm leading-relaxed">
-              Transforming lives and fostering sustainable change through compassionate giving and community support.
-            </p>
+            <h3 className="text-2xl font-bold mb-6 tracking-tight">{t('footer.brandTitle')}</h3>
+            <p className="text-gray-400 text-sm leading-relaxed">{t('footer.description')}</p>
           </div>
 
           {/* Links */}
           <div className="col-span-1">
-            <h3 className="text-lg font-semibold mb-6">Quick Links</h3>
+            <h3 className="text-lg font-semibold mb-6">{t('footer.quickLinks')}</h3>
             <ul className="space-y-3 text-gray-400 text-sm">
-              <li><Link href="/" className="hover:text-[#95E18A] transition-colors">Home</Link></li>
-              <li><Link href="/about" className="hover:text-[#95E18A] transition-colors">About Us</Link></li>
-              <li><Link href="/gallery" className="hover:text-[#95E18A] transition-colors">Gallery</Link></li>
-              <li><Link href="/contact" className="hover:text-[#95E18A] transition-colors">Contact</Link></li>
+              <li><Link href="/" className="hover:text-[#95E18A] transition-colors">{t('nav.home')}</Link></li>
+              <li><Link href="/about" className="hover:text-[#95E18A] transition-colors">{t('nav.about')}</Link></li>
+              <li><Link href="/gallery" className="hover:text-[#95E18A] transition-colors">{t('nav.gallery')}</Link></li>
+              <li><Link href="/contact" className="hover:text-[#95E18A] transition-colors">{t('nav.contact')}</Link></li>
             </ul>
           </div>
 
           {/* Legal / More */}
           <div className="col-span-1">
-            <h3 className="text-lg font-semibold mb-6">Legal</h3>
+            <h3 className="text-lg font-semibold mb-6">{t('footer.legal')}</h3>
             <ul className="space-y-3 text-gray-400 text-sm">
               <li><Link href="/privacy" className="hover:text-[#95E18A] transition-colors">Privacy Policy</Link></li>
               <li><Link href="/terms" className="hover:text-[#95E18A] transition-colors">Terms of Service</Link></li>
               <li><Link href="/cookies" className="hover:text-[#95E18A] transition-colors">Cookie Policy</Link></li>
-              <li><Link href="/donate" className="hover:text-[#95E18A] transition-colors">Donate</Link></li>
+              <li><Link href="/donate" className="hover:text-[#95E18A] transition-colors">{t('nav.donate')}</Link></li>
             </ul>
           </div>
 
           {/* Contact */}
           <div className="col-span-1">
-            <h3 className="text-lg font-semibold mb-6">Contact</h3>
+            <h3 className="text-lg font-semibold mb-6">{t('footer.contactTitle')}</h3>
             <div className="space-y-3 text-gray-400 text-sm">
               <p>info@minafoundation.org</p>
               <p>+255 68 798 0701</p>
@@ -54,7 +56,7 @@ function Footer() {
               <svg className="w-5 h-5 text-[#95E18A]" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 10h18M7 15h1m4 0h1m-7 4h12a3 3 0 003-3V8a3 3 0 00-3-3H6a3 3 0 00-3 3v8a3 3 0 003 3z" />
               </svg>
-              Supported Payment Methods
+              {t('footer.supportedPaymentMethods')}
             </h3>
             <p className="text-gray-400 text-sm mb-6 leading-relaxed">
               We accept safe and secure payments from anywhere in the world. Choose the option that works best for you.
@@ -78,7 +80,7 @@ function Footer() {
               <svg className="w-5 h-5 text-[#95E18A]" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 14v3m4-3v3m4-3v3M3 21h18M3 10h18M3 7l9-4 9 4M4 10h16v11H4V10z" />
               </svg>
-              Direct Bank Transfer
+              {t('footer.directBankTransfer')}
             </h3>
             <div className="bg-white/5 border border-white/10 rounded-xl p-6 grid grid-cols-1 sm:grid-cols-2 gap-6">
               <div>
@@ -123,7 +125,7 @@ function Footer() {
 
         {/* Footer Bottom */}
         <div className="mt-16 pt-8 border-t border-white/10 flex flex-col md:flex-row justify-between items-center text-xs text-gray-500">
-          <p>© {new Date().getFullYear()} Mina Foundation. All rights reserved.</p>
+          <p>{t('footer.copyright').replace('{year}', String(new Date().getFullYear()))}</p>
           <div className="flex space-x-6 mt-4 md:mt-0">
              {/* Social placeholders could go here */}
              <span className="hover:text-gray-300 cursor-pointer transition-colors">Instagram</span>

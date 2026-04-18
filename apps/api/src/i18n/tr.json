@@ -1,0 +1,10 @@
+{
+  "auth": {
+    "invalid_credentials": "Geçersiz kimlik bilgileri",
+    "mfa_required": "Çok faktörlü kimlik doğrulama gerekli",
+    "mfa_invalid": "Geçersiz tek kullanımlık kod"
+  },
+  "errors": {
+    "unknown": "Bilinmeyen bir hata oluştu"
+  }
+}

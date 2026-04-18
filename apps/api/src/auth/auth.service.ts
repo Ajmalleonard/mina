@@ -5,6 +5,7 @@ import {
 } from '@nestjs/common';
 import { UsersService } from '../users/users.service';
 import { JwtService } from '@nestjs/jwt';
+import { RefreshTokenService } from './refresh-token.service';
 import * as bcrypt from 'bcrypt';
 import { Role, User } from '../../prisma/generated/client';
 import { AdminLoginDto } from './dto/admin-login.dto';
@@ -40,6 +41,7 @@ export class AuthService {
   constructor(
     private usersService: UsersService,
     private jwtService: JwtService,
+    private refreshTokenService: RefreshTokenService,
   ) {}
 
   async validateUser(email: string, pass: string): Promise<any> {
@@ -56,8 +58,14 @@ export class AuthService {
   }
 
   async login(user: AuthenticatedUser) {
+    const access_token = this.buildAccessToken(user);
+    const refresh_token = this.refreshTokenService
+      ? this.refreshTokenService.createToken({ sub: user.id, email: user.email })
+      : null;
+
     return {
-      access_token: this.buildAccessToken(user),
+      access_token,
+      refresh_token,
     };
   }
   

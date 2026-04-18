@@ -1,8 +1,10 @@
 "use client";
 import React, { useState } from "react";
 import OptimizedImage from "@/components/OptimizedImage";
+import { useI18n } from "@/lib/i18n";
 
 export default function ContactPage() {
+  const { t } = useI18n();
   const [formData, setFormData] = useState({
     name: "",
     email: "",
@@ -54,12 +56,11 @@ export default function ContactPage() {
         </div>
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 text-center py-12">
           <h1 className="text-4xl md:text-5xl font-bold text-white mb-6">
-            Contact Us
+            {t('contact.hero.title')}
           </h1>
           <div className="w-24 h-1 bg-white mx-auto mb-8"></div>
           <p className="text-xl text-white/90 mb-8 max-w-3xl mx-auto">
-            We&apos;d love to hear from you. Reach out with questions, feedback,
-            or to learn more about our work.
+            {t('contact.hero.desc')}
           </p>
         </div>
       </section>
@@ -73,7 +74,7 @@ export default function ContactPage() {
               <div className="absolute -z-10 top-0 left-0 w-full h-full overflow-hidden opacity-5 rounded-sm bg-gray-100"></div>
 
               <h2 className="text-2xl mx-4 md:text-3xl font-bold text-[#111111] mb-6">
-                Get in Touch
+                {t('contact.getInTouch.title')}
               </h2>
               <div className="w-20 mx-4 h-1 bg-[#111111] mb-8"></div>
 
@@ -81,24 +82,23 @@ export default function ContactPage() {
                 {[
                   {
                     icon: "location",
-                    title: "Our Location",
-                    content: "Keko, Dar es salaam, Tanzania",
+                    title: t('contact.location'),
+                    content: t('contact.location.address'),
                   },
                   {
                     icon: "phone",
-                    title: "Phone",
+                    title: t('contact.phone'),
                     content: "+255 68 798 0701",
                   },
                   {
                     icon: "email",
-                    title: "Email",
-                    content: "info@minafoundation.org",
+                    title: t('contact.email'),
+                    content: t('contact.email.address'),
                   },
                   {
                     icon: "clock",
-                    title: "Office Hours",
-                    content:
-                      "Monday - Saturday: 9:00 AM - 5:00 PM, Friday : 8:00 AM - \nSaturday: Closed\nSunday: Closed",
+                    title: t('contact.officeHours'),
+                    content: t('contact.officeHours.time'),
                   },
                 ].map((item, index) => (
                   <div key={index} className="flex items-start">
@@ -148,7 +148,7 @@ export default function ContactPage() {
 
               <div className="mt-10 px-4">
                 <h3 className="text-lg font-bold text-[#111111] mb-4">
-                  Follow Us
+                  {t('contact.followUs')}
                 </h3>
                 <div className="flex space-x-4">
                   {[
@@ -192,7 +192,7 @@ export default function ContactPage() {
             <div className="bg-[#FFFBF2] p-8 rounded-sm border border-black/5 relative overflow-hidden">
               <div className="relative z-10">
                 <h2 className="text-2xl md:text-3xl font-bold text-[#111111] mb-6">
-                  Send a Message
+                  {t('contact.sendMessage.title')}
                 </h2>
                 <div className="w-20 h-1 bg-[#111111] mb-8"></div>
 
@@ -210,7 +210,7 @@ export default function ContactPage() {
                         clipRule="evenodd"
                       />
                     </svg>
-                    <span>Your message has been sent successfully!</span>
+                    <span>{t('contact.form.success')}</span>
                   </div>
                 )}
 
@@ -222,7 +222,7 @@ export default function ContactPage() {
                         htmlFor="name"
                         className="block text-sm font-medium text-gray-700 mb-1"
                       >
-                        Your Name
+                        {t('contact.form.name')}
                       </label>
                       <input
                         type="text"
@@ -232,7 +232,7 @@ export default function ContactPage() {
                         onChange={handleChange}
                         required
                         className="w-full px-4 py-3 border border-gray-300 rounded-sm focus:outline-none focus:ring-1 focus:ring-[#111111] focus:border-[#111111] transition-all bg-white text-black"
-                        placeholder="Enter your name"
+                        placeholder={t('contact.form.namePlaceholder')}
                       />
                     </div>
                     <div>
@@ -240,7 +240,7 @@ export default function ContactPage() {
                         htmlFor="email"
                         className="block text-sm font-medium text-gray-700 mb-1"
                       >
-                        Email Address
+                        {t('contact.form.email')}
                       </label>
                       <input
                         type="email"
@@ -250,7 +250,7 @@ export default function ContactPage() {
                         onChange={handleChange}
                         required
                         className="w-full px-4 py-3 border border-gray-300 rounded-sm focus:outline-none focus:ring-1 focus:ring-[#111111] focus:border-[#111111] transition-all bg-white text-black"
-                        placeholder="Enter your email"
+                        placeholder={t('contact.form.emailPlaceholder')}
                       />
                     </div>
                     <div>
@@ -258,7 +258,7 @@ export default function ContactPage() {
                         htmlFor="subject"
                         className="block text-sm font-medium text-gray-700 mb-1"
                       >
-                        Subject
+                        {t('contact.form.subject')}
                       </label>
                       <input
                         type="text"
@@ -268,7 +268,7 @@ export default function ContactPage() {
                         onChange={handleChange}
                         required
                         className="w-full px-4 py-3 border border-gray-300 rounded-sm focus:outline-none focus:ring-1 focus:ring-[#111111] focus:border-[#111111] transition-all bg-white text-black"
-                        placeholder="Enter subject"
+                        placeholder={t('contact.form.subjectPlaceholder')}
                       />
                     </div>
                     <div>
@@ -276,7 +276,7 @@ export default function ContactPage() {
                         htmlFor="message"
                         className="block text-sm font-medium text-gray-700 mb-1"
                       >
-                        Message
+                        {t('contact.form.message')}
                       </label>
                       <textarea
                         id="message"
@@ -286,14 +286,14 @@ export default function ContactPage() {
                         required
                         rows={5}
                         className="w-full px-4 py-3 border border-gray-300 rounded-sm focus:outline-none focus:ring-1 focus:ring-[#111111] focus:border-[#111111] transition-all resize-none bg-white text-black"
-                        placeholder="Type your message here..."
+                        placeholder={t('contact.form.messagePlaceholder')}
                       ></textarea>
                     </div>
                     <button
                       type="submit"
                       className="w-full bg-[#111111] text-white py-4 px-6 rounded-full hover:bg-black transition-all font-bold text-lg"
                     >
-                      Send Message
+                      {t('contact.form.send')}
                     </button>
                   </div>
                 </form>

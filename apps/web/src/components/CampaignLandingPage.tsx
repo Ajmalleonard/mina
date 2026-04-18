@@ -4,25 +4,51 @@ import Link from "next/link";
 import OptimizedImage from "@/components/OptimizedImage";
 import { CampaignCard, type Activity } from "@/components/CampaignCard";
 import { useCart } from "@/context/CartContext";
+import { useI18n } from "@/lib/i18n";
 import { Button } from "@/components/ui/Button";
 import { ArrowRight, CheckCircle, Heart, Users, Globe, Target } from "lucide-react";
 
 type CampaignConfig = {
+  baseKey: string;
   title: string;
   description: string;
   heroImage: string;
   heroAlt: string;
   category: string;
-  accentColor?: string;
   storyTitle: string;
   story: string;
   storyImage: string;
   storyImageAlt: string;
-  impactStats: { value: string; label: string; icon: React.ReactNode }[];
-  ctaText: string;
+  impactStats: { value: string; icon: React.ReactNode }[];
   ctaLink: string;
-  secondaryCtaText?: string;
   secondaryCtaLink?: string;
+  translations: {
+    title: string;
+    lead: string;
+    cta: string;
+    storyTitle: string;
+    labelPrefix: string;
+    activitiesTitle: string;
+    surgeriesPerformed: string;
+    perSurgery: string;
+    procedureTime: string;
+    districtsReached: string;
+    viewCampaigns: string;
+    donate: string;
+    contactTitle: string;
+    form: {
+      name: string;
+      namePlaceholder: string;
+      email: string;
+      emailPlaceholder: string;
+      subject: string;
+      subjectPlaceholder: string;
+      message: string;
+      messagePlaceholder: string;
+      send: string;
+      success: string;
+    };
+  };
 };
 
 type CampaignLandingPageProps = {
@@ -30,6 +56,7 @@ type CampaignLandingPageProps = {
 };
 
 export default function CampaignLandingPage({ config }: CampaignLandingPageProps) {
+  const { t, locale } = useI18n();
   const [activities, setActivities] = useState<Activity[]>([]);
   const [isLoading, setIsLoading] = useState(true);
   const [fetchError, setFetchError] = useState(false);
@@ -78,25 +105,25 @@ export default function CampaignLandingPage({ config }: CampaignLandingPageProps
         </div>
         <div className="relative z-10 text-center px-4 max-w-4xl mx-auto">
           <h1 className="text-4xl md:text-5xl lg:text-6xl font-extrabold text-white mb-6 uppercase tracking-tight drop-shadow-xl">
-            {config.title}
+            {t(`${config.baseKey}.title`)}
           </h1>
           <p className="text-xl md:text-2xl text-gray-200 drop-shadow-md font-light">
-            {config.description}
+            {t(`${config.baseKey}.lead`)}
           </p>
           <div className="mt-10 flex flex-wrap justify-center gap-4">
             <Link
               href={config.ctaLink}
               className="inline-flex items-center gap-2 px-8 py-4 bg-[#95E18A] text-[#111111] hover:bg-white rounded-full font-bold text-lg transition-colors"
             >
-              {config.ctaText}
+              {t(`${config.baseKey}.cta`)}
               <ArrowRight className="w-5 h-5" />
             </Link>
-            {config.secondaryCtaText && config.secondaryCtaLink && (
+            {config.secondaryCtaLink && (
               <Link
                 href={config.secondaryCtaLink}
                 className="inline-flex items-center gap-2 px-8 py-4 bg-white/10 backdrop-blur-md border border-white/20 text-white hover:bg-white hover:text-[#111111] rounded-full font-bold text-lg transition-colors"
               >
-                {config.secondaryCtaText}
+                {t('campaign.viewCampaigns')}
               </Link>
             )}
           </div>
@@ -114,7 +141,7 @@ export default function CampaignLandingPage({ config }: CampaignLandingPageProps
                   {stat.value}
                 </div>
                 <div className="text-sm text-gray-500 font-medium uppercase tracking-wide">
-                  {stat.label}
+                  {t(`${config.baseKey}.${i === 0 ? 'surgeries' : i === 1 ? 'perSurgery' : i === 2 ? 'procedureTime' : 'districts'}`)}
                 </div>
               </div>
             ))}
@@ -127,10 +154,10 @@ export default function CampaignLandingPage({ config }: CampaignLandingPageProps
         <div className="grid grid-cols-1 md:grid-cols-2 gap-16 items-center">
           <div>
             <span className="inline-block text-[#95E18A] font-bold tracking-widest uppercase text-xs mb-4">
-              Our Story
+              {t('about.story.title')}
             </span>
             <h2 className="text-4xl md:text-5xl font-extrabold text-[#111111] mb-6 uppercase tracking-tight">
-              {config.storyTitle}
+              {t(`${config.baseKey}.storyTitle`)}
             </h2>
             <p className="text-lg text-gray-700 leading-relaxed mb-8">
               {config.story}
@@ -138,7 +165,7 @@ export default function CampaignLandingPage({ config }: CampaignLandingPageProps
             <div className="flex flex-wrap gap-3">
               <Link href={config.ctaLink}>
                 <Button className="rounded-xl font-bold px-8 py-6 text-base bg-[#111111] text-white hover:bg-[#333]">
-                  {config.ctaText}
+                  {t(`${config.baseKey}.cta`)}
                 </Button>
               </Link>
               <Link href="/campaigns">
@@ -146,7 +173,7 @@ export default function CampaignLandingPage({ config }: CampaignLandingPageProps
                   variant="outline"
                   className="rounded-xl font-bold px-8 py-6 text-base border-2"
                 >
-                  View All Campaigns
+                  {t('campaign.viewCampaigns')}
                 </Button>
               </Link>
             </div>
@@ -168,10 +195,10 @@ export default function CampaignLandingPage({ config }: CampaignLandingPageProps
         <div className="max-w-7xl mx-auto">
           <div className="text-center mb-16">
             <span className="inline-block text-[#95E18A] font-bold tracking-widest uppercase text-xs mb-4">
-              Campaigns
+              {t('campaigns.core.title')}
             </span>
             <h2 className="text-4xl md:text-5xl font-extrabold text-[#111111] uppercase tracking-tight">
-              Support Our {config.title.split(" ")[0]} Programs
+              {t(`${config.baseKey}.activitiesTitle`)}
             </h2>
           </div>
 
@@ -233,7 +260,7 @@ export default function CampaignLandingPage({ config }: CampaignLandingPageProps
         <div className="max-w-3xl mx-auto">
           <Heart className="w-12 h-12 text-[#95E18A] mx-auto mb-6" />
           <h2 className="text-3xl md:text-4xl font-extrabold uppercase mb-6">
-            Make a Difference Today
+            {t(`${config.baseKey}.donate`)}
           </h2>
           <p className="text-lg text-gray-300 mb-10">
             Your generosity creates lasting change. Every donation, no matter the size, brings hope to those who need it most.
@@ -243,14 +270,14 @@ export default function CampaignLandingPage({ config }: CampaignLandingPageProps
               href={config.ctaLink}
               className="inline-flex items-center gap-2 px-10 py-5 bg-[#95E18A] text-[#111111] hover:bg-white rounded-2xl font-bold text-lg transition-colors"
             >
-              {config.ctaText}
+              {t(`${config.baseKey}.donate`)}
               <ArrowRight className="w-5 h-5" />
             </Link>
             <Link
               href="/contact"
               className="inline-flex items-center gap-2 px-10 py-5 bg-white/10 backdrop-blur-md border border-white/20 hover:bg-white hover:text-[#111111] rounded-2xl font-bold text-lg transition-colors"
             >
-              Contact Us
+              {t('contact.hero.title')}
             </Link>
           </div>
         </div>

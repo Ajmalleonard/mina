@@ -4,8 +4,10 @@ import HeroSection from "@/components/hero";
 import { team } from "@/constants/data";
 import { HeartHandshake, Scale, Star } from "lucide-react";
 import OptimizedImage from "@/components/OptimizedImage";
+import { useI18n } from "@/lib/i18n";
 
 export default function About() {
+  const { t } = useI18n();
   // Images for hero slider from images folder
   const heroImages = [
     { src: "/images/IMG_2525_2.jpg", alt: "Community gathering" },
@@ -16,11 +18,11 @@ export default function About() {
     <main className="min-h-screen bg-[#FFFBF2] text-[#111111]">
       {/* Hero Section */}
       <HeroSection
-        title="About Mina Foundation"
-        description="Our mission is to empower the community through education, support services, and sustainable programs."
-        primaryButtonText="Get Involved"
+        title={t('about.hero.title')}
+        description={t('about.hero.description')}
+        primaryButtonText={t('about.hero.primaryButton')}
         primaryButtonLink="/contact"
-        secondaryButtonText="Donate"
+        secondaryButtonText={t('about.hero.secondaryButton')}
         secondaryButtonLink="/donate"
         backgroundImages={heroImages}
       />
@@ -31,25 +33,17 @@ export default function About() {
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
             <div>
               <h2 className="text-3xl font-bold text-[#111111] mb-4">
-                Our Story
+                {t('about.story.title')}
               </h2>
               <div className="w-20 h-1 bg-[#111111] mb-6"></div>
               <p className="text-gray-700 mb-6 font-medium">
-                Mina Foundation was established in 2021 with a vision to create
-                a supportive ecosystem for families. What started as a small
-                community initiative has grown into a comprehensive foundation
-                serving over 20,000+ of families across the region.
+                {t('about.story.text1')}
               </p>
               <p className="text-gray-700 mb-6">
-                Our founders recognized the unique challenges faced by the
-                community and sought to build a platform that addresses these
-                challenges while preserving cultural values and traditions.
+                {t('about.story.text2')}
               </p>
               <p className="text-gray-700">
-                Today, Mina Foundation stands as a beacon of hope and support,
-                continuously evolving to meet the changing needs of our
-                community while staying true to our core values of compassion,
-                integrity, and excellence.
+                {t('about.story.text3')}
               </p>
             </div>
             <div className="relative">
@@ -83,33 +77,32 @@ export default function About() {
         <div className="container mx-auto px-6">
           <div className="text-center mb-16">
             <h2 className="text-3xl font-bold text-[#111111] mb-4">
-              Our Core Values
+              {t('about.values.title')}
             </h2>
             <div className="w-20 h-1 bg-[#111111] mx-auto mb-6"></div>
             <p className="max-w-3xl mx-auto text-lg text-gray-700">
-              These principles guide everything we do and every decision we make
-              as an organization.
+              {t('about.values.desc')}
             </p>
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
             {[
               {
-                value: "Integrity",
+                value: t('about.values.integrity'),
                 Icon: Scale,
-                desc: "We uphold the highest ethical standards and transparency in all our operations.",
+                desc: t('about.values.integrityDesc'),
                 image: "/images/13.jpg",
               },
               {
-                value: "Compassion",
+                value: t('about.values.compassion'),
                 Icon: HeartHandshake,
-                desc: "We approach our work with empathy and genuine care for those we serve.",
+                desc: t('about.values.compassionDesc'),
                 image: "/images/18.jpg",
               },
               {
-                value: "Excellence",
+                value: t('about.values.excellence'),
                 Icon: Star,
-                desc: "We strive for quality and continuous improvement in all our programs and services.",
+                desc: t('about.values.excellenceDesc'),
                 image: "/images/20.jpg",
               },
             ].map((item, index) => (
@@ -146,11 +139,10 @@ export default function About() {
       <section className="py-20 bg-white">
         <div className="container mx-auto px-6">
           <div className="text-center mb-16">
-            <h2 className="text-3xl font-bold text-[#111111] mb-4">Our Team</h2>
+            <h2 className="text-3xl font-bold text-[#111111] mb-4">{t('about.team.title')}</h2>
             <div className="w-20 h-1 bg-[#111111] mx-auto mb-6"></div>
             <p className="max-w-3xl mx-auto text-lg text-gray-700">
-              Meet the dedicated individuals who work tirelessly to fulfill our
-              mission.
+              {t('about.team.desc')}
             </p>
           </div>
 
@@ -191,18 +183,17 @@ export default function About() {
         </div>
         <div className="container mx-auto px-6 text-center relative z-10">
           <h2 className="text-3xl md:text-5xl font-bold mb-4">
-            Join Our Community
+            {t('about.cta.title')}
           </h2>
           <p className="text-lg text-white/90 max-w-2xl mx-auto mb-8 font-light">
-            Be part of our mission to strengthen families and build resilient
-            communities.
+            {t('about.cta.desc')}
           </p>
           <div>
             <a
               href="/contact"
               className="px-8 py-4 bg-white text-[#111111] hover:bg-gray-100 rounded-full font-bold text-lg inline-block transition-colors"
             >
-              Contact Us Today
+              {t('about.cta.button')}
             </a>
           </div>
         </div>

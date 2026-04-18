@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { useI18n } from '@/lib/i18n';
 
 interface CheckoutOverlayProps {
   isOpen: boolean;
@@ -24,6 +25,8 @@ export default function CheckoutOverlay({
   });
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
+
+  const { t } = useI18n();
 
   if (!isOpen) return null;
 
@@ -77,9 +80,9 @@ export default function CheckoutOverlay({
           ×
         </button>
         
-        <h2 className="text-2xl font-bold mb-2 text-[#111111]">Complete Your Donation</h2>
+        <h2 className="text-2xl font-bold mb-2 text-[#111111]">{t('checkout.title')}</h2>
         <p className="text-sm text-gray-600 mb-6 border-b border-[#111111] pb-4">
-          You are dedicating <strong>${amount}</strong> to support <strong>{activityTitle}</strong>.
+          {t('checkout.lead').replace('{amount}', `$${amount}`).replace('{activity}', activityTitle)}
         </p>
 
         {error && (
@@ -90,31 +93,31 @@ export default function CheckoutOverlay({
 
         <form onSubmit={handleSubmit} className="space-y-4">
           <div>
-            <label className="block text-xs font-bold uppercase tracking-wider mb-1">Full Name (Optional)</label>
+            <label className="block text-xs font-bold uppercase tracking-wider mb-1">{t('checkout.full_name')}</label>
             <input
               type="text"
               name="donorName"
               value={formData.donorName}
               onChange={handleInputChange}
               className="w-full border border-[#111111] p-3 text-sm focus:outline-none focus:ring-1 focus:ring-[#111111]"
-              placeholder="e.g. Ali Rahman"
+              placeholder={t('checkout.placeholder.name')}
             />
           </div>
 
           <div>
-            <label className="block text-xs font-bold uppercase tracking-wider mb-1">Email Address (Optional)</label>
+            <label className="block text-xs font-bold uppercase tracking-wider mb-1">{t('checkout.email')}</label>
             <input
               type="email"
               name="donorEmail"
               value={formData.donorEmail}
               onChange={handleInputChange}
               className="w-full border border-[#111111] p-3 text-sm focus:outline-none focus:ring-1 focus:ring-[#111111]"
-              placeholder="For a thank you receipt"
+              placeholder={t('checkout.placeholder.email')}
             />
           </div>
 
           <div>
-            <label className="block text-xs font-bold uppercase tracking-wider mb-1">Phone Number (Optional)</label>
+            <label className="block text-xs font-bold uppercase tracking-wider mb-1">{t('checkout.phone')}</label>
             <input
               type="tel"
               name="donorPhone"
@@ -125,19 +128,19 @@ export default function CheckoutOverlay({
           </div>
 
           <div>
-            <label className="block text-xs font-bold uppercase tracking-wider mb-1">Message (Optional)</label>
+            <label className="block text-xs font-bold uppercase tracking-wider mb-1">{t('checkout.message')}</label>
             <textarea
               name="message"
               value={formData.message}
               onChange={handleInputChange}
               rows={2}
               className="w-full border border-[#111111] p-3 text-sm focus:outline-none focus:ring-1 focus:ring-[#111111]"
-              placeholder="Leave a message of support"
+              placeholder={t('checkout.placeholder.message')}
             ></textarea>
           </div>
 
           <div>
-            <label className="block text-xs font-bold uppercase tracking-wider mb-1">Payment Method</label>
+            <label className="block text-xs font-bold uppercase tracking-wider mb-1">{t('checkout.payment_method')}</label>
             <div className="grid grid-cols-2 gap-4">
               <label className={`border border-[#111111] p-3 text-center cursor-pointer transition-colors ${formData.paymentMethod === 'paypal' ? 'bg-[#111111] text-white' : 'bg-white text-[#111111] hover:bg-gray-50'}`}>
                 <input
@@ -148,7 +151,7 @@ export default function CheckoutOverlay({
                   onChange={handleInputChange}
                   className="hidden"
                 />
-                <span className="font-bold text-sm uppercase">PayPal</span>
+                <span className="font-bold text-sm uppercase">{t('checkout.payment.paypal')}</span>
               </label>
               <label className={`border border-[#111111] p-3 text-center cursor-pointer transition-colors ${formData.paymentMethod === 'pesapal' ? 'bg-[#111111] text-white' : 'bg-white text-[#111111] hover:bg-gray-50'}`}>
                 <input
@@ -159,7 +162,7 @@ export default function CheckoutOverlay({
                   onChange={handleInputChange}
                   className="hidden"
                 />
-                <span className="font-bold text-sm uppercase">PesaPal</span>
+                <span className="font-bold text-sm uppercase">{t('checkout.payment.pesapal')}</span>
               </label>
             </div>
           </div>
@@ -169,7 +172,7 @@ export default function CheckoutOverlay({
             disabled={loading}
             className="w-full bg-[#95E18A] text-[#111111] p-4 text-sm font-bold uppercase tracking-widest hover:bg-[#85c97b] transition-colors border border-[#111111] mt-6 disabled:opacity-50"
           >
-            {loading ? 'Processing...' : 'Proceed to Payment'}
+            {loading ? t('checkout.processing') : t('checkout.proceed')}
           </button>
         </form>
       </div>

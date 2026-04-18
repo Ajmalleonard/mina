@@ -3,6 +3,7 @@
 import { useState, useEffect } from "react";
 import Link from "next/link";
 import HeroSection from "@/components/hero";
+import { useI18n } from '@/lib/i18n';
 import CheckoutOverlay from "@/components/CheckoutOverlay";
 import { ArrowRight, Activity as ActivityIcon } from "lucide-react";
 import { useCart } from "@/context/CartContext";
@@ -23,6 +24,7 @@ interface Activity {
 
 
 export default function Home() {
+  const { t } = useI18n();
   const [activities, setActivities] = useState<Activity[]>([]);
   const [amounts, setAmounts] = useState<{ [key: string]: number }>({});
   const [isLoading, setIsLoading] = useState(true);
@@ -79,27 +81,23 @@ export default function Home() {
   // For the homepage, we feature the first 3 activities to fit the 3-column grid
   const featuredActivities = activities.slice(0, 3);
 
+
   return (
     <main className="min-h-screen bg-[#FFFBF2] text-[#111111]">
-      <HeroSection
-        title="Your Empathy Transforms Lives"
-        description="Empowering communities by transforming lives and fostering sustainable change through compassionate giving across Tanzania."
-      />
+      <HeroSection title={t('hero.title')} description={t('hero.description')} />
       {/* Our Activities Section */}
       <section className="py-24 bg-[#FFFBF2] border-b border-[#111111]">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex flex-col md:flex-row md:items-end justify-between mb-16 gap-6">
             <div>
-              <h2 className="text-4xl font-bold mb-4">Featured Campaigns</h2>
-              <p className="text-lg text-gray-700 max-w-2xl">
-                Immediate relief and long-term empowerment initiatives making a tangible difference across Tanzania.
-              </p>
+              <h2 className="text-4xl font-bold mb-4">{t('featured_campaigns')}</h2>
+              <p className="text-lg text-gray-700 max-w-2xl">{t('featured_description')}</p>
             </div>
             <Link
               href="/campaigns"
               className="inline-flex items-center gap-2 bg-[#111111] text-white px-8 py-4 font-bold text-sm tracking-wide rounded-full hover:bg-black/80 transition-colors"
             >
-              View All Campaigns
+              {t('view_all_campaigns')}
               <ArrowRight className="w-4 h-4" />
             </Link>
           </div>
@@ -148,41 +146,30 @@ export default function Home() {
       </section>
       {/* Impact Text Section */}
       <section className="py-24 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto">
-        <div className="grid grid-cols-1 md:grid-cols-12 gap-12 text-[#111111]">
+          <div className="grid grid-cols-1 md:grid-cols-12 gap-12 text-[#111111]">
           <div className="md:col-span-4 space-y-4">
             <h3 className="font-bold text-sm uppercase tracking-wide inline-block">
-              Our Positive Impact
+              {t('impact.title')}
             </h3>
             <div className="space-y-1">
-              <p className="text-xs font-medium opacity-60">
-                Across Tanzania
-              </p>
-              <p className="text-xs font-medium">
-                Core Values Guiding <br /> Our National Mission
-              </p>
+              <p className="text-xs font-medium opacity-60">{t('impact.across')}</p>
+              <p className="text-xs font-medium">{t('impact.core_values')}</p>
             </div>
           </div>
 
           <div className="md:col-span-8">
             <p className="text-2xl md:text-3xl font-medium leading-tight mb-8">
-              Over 80,000 lives have been touched by our charity's work. We
-              focus on empowering individuals, improving communities, and
-              fostering sustainable development across Tanzania. Through
-              targeted initiatives, we have enabled access to education,
-              healthcare, and economic opportunities.
+              {t('impact.summary')}
             </p>
 
             <div className="flex flex-wrap gap-3">
               {[
-                "Spreading Hope",
-                "Inspiring Action",
-                "Building Futures",
-                "Fostering Unity",
+                t('tags.spreadingHope'),
+                t('tags.inspiringAction'),
+                t('tags.buildingFutures'),
+                t('tags.fosteringUnity'),
               ].map((tag) => (
-                <span
-                  key={tag}
-                  className="px-6 py-2 rounded-full   bg-white text-sm font-medium hover:bg-[#111111] hover:text-white cursor-default"
-                >
+                <span key={tag} className="px-6 py-2 rounded-full bg-white text-sm font-medium hover:bg-[#111111] hover:text-white cursor-default">
                   {tag}
                 </span>
               ))}
@@ -197,32 +184,18 @@ export default function Home() {
           <div className="grid grid-cols-1 md:grid-cols-3 gap-12 text-center">
             <div className="p-10 bg-white/5 rounded-3xl">
               <h3 className="text-5xl font-bold mb-4 text-[#95E18A]">15</h3>
-              <p className="text-xl font-medium uppercase tracking-wide">
-                Masjids Across Nation
-              </p>
-              <p className="text-sm mt-3 text-white/70">
-                Built to serve rural communities as spiritual and educational
-                centers.
-              </p>
+              <p className="text-xl font-medium uppercase tracking-wide">{t('achievements.masjids.title')}</p>
+              <p className="text-sm mt-3 text-white/70">{t('achievements.masjids.lead')}</p>
             </div>
             <div className="p-10 bg-white/5 rounded-3xl">
               <h3 className="text-5xl font-bold mb-4 text-[#95E18A]">2,348</h3>
-              <p className="text-xl font-medium uppercase tracking-wide">
-                Cataract Surgeries
-              </p>
-              <p className="text-sm mt-3 text-white/70">
-                Successfully performed, restoring sight to the elderly and
-                vulnerable.
-              </p>
+              <p className="text-xl font-medium uppercase tracking-wide">{t('achievements.surgeries.title')}</p>
+              <p className="text-sm mt-3 text-white/70">{t('achievements.surgeries.lead')}</p>
             </div>
             <div className="p-10 bg-white/5 rounded-3xl">
               <h3 className="text-5xl font-bold mb-4 text-[#95E18A]">500+</h3>
-              <p className="text-xl font-medium uppercase tracking-wide">
-                Orphans Sponsored
-              </p>
-              <p className="text-sm mt-3 text-white/70">
-                Receiving comprehensive care, education, and family support.
-              </p>
+              <p className="text-xl font-medium uppercase tracking-wide">{t('achievements.orphans.title')}</p>
+              <p className="text-sm mt-3 text-white/70">{t('achievements.orphans.lead')}</p>
             </div>
           </div>
         </div>
@@ -231,56 +204,44 @@ export default function Home() {
       {/* Seasonal Campaigns: Ramadan, Zakat, Eid */}
       <section className="py-24 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto">
         <div className="mb-16">
-          <h2 className="text-4xl font-bold mb-4">Core Islamic Campaigns</h2>
-          <p className="text-lg text-gray-700 max-w-2xl">
-            Fulfilling specific community obligations and spreading joy during
-            holy months in Tanzania.
-          </p>
+          <h2 className="text-4xl font-bold mb-4">{t('campaigns.core.title')}</h2>
+          <p className="text-lg text-gray-700 max-w-2xl">{t('campaigns.core.description')}</p>
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
           {/* Ramadan Card */}
           <div className="bg-white p-10 rounded-3xl flex flex-col h-full">
-            <h3 className="text-2xl font-bold mb-4">Ramadan Relief</h3>
-            <p className="text-sm text-gray-700 mb-8 min-h-15 flex-1">
-              Providing Suhoor and Iftar food packages to impoverished families
-              throughout the holy month of Ramadan.
-            </p>
+            <h3 className="text-2xl font-bold mb-4">{t('campaign.ramadan.title')}</h3>
+            <p className="text-sm text-gray-700 mb-8 min-h-15 flex-1">{t('campaign.ramadan.desc')}</p>
             <Link
               href="/ramadan"
               className="inline-block py-4 px-8 bg-[#111111] text-white text-center font-bold text-sm rounded-2xl"
             >
-              Support Ramadan
+              {t('campaign.ramadan.cta')}
             </Link>
           </div>
 
           {/* Zakat Card */}
           <div className="bg-[#95E18A] p-10 rounded-3xl flex flex-col h-full">
-            <h3 className="text-2xl font-bold mb-4">Zakat Distribution</h3>
-            <p className="text-sm text-[#111111] mb-8 font-medium min-h-15 flex-1">
-              Purify your wealth. We ensure your Zakat reaches the most eligible
-              families strictly under Islamic guidelines.
-            </p>
+            <h3 className="text-2xl font-bold mb-4">{t('campaign.zakat.title')}</h3>
+            <p className="text-sm text-[#111111] mb-8 font-medium min-h-15 flex-1">{t('campaign.zakat.desc')}</p>
             <Link
               href="/zakat"
               className="inline-block py-4 px-8 bg-[#111111] text-white text-center font-bold text-sm rounded-2xl"
             >
-              Pay Zakat
+              {t('campaign.zakat.cta')}
             </Link>
           </div>
 
           {/* Eid Clothing Card */}
           <div className="bg-white p-10 rounded-3xl flex flex-col h-full">
-            <h3 className="text-2xl font-bold mb-4">Eid Clothing</h3>
-            <p className="text-sm text-gray-700 mb-8 min-h-15 flex-1">
-              Gift a child the joy of Eid with brand new clothes. Ensure they
-              feel valued and celebrated.
-            </p>
+            <h3 className="text-2xl font-bold mb-4">{t('campaign.eid.title')}</h3>
+            <p className="text-sm text-gray-700 mb-8 min-h-15 flex-1">{t('campaign.eid.desc')}</p>
             <Link
               href="/eid"
               className="inline-block py-4 px-8 bg-[#111111] text-white text-center font-bold text-sm rounded-2xl"
             >
-              Donate Clothes
+              {t('campaign.eid.cta')}
             </Link>
           </div>
         </div>
@@ -291,21 +252,15 @@ export default function Home() {
         <div className="grid grid-cols-1 md:grid-cols-2 gap-16 items-center">
           <div className="space-y-8">
             <div>
-              <h2 className="text-5xl font-bold mb-6 text-[#111111]">Masjid Construction</h2>
-              <p className="text-lg text-gray-700 leading-relaxed">
-                Building a Masjid is an ongoing charity (Sadaqah Jariyah). Across
-                rural Tanzania, many communities lack a proper place for worship,
-                education, and gathering. Our construction projects aim to provide
-                structurally sound, large-capacity Mosques that serve as the heart
-                of the community.
-              </p>
+              <h2 className="text-5xl font-bold mb-6 text-[#111111]">{t('masjid.title')}</h2>
+              <p className="text-lg text-gray-700 leading-relaxed">{t('masjid.lead')}</p>
             </div>
 
             <ul className="space-y-4">
               {[
-                "Providing safe spiritual centers.",
-                "Serving as educational hubs for children.",
-                "Building with durable, modern materials.",
+                t('masjid.benefit.1'),
+                t('masjid.benefit.2'),
+                t('masjid.benefit.3'),
               ].map((text) => (
                 <li key={text} className="flex items-center gap-4">
                   <span className="w-6 h-6 rounded-full bg-[#95E18A] flex items-center justify-center text-[#111111] font-bold text-xs">
@@ -320,7 +275,7 @@ export default function Home() {
               href="/masjid"
               className="inline-flex items-center gap-3 bg-[#111111] text-white px-10 py-5 font-bold text-sm tracking-widest uppercase rounded-2xl hover:bg-[#333333] transition-colors"
             >
-              Fund a Masjid
+              {t('masjid.cta')}
               <ArrowRight className="w-5 h-5" />
             </Link>
           </div>
@@ -396,27 +351,22 @@ export default function Home() {
 
           <div className="order-1 md:order-2 space-y-8">
             <h2 className="text-5xl font-bold text-[#111111] leading-tight">
-              Restoring Sight: <br /> Cataract Relief
+              {t('katarakt.title')}
             </h2>
             <p className="text-lg text-gray-700 leading-relaxed">
-              Thousands in Tanzania suffer from preventable blindness due to
-              cataracts. For many elderly individuals, this means a loss of
-              independence and severe hardship. Our medical camps provide free,
-              life-changing cataract surgeries that restore sight in under 30
-              minutes.
+              {t('katarakt.lead')}
             </p>
             <div className="bg-[#e6f7e4] p-8 rounded-3xl space-y-3">
-              <h4 className="font-bold text-xl text-[#2D5A27]">Impact per $75</h4>
+              <h4 className="font-bold text-xl text-[#2D5A27]">{t('katarakt.impact.per')}</h4>
               <p className="text-sm text-gray-700 leading-relaxed">
-                Funds an entire surgery, including pre-operative screening, the
-                procedure itself, and post-operative medications.
+                {t('katarakt.impact.desc')}
               </p>
             </div>
             <Link
               href="/katarakt"
               className="inline-flex items-center gap-3 bg-[#111111] text-white px-10 py-5 font-bold text-sm tracking-widest uppercase rounded-2xl hover:bg-[#333333] transition-colors"
             >
-              Give the Gift of Sight
+              {t('katarakt.cta')}
               <ArrowRight className="w-5 h-5" />
             </Link>
           </div>
@@ -427,7 +377,7 @@ export default function Home() {
       <section className="py-24">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-16">
-            <h2 className="text-5xl font-bold text-[#111111]">Urgent General Appeals</h2>
+            <h2 className="text-5xl font-bold text-[#111111]">{t('urgent.title')}</h2>
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
@@ -448,12 +398,12 @@ export default function Home() {
                 </svg>
               </div>
               <h3 className="text-2xl font-bold mb-6 text-[#111111] leading-tight flex-1">
-                Empower Vulnerable Youth Through Education
+                {t('urgent.card1.title')}
               </h3>
 
               <div>
                 <div className="flex justify-between text-xs font-bold uppercase mb-3 text-[#111111]">
-                  <span>Fund Raised</span>
+                  <span>{t('urgent.card1.raised')}</span>
                   <span className="text-[#95E18A]">76%</span>
                 </div>
                 <div className="w-full h-3 bg-gray-100 rounded-full mb-3 overflow-hidden">
@@ -471,7 +421,7 @@ export default function Home() {
                   href="/donate"
                   className="block w-full py-5 bg-[#111111] text-white text-center font-bold text-sm rounded-2xl hover:bg-[#333333] transition-colors"
                 >
-                  Donate Now
+                  {t('button.donate')}
                 </Link>
               </div>
             </div>
@@ -493,12 +443,12 @@ export default function Home() {
                 </svg>
               </div>
               <h3 className="text-2xl font-bold mb-6 text-[#111111] leading-tight flex-1">
-                Support Local Families in Crisis Today
+                {t('urgent.card2.title')}
               </h3>
 
               <div>
                 <div className="flex justify-between text-xs font-bold uppercase mb-3 text-[#111111]">
-                  <span>Fund Raised</span>
+                  <span>{t('urgent.card1.raised')}</span>
                   <span>45%</span>
                 </div>
                 <div className="w-full h-3 bg-black/10 rounded-full mb-3 overflow-hidden">
@@ -516,7 +466,7 @@ export default function Home() {
                   href="/donate"
                   className="block w-full py-5 bg-[#111111] text-white text-center font-bold text-sm rounded-2xl hover:bg-black/80 transition-colors"
                 >
-                  Donate Now
+                  {t('button.donate')}
                 </Link>
               </div>
             </div>
@@ -538,12 +488,12 @@ export default function Home() {
                 </svg>
               </div>
               <h3 className="text-2xl font-bold mb-6 text-[#111111] leading-tight flex-1">
-                Provide Nutritious Meals to Hungry Children
+                {t('urgent.card3.title')}
               </h3>
 
               <div>
                 <div className="flex justify-between text-xs font-bold uppercase mb-3 text-[#111111]">
-                  <span>Fund Raised</span>
+                  <span>{t('urgent.card1.raised')}</span>
                   <span className="text-[#95E18A]">63%</span>
                 </div>
                 <div className="w-full h-3 bg-gray-100 rounded-full mb-3 overflow-hidden">
@@ -561,7 +511,7 @@ export default function Home() {
                   href="/donate"
                   className="block w-full py-5 bg-[#111111] text-white text-center font-bold text-sm rounded-2xl hover:bg-[#333333] transition-colors"
                 >
-                  Donate Now
+                  {t('button.donate')}
                 </Link>
               </div>
             </div>
@@ -572,7 +522,7 @@ export default function Home() {
               href="/donate"
               className="inline-flex items-center gap-4 text-sm font-black uppercase tracking-[0.2em] group"
             >
-              <span className="border-b-2 border-[#111111] pb-1 group-hover:opacity-60 transition-opacity">Join the Movement, and Change a Life</span>
+              <span className="border-b-2 border-[#111111] pb-1 group-hover:opacity-60 transition-opacity">{t('urgent.join')}</span>
               <span className="bg-[#111111] text-white w-10 h-10 rounded-full flex items-center justify-center group-hover:scale-110 transition-transform">
                 <ArrowRight className="w-4 h-4" />
               </span>

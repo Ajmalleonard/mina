@@ -1,6 +1,7 @@
 "use client";
 
 import React from "react";
+import { useI18n } from '@/lib/i18n';
 import { Map, MapMarker, MarkerContent, MarkerPopup, MapControls } from "@/components/ui/map";
 
 const LOCATIONS = [
@@ -14,13 +15,17 @@ const LOCATIONS = [
   { id: "kigoma-learning", title: "Learning Center", description: "Planned digital literacy & vocational training hub in Kigoma.", lat: -4.8769, lng: 29.6267, status: "planned" as const, category: "Education" },
 ];
 
-const STATS = [
-  { label: "Completed Projects", value: `${LOCATIONS.filter(l => l.status === "completed").length}`, color: "#95E18A" },
-  { label: "Planned Projects", value: `${LOCATIONS.filter(l => l.status === "planned").length}`, color: "#F5A623" },
-  { label: "Active Regions", value: "8+", color: "#111111" },
-];
+// STATS will be generated inside the component so translations can be applied
 
 export default function ImpactMapSection() {
+  const { t } = useI18n();
+
+  const STATS = [
+    { label: t('impact.stats.completed'), value: `${LOCATIONS.filter(l => l.status === "completed").length}`, color: "#95E18A" },
+    { label: t('impact.stats.planned'), value: `${LOCATIONS.filter(l => l.status === "planned").length}`, color: "#F5A623" },
+    { label: t('impact.stats.active'), value: "8+", color: "#111111" },
+  ];
+
   return (
     <section className="py-24 bg-[#FFFBF2]">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -29,15 +34,15 @@ export default function ImpactMapSection() {
         <div className="flex flex-col md:flex-row md:items-end justify-between mb-14 gap-8">
           <div>
             <span className="inline-block px-3 py-1 bg-[#95E18A]/15 rounded-full text-[10px] font-black uppercase tracking-widest text-[#2D5A27] mb-5">
-              Our Footprint
+              {t('impact.map.badge')}
             </span>
             <h2 className="text-5xl md:text-6xl font-black text-[#111111] tracking-tighter leading-none">
-              Where We <br />
-              <span className="text-[#F5A623]">Make Impact</span>
+              {t('impact.map.title').split(' ').slice(0,2).join(' ')} <br />
+              <span className="text-[#F5A623]">{t('impact.map.title').split(' ').slice(2).join(' ')}</span>
             </h2>
           </div>
           <p className="max-w-xs text-sm font-medium text-gray-400 leading-relaxed md:text-right">
-            Every marker is a real project in Tanzania — powered by your generosity.
+            {t('impact.map.subtitle')}
           </p>
         </div>
 
@@ -97,7 +102,7 @@ export default function ImpactMapSection() {
                       className="inline-block px-3 py-1 rounded-full text-[9px] font-black uppercase tracking-wider text-[#111111]"
                       style={{ background: loc.status === "completed" ? "#95E18A" : "#F5A623" }}
                     >
-                      {loc.status === "completed" ? "✓ Contributed" : "● Planned"}
+                      {loc.status === "completed" ? `✓ ${t('impact.legend.contributed')}` : `● ${t('impact.legend.planned')}`}
                     </span>
                   </div>
                 </MarkerPopup>
@@ -110,11 +115,11 @@ export default function ImpactMapSection() {
         <div className="flex items-center gap-6 mt-5">
           <div className="flex items-center gap-2">
             <div className="w-3 h-3 rounded-full bg-[#95E18A]" />
-            <span className="text-[10px] font-bold text-[#111111]/40 uppercase tracking-wider">Contributed</span>
+            <span className="text-[10px] font-bold text-[#111111]/40 uppercase tracking-wider">{t('impact.legend.contributed')}</span>
           </div>
           <div className="flex items-center gap-2">
             <div className="w-3 h-3 rounded-full bg-[#F5A623]" />
-            <span className="text-[10px] font-bold text-[#111111]/40 uppercase tracking-wider">Planned</span>
+            <span className="text-[10px] font-bold text-[#111111]/40 uppercase tracking-wider">{t('impact.legend.planned')}</span>
           </div>
         </div>
 
