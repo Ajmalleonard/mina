@@ -2,6 +2,7 @@ import CampaignLandingPage from "@/components/CampaignLandingPage";
 import { Heart, Users, Globe, Target, CheckCircle } from "lucide-react";
 
 const config = {
+  baseKey: "ramadan",
   title: "Ramadan Relief",
   description:
     "Providing Suhoor and Iftar food packages to impoverished families throughout the holy month of Ramadan.",
@@ -16,29 +17,46 @@ const config = {
   impactStats: [
     {
       value: "5,000+",
-      label: "Families Fed",
       icon: <Heart className="w-8 h-8 text-[#95E18A]" />,
     },
     {
       value: "25,000",
-      label: "Meals Served",
       icon: <Users className="w-8 h-8 text-[#95E18A]" />,
     },
     {
       value: "15+",
-      label: "Districts Covered",
       icon: <Globe className="w-8 h-8 text-[#95E18A]" />,
     },
     {
       value: "5",
-      label: "Years Running",
       icon: <Target className="w-8 h-8 text-[#95E18A]" />,
     },
   ],
-  ctaText: "Support Ramadan",
   ctaLink: "/donate",
-  secondaryCtaText: "View Campaigns",
   secondaryCtaLink: "/campaigns?category=RAMADAN_CAMPAIGN",
+  translations: {
+    title: "Ramadan Relief",
+    lead: "Providing Suhoor and Iftar food packages to impoverished families throughout the holy month of Ramadan.",
+    cta: "Support Ramadan",
+    storyTitle: "Feeding Families During the Holy Month",
+    labelPrefix: "ramadan",
+    activitiesTitle: "Ramadan Relief Impact",
+    viewCampaigns: "View Campaigns",
+    donate: "Support Ramadan",
+    contactTitle: "Contact Us",
+    form: {
+      name: "Your Name",
+      namePlaceholder: "Enter your name",
+      email: "Email Address",
+      emailPlaceholder: "Enter your email",
+      subject: "Subject",
+      subjectPlaceholder: "Enter subject",
+      message: "Message",
+      messagePlaceholder: "Type your message here...",
+      send: "Send Message",
+      success: "Your message has been sent successfully!"
+    }
+  }
 };
 
 export default function RamadanPage() {

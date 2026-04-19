@@ -2,6 +2,7 @@ import CampaignLandingPage from "@/components/CampaignLandingPage";
 import { Heart, Users, Globe, Target } from "lucide-react";
 
 const config = {
+  baseKey: "eid",
   title: "Eid Clothing Appeal",
   description:
     "Gift a child the joy of Eid with brand new clothes. Ensure they feel valued and celebrated.",
@@ -16,29 +17,46 @@ const config = {
   impactStats: [
     {
       value: "1,500+",
-      label: "Children Clothed",
       icon: <Heart className="w-8 h-8 text-[#95E18A]" />,
     },
     {
       value: "500+",
-      label: "Orphans Supported",
       icon: <Users className="w-8 h-8 text-[#95E18A]" />,
     },
     {
       value: "12",
-      label: "Communities Reached",
       icon: <Globe className="w-8 h-8 text-[#95E18A]" />,
     },
     {
       value: "3",
-      label: "Years Running",
       icon: <Target className="w-8 h-8 text-[#95E18A]" />,
     },
   ],
-  ctaText: "Donate Clothes",
   ctaLink: "/donate",
-  secondaryCtaText: "View Campaigns",
   secondaryCtaLink: "/campaigns?category=WE_ARE_TOGETHER_WITH_OUR_ORPHANS",
+  translations: {
+    title: "Eid Clothing Appeal",
+    lead: "Gift a child the joy of Eid with brand new clothes. Ensure they feel valued and celebrated.",
+    cta: "Donate Clothes",
+    storyTitle: "Every Child Deserves to Celebrate",
+    labelPrefix: "eid",
+    activitiesTitle: "Eid Clothing Impact",
+    viewCampaigns: "View Campaigns",
+    donate: "Donate Clothes",
+    contactTitle: "Contact Us",
+    form: {
+      name: "Your Name",
+      namePlaceholder: "Enter your name",
+      email: "Email Address",
+      emailPlaceholder: "Enter your email",
+      subject: "Subject",
+      subjectPlaceholder: "Enter subject",
+      message: "Message",
+      messagePlaceholder: "Type your message here...",
+      send: "Send Message",
+      success: "Your message has been sent successfully!"
+    }
+  }
 };
 
 export default function EidPage() {

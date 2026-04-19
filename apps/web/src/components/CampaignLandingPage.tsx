@@ -10,12 +10,9 @@ import { ArrowRight, CheckCircle, Heart, Users, Globe, Target } from "lucide-rea
 
 type CampaignConfig = {
   baseKey: string;
-  title: string;
-  description: string;
   heroImage: string;
   heroAlt: string;
   category: string;
-  storyTitle: string;
   story: string;
   storyImage: string;
   storyImageAlt: string;
@@ -29,10 +26,6 @@ type CampaignConfig = {
     storyTitle: string;
     labelPrefix: string;
     activitiesTitle: string;
-    surgeriesPerformed: string;
-    perSurgery: string;
-    procedureTime: string;
-    districtsReached: string;
     viewCampaigns: string;
     donate: string;
     contactTitle: string;

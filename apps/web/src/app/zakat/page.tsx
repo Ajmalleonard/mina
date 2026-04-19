@@ -2,6 +2,7 @@ import CampaignLandingPage from "@/components/CampaignLandingPage";
 import { Heart, Users, Globe, Target, CheckCircle } from "lucide-react";
 
 const config = {
+  baseKey: "zakat",
   title: "Zakat Distribution",
   description:
     "Purify your wealth. We ensure your Zakat reaches the most eligible families strictly under Islamic guidelines.",
@@ -16,29 +17,46 @@ const config = {
   impactStats: [
     {
       value: "2,000+",
-      label: "Families Supported",
       icon: <Heart className="w-8 h-8 text-[#95E18A]" />,
     },
     {
       value: "100%",
-      label: "To Eligible Recipients",
       icon: <CheckCircle className="w-8 h-8 text-[#95E18A]" />,
     },
     {
       value: "8",
-      label: "Regions Covered",
       icon: <Globe className="w-8 h-8 text-[#95E18A]" />,
     },
     {
       value: "Sharia",
-      label: "Compliant Process",
       icon: <Target className="w-8 h-8 text-[#95E18A]" />,
     },
   ],
-  ctaText: "Pay Your Zakat",
   ctaLink: "/donate",
-  secondaryCtaText: "View Campaigns",
   secondaryCtaLink: "/campaigns?category=ZAKAT_AND_SADAKA",
+  translations: {
+    title: "Zakat Distribution",
+    lead: "Purify your wealth. We ensure your Zakat reaches the most eligible families strictly under Islamic guidelines.",
+    cta: "Pay Zakat",
+    storyTitle: "Ensuring Your Zakat Reaches Those in Need",
+    labelPrefix: "zakat",
+    activitiesTitle: "Zakat Distribution Impact",
+    viewCampaigns: "View Campaigns",
+    donate: "Pay Zakat",
+    contactTitle: "Contact Us",
+    form: {
+      name: "Your Name",
+      namePlaceholder: "Enter your name",
+      email: "Email Address",
+      emailPlaceholder: "Enter your email",
+      subject: "Subject",
+      subjectPlaceholder: "Enter subject",
+      message: "Message",
+      messagePlaceholder: "Type your message here...",
+      send: "Send Message",
+      success: "Your message has been sent successfully!"
+    }
+  }
 };
 
 export default function ZakatPage() {
