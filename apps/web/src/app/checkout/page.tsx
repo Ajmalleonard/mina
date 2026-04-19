@@ -5,6 +5,7 @@ import { useForm } from 'react-hook-form';
 import Link from 'next/link';
 import { useCart } from '@/context/CartContext';
 import { useAuth } from '@/context/AuthContext';
+import { useI18n } from '@/lib/i18n';
 import { toast } from 'sonner';
 import api from '@/lib/api';
 import OptimizedImage from '@/components/OptimizedImage';
@@ -21,9 +22,15 @@ interface DonorDetails {
 
 // ─── Step Indicator ──────────────────────────────────────────────────────────
 
-const STEPS = ['Cart', 'Your Data', 'Payment', 'Done'];
-
 function StepIndicator({ current }: { current: number }) {
+  const { t } = useI18n();
+  const STEPS = [
+    t('checkout.step.cart'),
+    t('checkout.step.data'),
+    t('checkout.step.payment'),
+    t('checkout.step.done'),
+  ];
+
   return (
     <div className="flex items-center w-full max-w-lg mx-auto mb-10 px-2">
       {STEPS.map((label, i) => {
@@ -60,13 +67,14 @@ function StepIndicator({ current }: { current: number }) {
 
 function CartReview({ onNext }: { onNext: () => void }) {
   const { cart, removeFromCart, totalAmount } = useCart();
+  const { t } = useI18n();
 
   if (cart.items.length === 0) {
     return (
       <div className="text-center py-20">
-        <p className="text-[#888] text-base mb-6">Your basket is empty.</p>
+        <p className="text-[#888] text-base mb-6">{t('cart.empty')}</p>
         <Link href="/" className="text-[#111111] text-sm font-semibold underline underline-offset-4">
-          Browse Campaigns
+          {t('cart.browseCampaigns')}
         </Link>
       </div>
     );
@@ -74,7 +82,7 @@ function CartReview({ onNext }: { onNext: () => void }) {
 
   return (
     <div className="bg-white rounded-2xl p-6 sm:p-8">
-      <h2 className="text-lg font-semibold text-[#111111] mb-6">Your Basket</h2>
+      <h2 className="text-lg font-semibold text-[#111111] mb-6">{t('cart.title')}</h2>
       <div className="space-y-0 mb-6">
         {cart.items.map((item) => (
           <div key={item.id} className="flex items-center gap-4 py-4 border-b border-[#f0f0f0]">
@@ -89,7 +97,7 @@ function CartReview({ onNext }: { onNext: () => void }) {
             </div>
             <div className="flex-1 min-w-0">
               <p className="text-sm font-medium text-[#111111] truncate">{item.activity.title}</p>
-              <p className="text-xs text-[#888] mt-0.5">Qty: {item.quantity}</p>
+              <p className="text-xs text-[#888] mt-0.5">{t('cart.quantity')} {item.quantity}</p>
             </div>
             <div className="text-right shrink-0">
               <p className="text-sm font-semibold text-[#111111]">
@@ -99,7 +107,7 @@ function CartReview({ onNext }: { onNext: () => void }) {
                 onClick={() => removeFromCart(item.id)}
                 className="text-xs text-[#aaa] hover:text-red-500 transition-colors mt-1"
               >
-                Remove
+                {t('cart.remove')}
               </button>
             </div>
           </div>
@@ -107,7 +115,7 @@ function CartReview({ onNext }: { onNext: () => void }) {
       </div>
 
       <div className="flex justify-between items-center py-4 border-t-2 border-[#111111]">
-        <span className="text-sm font-semibold text-[#111111] uppercase tracking-wider">Total</span>
+        <span className="text-sm font-semibold text-[#111111] uppercase tracking-wider">{t('cart.total')}</span>
         <span className="text-xl font-bold text-[#111111]">€{totalAmount.toFixed(2)}</span>
       </div>
 
@@ -115,7 +123,7 @@ function CartReview({ onNext }: { onNext: () => void }) {
         onClick={onNext}
         className="w-full mt-6 bg-[#111111] text-white py-3.5 text-sm font-semibold tracking-widest uppercase hover:bg-[#333] transition-colors rounded-xl"
       >
-        Next →
+        {t('button.next')}
       </button>
     </div>
   );
@@ -125,6 +133,7 @@ function CartReview({ onNext }: { onNext: () => void }) {
 
 function DonorForm({ onNext, onBack }: { onNext: (data: DonorDetails) => void; onBack: () => void }) {
   const { user } = useAuth();
+  const { t } = useI18n();
   const { register, handleSubmit, formState: { errors } } = useForm<DonorDetails>({
     defaultValues: {
       firstName: user?.firstName || '',
@@ -136,57 +145,57 @@ function DonorForm({ onNext, onBack }: { onNext: (data: DonorDetails) => void; o
 
   return (
     <form onSubmit={handleSubmit(onNext)} className="bg-white rounded-2xl p-6 sm:p-8">
-      <h2 className="text-lg font-semibold text-[#111111] mb-6">Your Data</h2>
+      <h2 className="text-lg font-semibold text-[#111111] mb-6">{t('checkout.step.data')}</h2>
       <div className="space-y-4">
         <div className="grid grid-cols-2 gap-4">
           <div>
-            <label className="block text-xs font-medium text-[#888] mb-1.5">First Name *</label>
+            <label className="block text-xs font-medium text-[#888] mb-1.5">{t('form.firstName') || 'First Name *'}</label>
             <input
               {...register('firstName', { required: 'Required' })}
               className="w-full bg-[#f8f8f8] px-4 py-3 text-sm text-[#111111] placeholder-[#bbb] focus:outline-none focus:bg-[#f0f0f0] transition-colors rounded-lg"
-              placeholder="First name"
+              placeholder={t('form.firstNamePlaceholder') || 'First name'}
             />
             {errors.firstName && <p className="text-red-500 text-xs mt-1">{errors.firstName.message}</p>}
           </div>
           <div>
-            <label className="block text-xs font-medium text-[#888] mb-1.5">Last Name *</label>
+            <label className="block text-xs font-medium text-[#888] mb-1.5">{t('form.lastName') || 'Last Name *'}</label>
             <input
               {...register('lastName', { required: 'Required' })}
               className="w-full bg-[#f8f8f8] px-4 py-3 text-sm text-[#111111] placeholder-[#bbb] focus:outline-none focus:bg-[#f0f0f0] transition-colors rounded-lg"
-              placeholder="Last name"
+              placeholder={t('form.lastNamePlaceholder') || 'Last name'}
             />
             {errors.lastName && <p className="text-red-500 text-xs mt-1">{errors.lastName.message}</p>}
           </div>
         </div>
 
         <div>
-          <label className="block text-xs font-medium text-[#888] mb-1.5">Email Address *</label>
+          <label className="block text-xs font-medium text-[#888] mb-1.5">{t('form.email') || 'Email Address *'}</label>
           <input
             type="email"
             {...register('email', { required: 'Required', pattern: { value: /\S+@\S+\.\S+/, message: 'Invalid email' } })}
             className="w-full bg-[#f8f8f8] px-4 py-3 text-sm text-[#111111] placeholder-[#bbb] focus:outline-none focus:bg-[#f0f0f0] transition-colors rounded-lg"
-            placeholder="you@example.com"
+            placeholder={t('form.emailPlaceholder') || 'you@example.com'}
           />
           {errors.email && <p className="text-red-500 text-xs mt-1">{errors.email.message}</p>}
         </div>
 
         <div>
-          <label className="block text-xs font-medium text-[#888] mb-1.5">Phone (Optional)</label>
+          <label className="block text-xs font-medium text-[#888] mb-1.5">{t('form.phone') || 'Phone (Optional)'}</label>
           <input
             type="tel"
             {...register('phone')}
             className="w-full bg-[#f8f8f8] px-4 py-3 text-sm text-[#111111] placeholder-[#bbb] focus:outline-none focus:bg-[#f0f0f0] transition-colors rounded-lg"
-            placeholder="+1 234 567 890"
+            placeholder={t('form.phonePlaceholder') || '+1 234 567 890'}
           />
         </div>
 
         <div>
-          <label className="block text-xs font-medium text-[#888] mb-1.5">Message (Optional)</label>
+          <label className="block text-xs font-medium text-[#888] mb-1.5">{t('form.message') || 'Message (Optional)'}</label>
           <textarea
             {...register('message')}
             rows={3}
             className="w-full bg-[#f8f8f8] px-4 py-3 text-sm text-[#111111] placeholder-[#bbb] focus:outline-none focus:bg-[#f0f0f0] transition-colors resize-none rounded-lg"
-            placeholder="Leave a message of support..."
+            placeholder={t('form.messagePlaceholder') || 'Leave a message of support...'}
           />
         </div>
       </div>
@@ -197,13 +206,13 @@ function DonorForm({ onNext, onBack }: { onNext: (data: DonorDetails) => void; o
           onClick={onBack}
           className="shrink-0 px-6 py-3.5 text-sm font-semibold text-[#111111] bg-[#f0f0f0] hover:bg-[#e5e5e5] transition-colors rounded-xl"
         >
-          ← Back
+          {t('button.back')}
         </button>
         <button
           type="submit"
           className="flex-1 bg-[#111111] text-white py-3.5 text-sm font-semibold tracking-widest uppercase hover:bg-[#333] transition-colors rounded-xl"
         >
-          Next →
+          {t('button.next')}
         </button>
       </div>
     </form>

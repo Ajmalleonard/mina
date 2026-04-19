@@ -1,49 +1,51 @@
+"use client";
+
 import Link from "next/link";
+import { useI18n } from "@/lib/i18n";
 
 export default function PrivacyPage() {
+  const { t } = useI18n();
+
   return (
     <main className="min-h-screen bg-[#FFFBF2] text-[#111111]">
       <div className="bg-[#111111] text-white py-20 px-4">
         <div className="max-w-3xl mx-auto">
           <h1 className="text-4xl md:text-5xl font-extrabold uppercase tracking-tight mb-4">
-            Privacy Policy
+            {t("privacy.title")}
           </h1>
-          <p className="text-gray-400">Last updated: March 2026</p>
+          <p className="text-gray-400">{t("privacy.lastUpdated")}</p>
         </div>
       </div>
 
       <div className="max-w-3xl mx-auto px-4 py-16 space-y-10">
         <section>
-          <h2 className="text-2xl font-bold mb-4">1. Introduction</h2>
-          <p className="text-gray-700 leading-relaxed">
-            Mina Foundation (&quot;we,&quot; &quot;our,&quot; or &quot;us&quot;) is committed to protecting your privacy. This Privacy Policy explains how we collect, use, disclose, and safeguard your information when you visit our website minafoundationtz.org or minafoundation.org (the &quot;Site&quot;), make a donation, or otherwise interact with our services. Please read this policy carefully. If you disagree with its terms, please discontinue use of our Site.
-          </p>
+          <h2 className="text-2xl font-bold mb-4">{t("privacy.section1.title")}</h2>
+          <p className="text-gray-700 leading-relaxed">{t("privacy.section1.p1")}</p>
         </section>
 
         <section>
-          <h2 className="text-2xl font-bold mb-4">2. Information We Collect</h2>
+          <h2 className="text-2xl font-bold mb-4">{t("privacy.section2.title")}</h2>
           <div className="space-y-4 text-gray-700 leading-relaxed">
-            <p>We collect information in several ways:</p>
+            <p>{t("privacy.section2.p1")}</p>
             <ul className="list-disc pl-6 space-y-2">
-              <li><strong>Donation Information:</strong> When you make a donation, we collect your name, email address, phone number, billing address, and payment details (processed securely via PayPal, PesaPal, or our payment processor). We do not store your full credit card details.</li>
-              <li><strong>Account Information:</strong> If you create an account, we collect your name, email, phone number, and password (stored in hashed form).</li>
-              <li><strong>Usage Data:</strong> We collect non-personally identifying information such as browser type, IP address, pages visited, and referring URL through cookies and server logs.</li>
-              <li><strong>Communications:</strong> If you contact us via the contact form, we collect your name, email, and message content.</li>
+              <li><strong>{t("privacy.section2.li.donationTitle")}</strong> {t("privacy.section2.li.donation")}</li>
+              <li><strong>{t("privacy.section2.li.accountTitle")}</strong> {t("privacy.section2.li.account")}</li>
+              <li><strong>{t("privacy.section2.li.usageTitle")}</strong> {t("privacy.section2.li.usage")}</li>
             </ul>
           </div>
         </section>
 
         <section>
-          <h2 className="text-2xl font-bold mb-4">3. How We Use Your Information</h2>
+          <h2 className="text-2xl font-bold mb-4">{t("privacy.section3.title")}</h2>
           <div className="space-y-4 text-gray-700 leading-relaxed">
-            <p>We use collected information to:</p>
+            <p>{t("privacy.section3.p1")}</p>
             <ul className="list-disc pl-6 space-y-2">
-              <li>Process and receipt your donations</li>
-              <li>Send you updates about our programs, campaigns, and impact (you may opt out at any time)</li>
-              <li>Respond to your inquiries and support requests</li>
-              <li>Improve our website and services</li>
-              <li>Comply with applicable laws and regulations</li>
-              <li>Detect and prevent fraud or unauthorized transactions</li>
+              <li>{t("privacy.section3.li.processDonations")}</li>
+              <li>{t("privacy.section3.li.sendUpdates")}</li>
+              <li>{t("privacy.section3.li.respondInquiries")}</li>
+              <li>{t("privacy.section3.li.improve")}</li>
+              <li>{t("privacy.section3.li.comply")}</li>
+              <li>{t("privacy.section3.li.detectFraud")}</li>
             </ul>
           </div>
         </section>
@@ -56,30 +58,24 @@ export default function PrivacyPage() {
         </section>
 
         <section>
-          <h2 className="text-2xl font-bold mb-4">5. Data Retention</h2>
-          <p className="text-gray-700 leading-relaxed">
-            We retain your personal information for as long as your account is active, or as needed to provide you services, comply with legal obligations, resolve disputes, and enforce our agreements. Donation records are retained for a minimum of 7 years in accordance with financial record-keeping requirements.
-          </p>
+          <h2 className="text-2xl font-bold mb-4">{t("privacy.section5.title")}</h2>
+          <p className="text-gray-700 leading-relaxed">{t("privacy.section5.p1")}</p>
         </section>
 
         <section>
-          <h2 className="text-2xl font-bold mb-4">6. Data Security</h2>
-          <p className="text-gray-700 leading-relaxed">
-            We implement appropriate technical and organizational security measures to protect your personal information against unauthorized access, alteration, disclosure, or destruction. These include HTTPS encryption, secure servers, access controls, and regular security assessments. However, no method of transmission over the Internet is 100% secure, and we cannot guarantee absolute security.
-          </p>
+          <h2 className="text-2xl font-bold mb-4">{t("privacy.section6.title")}</h2>
+          <p className="text-gray-700 leading-relaxed">{t("privacy.section6.p1")}</p>
         </section>
 
         <section>
-          <h2 className="text-2xl font-bold mb-4">7. Cookies & Tracking</h2>
-          <p className="text-gray-700 leading-relaxed">
-            Our website uses cookies to enhance your browsing experience. Cookies are small files stored on your device. We use essential cookies (necessary for the site to function), analytics cookies (to understand how visitors use our site), and marketing cookies (with your consent). You can control cookie preferences through our cookie consent banner or your browser settings.
-          </p>
+          <h2 className="text-2xl font-bold mb-4">{t("privacy.section7.title")}</h2>
+          <p className="text-gray-700 leading-relaxed">{t("privacy.section7.p1")}</p>
         </section>
 
         <section>
-          <h2 className="text-2xl font-bold mb-4">8. Your Rights</h2>
+          <h2 className="text-2xl font-bold mb-4">{t("privacy.section8.title")}</h2>
           <div className="space-y-4 text-gray-700 leading-relaxed">
-            <p>Depending on your location, you may have the right to:</p>
+            <p>{t("privacy.section8.p1")}</p>
             <ul className="list-disc pl-6 space-y-2">
               <li>Access the personal information we hold about you</li>
               <li>Request correction of inaccurate data</li>
@@ -93,35 +89,27 @@ export default function PrivacyPage() {
         </section>
 
         <section>
-          <h2 className="text-2xl font-bold mb-4">9. Third-Party Links</h2>
-          <p className="text-gray-700 leading-relaxed">
-            Our website may contain links to third-party websites (e.g., PayPal, PesaPal). We are not responsible for the privacy practices of these external sites. We encourage you to review their privacy policies before providing any personal information.
-          </p>
+          <h2 className="text-2xl font-bold mb-4">{t("privacy.section9.title")}</h2>
+          <p className="text-gray-700 leading-relaxed">{t("privacy.section9.p1")}</p>
         </section>
 
         <section>
-          <h2 className="text-2xl font-bold mb-4">10. Children&apos;s Privacy</h2>
-          <p className="text-gray-700 leading-relaxed">
-            Our website is not directed to children under the age of 13. We do not knowingly collect personal information from children under 13. If we become aware that we have collected data from a child under 13, we will take steps to delete such information promptly.
-          </p>
+          <h2 className="text-2xl font-bold mb-4">{t("privacy.section10.title")}</h2>
+          <p className="text-gray-700 leading-relaxed">{t("privacy.section10.p1")}</p>
         </section>
 
         <section>
-          <h2 className="text-2xl font-bold mb-4">11. Changes to This Policy</h2>
-          <p className="text-gray-700 leading-relaxed">
-            We may update this Privacy Policy from time to time. We will notify you of any material changes by posting the new policy on this page and updating the &quot;Last updated&quot; date. We encourage you to review this policy periodically.
-          </p>
+          <h2 className="text-2xl font-bold mb-4">{t("privacy.section11.title")}</h2>
+          <p className="text-gray-700 leading-relaxed">{t("privacy.section11.p1")}</p>
         </section>
 
         <section>
-          <h2 className="text-2xl font-bold mb-4">12. Contact Us</h2>
-          <p className="text-gray-700 leading-relaxed">
-            If you have any questions about this Privacy Policy or our data practices, please contact us:
-          </p>
+          <h2 className="text-2xl font-bold mb-4">{t("privacy.section12.title")}</h2>
+          <p className="text-gray-700 leading-relaxed">{t("privacy.section12.p1")}</p>
           <div className="mt-4 p-6 bg-white rounded-2xl border border-gray-200">
-            <p className="font-bold text-[#111111]">Mina Foundation</p>
-            <p className="text-gray-600">Keko, Dar es Salaam, Tanzania</p>
-            <p className="text-gray-600">Email: <a href="mailto:info@minafoundation.org" className="text-[#95E18A] underline">info@minafoundation.org</a></p>
+            <p className="font-bold text-[#111111]">{t("footer.brandTitle")}</p>
+            <p className="text-gray-600">{t("contact.location.address")}</p>
+            <p className="text-gray-600">Email: <a href={`mailto:${t("contact.email.address")}`} className="text-[#95E18A] underline">{t("contact.email.address")}</a></p>
             <p className="text-gray-600">Phone: +255 68 798 0701</p>
           </div>
         </section>

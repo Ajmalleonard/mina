@@ -25,10 +25,10 @@ export default function ImpactPage() {
       </section>
 
       {/* Map Section */}
-      <section className="max-w-[1400px] mx-auto px-4 sm:px-6 lg:px-8 pb-32">
+      <section className="max-w-350 mx-auto px-4 sm:px-6 lg:px-8 pb-32">
         <div className="relative rounded-[3rem] overflow-hidden bg-white transition-all duration-700">
            
-           <div className="w-full h-[800px]">
+           <div className="w-full h-200">
              <ImpactMap />
            </div>
         </div>

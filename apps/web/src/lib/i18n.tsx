@@ -6,7 +6,7 @@ import arMessages from "../../messages/ar.json";
 import trMessages from "../../messages/tr.json";
 import esMessages from "../../messages/es.json";
 
-type Messages = Record<string, string>;
+type Messages = Record<string, any>;
 
 interface I18nContextValue {
   locale: string;
@@ -51,7 +51,25 @@ export function I18nProvider({ children }: { children: React.ReactNode }) {
   }, [locale]);
 
   function t(key: string) {
-    return messages[key] || key;
+    // direct flat lookup
+    if (messages && typeof messages === "object" && key in messages) {
+      const v = messages[key];
+      return typeof v === "string" ? v : key;
+    }
+
+    // try nested lookup for keys like 'privacy.section1.title'
+    const parts = key.split(".");
+    let node: any = messages;
+    for (const p of parts) {
+      if (node && typeof node === "object" && p in node) {
+        node = node[p];
+      } else {
+        node = undefined;
+        break;
+      }
+    }
+
+    return typeof node === "string" ? node : key;
   }
 
   return (

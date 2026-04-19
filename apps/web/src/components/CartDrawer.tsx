@@ -4,10 +4,12 @@ import React from 'react';
 import Link from 'next/link';
 import { useCart } from '@/context/CartContext';
 import { CloseCircle, Trash } from 'iconsax-reactjs';
+import { useI18n } from '@/lib/i18n';
 import OptimizedImage from '@/components/OptimizedImage';
 
 export default function CartDrawer() {
   const { cart, isDrawerOpen, closeDrawer, removeFromCart, totalAmount, itemCount } = useCart();
+  const { t } = useI18n();
 
   if (!isDrawerOpen) return null;
 
@@ -24,7 +26,7 @@ export default function CartDrawer() {
         {/* Header */}
         <div className="flex items-center justify-between px-6 py-5 border-b border-[#f0f0f0]">
           <h2 className="text-sm font-semibold uppercase tracking-widest text-[#111111]">
-            Basket <span className="text-[#aaa] font-normal">({itemCount})</span>
+            {t('cart.title')} <span className="text-[#aaa] font-normal">({itemCount})</span>
           </h2>
           <button
             onClick={closeDrawer}
@@ -38,12 +40,12 @@ export default function CartDrawer() {
         <div className="flex-1 overflow-y-auto px-6 py-4">
           {cart.items.length === 0 ? (
             <div className="h-full flex flex-col items-center justify-center text-center space-y-4">
-              <p className="text-[#aaa] text-sm">Your basket is empty.</p>
+              <p className="text-[#aaa] text-sm">{t('cart.empty')}</p>
               <button
                 onClick={closeDrawer}
                 className="text-xs text-[#111111] underline underline-offset-4 hover:text-[#555] transition-colors"
               >
-                Continue Browsing
+                {t('cart.continueBrowsing')}
               </button>
             </div>
           ) : (
@@ -86,7 +88,7 @@ export default function CartDrawer() {
         {cart.items.length > 0 && (
           <div className="px-6 py-5 border-t border-[#f0f0f0]">
             <div className="flex justify-between items-center mb-4">
-              <span className="text-xs font-medium text-[#888] uppercase tracking-widest">Total</span>
+              <span className="text-xs font-medium text-[#888] uppercase tracking-widest">{t('cart.total')}</span>
               <span className="text-lg font-bold text-[#111111]">€{totalAmount.toFixed(2)}</span>
             </div>
             <Link
@@ -94,7 +96,7 @@ export default function CartDrawer() {
               onClick={closeDrawer}
               className="block w-full text-center bg-[#111111] text-white py-3.5 text-xs font-semibold tracking-widest uppercase hover:bg-[#333] transition-colors"
             >
-              Checkout
+              {t('button.checkout')}
             </Link>
           </div>
         )}
