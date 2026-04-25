@@ -7,6 +7,8 @@ import { Toaster } from 'sonner';
 import { useEffect } from 'react';
 import { I18nProvider } from '@/lib/i18n';
 
+import { CurrencyProvider } from '@/context/CurrencyContext';
+
 export default function Providers({ children }: { children: React.ReactNode }) {
   useEffect(() => {
     try {
@@ -31,9 +33,11 @@ export default function Providers({ children }: { children: React.ReactNode }) {
     <AuthProvider>
       <CartProvider>
         <I18nProvider>
-          <Toaster position="bottom-right" richColors />
-          <CartDrawer />
-          {children}
+          <CurrencyProvider>
+            <Toaster position="bottom-right" richColors />
+            <CartDrawer />
+            {children}
+          </CurrencyProvider>
         </I18nProvider>
       </CartProvider>
     </AuthProvider>

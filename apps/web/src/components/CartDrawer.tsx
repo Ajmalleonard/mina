@@ -3,12 +3,14 @@
 import React from 'react';
 import Link from 'next/link';
 import { useCart } from '@/context/CartContext';
+import { useCurrency } from '@/context/CurrencyContext';
 import { CloseCircle, Trash } from 'iconsax-reactjs';
 import { useI18n } from '@/lib/i18n';
 import OptimizedImage from '@/components/OptimizedImage';
 
 export default function CartDrawer() {
   const { cart, isDrawerOpen, closeDrawer, removeFromCart, totalAmount, itemCount } = useCart();
+  const { formatAmount } = useCurrency();
   const { t } = useI18n();
 
   if (!isDrawerOpen) return null;
@@ -64,12 +66,12 @@ export default function CartDrawer() {
                   <div className="flex-1 min-w-0">
                     <h3 className="text-sm font-medium text-[#111111] truncate">{item.activity.title}</h3>
                     <p className="text-xs text-[#aaa] mt-0.5">
-                      €{item.amount.toFixed(2)} {item.quantity > 1 && `× ${item.quantity}`}
+                      {formatAmount(item.amount)} {item.quantity > 1 && `× ${item.quantity}`}
                     </p>
                   </div>
                   <div className="flex flex-col items-end gap-1">
                     <span className="text-sm font-semibold text-[#111111]">
-                      €{(item.amount * item.quantity).toFixed(2)}
+                      {formatAmount(item.amount * item.quantity)}
                     </span>
                     <button
                       onClick={() => removeFromCart(item.id)}
@@ -89,7 +91,7 @@ export default function CartDrawer() {
           <div className="px-6 py-5 border-t border-[#f0f0f0]">
             <div className="flex justify-between items-center mb-4">
               <span className="text-xs font-medium text-[#888] uppercase tracking-widest">{t('cart.total')}</span>
-              <span className="text-lg font-bold text-[#111111]">€{totalAmount.toFixed(2)}</span>
+              <span className="text-lg font-bold text-[#111111]">{formatAmount(totalAmount)}</span>
             </div>
             <Link
               href="/checkout"

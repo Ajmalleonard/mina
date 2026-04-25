@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { Button } from "@/components/ui/Button";
 import OptimizedImage from "@/components/OptimizedImage";
+import { useCurrency } from "@/context/CurrencyContext";
 
 export interface Activity {
   id: string;
@@ -22,6 +23,7 @@ interface CampaignCardProps {
 
 export function CampaignCard({ activity, onAddToCart }: CampaignCardProps) {
   const [amount, setAmount] = useState<number>(1);
+  const { formatAmount } = useCurrency();
 
   const updateAmount = (delta: number) => {
     setAmount((prev) => Math.max(1, prev + delta));
@@ -55,7 +57,7 @@ export function CampaignCard({ activity, onAddToCart }: CampaignCardProps) {
         
         {/* If it's a fixed price item, show price; otherwise show general donation label */}
         <p className="text-[15px] font-bold text-[#111111] mb-4">
-          {activity.price ? `$${activity.price.toLocaleString()}` : "Any Amount"}
+          {activity.price ? formatAmount(activity.price) : "Any Amount"}
         </p>
 
         <p className="text-xs mb-6 grow leading-relaxed text-gray-600">
@@ -71,7 +73,7 @@ export function CampaignCard({ activity, onAddToCart }: CampaignCardProps) {
         {activity.goalAmount && (
           <div className="mb-6">
             <div className="flex items-center justify-between text-[10px] font-bold text-[#111111] mb-1">
-              <span>Raised: ${(activity.raisedAmount || 0).toLocaleString()}</span>
+              <span>Raised: {formatAmount(activity.raisedAmount || 0)}</span>
             </div>
             <div className="w-full bg-white h-2 rounded-none overflow-hidden">
               <div
@@ -85,7 +87,7 @@ export function CampaignCard({ activity, onAddToCart }: CampaignCardProps) {
               />
             </div>
             <p className="text-[10px] font-bold text-[#111111] mt-1">
-              Target: ${activity.goalAmount.toLocaleString()}
+              Target: {formatAmount(activity.goalAmount)}
             </p>
           </div>
         )}

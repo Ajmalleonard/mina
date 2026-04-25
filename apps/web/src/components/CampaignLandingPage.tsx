@@ -97,18 +97,18 @@ export default function CampaignLandingPage({ config }: CampaignLandingPageProps
           <div className="absolute inset-0 bg-linear-to-t from-black/80 via-black/40 to-transparent" />
         </div>
         <div className="relative z-10 text-center px-4 max-w-4xl mx-auto">
-          <h1 className="text-4xl md:text-5xl lg:text-6xl font-extrabold text-white mb-6 uppercase tracking-tight drop-shadow-xl">
-            {t(`${config.baseKey}.title`)}
+<h1 className="text-4xl md:text-5xl lg:text-6xl font-extrabold text-white mb-6 uppercase tracking-tight drop-shadow-xl">
+            {config.translations.title}
           </h1>
           <p className="text-xl md:text-2xl text-gray-200 drop-shadow-md font-light">
-            {t(`${config.baseKey}.lead`)}
+            {config.translations.lead}
           </p>
           <div className="mt-10 flex flex-wrap justify-center gap-4">
             <Link
               href={config.ctaLink}
               className="inline-flex items-center gap-2 px-8 py-4 bg-[#95E18A] text-[#111111] hover:bg-white rounded-full font-bold text-lg transition-colors"
             >
-              {t(`${config.baseKey}.cta`)}
+              {config.translations.cta}
               <ArrowRight className="w-5 h-5" />
             </Link>
             {config.secondaryCtaLink && (
@@ -116,7 +116,7 @@ export default function CampaignLandingPage({ config }: CampaignLandingPageProps
                 href={config.secondaryCtaLink}
                 className="inline-flex items-center gap-2 px-8 py-4 bg-white/10 backdrop-blur-md border border-white/20 text-white hover:bg-white hover:text-[#111111] rounded-full font-bold text-lg transition-colors"
               >
-                {t('campaign.viewCampaigns')}
+                {config.translations.viewCampaigns}
               </Link>
             )}
           </div>
@@ -134,7 +134,7 @@ export default function CampaignLandingPage({ config }: CampaignLandingPageProps
                   {stat.value}
                 </div>
                 <div className="text-sm text-gray-500 font-medium uppercase tracking-wide">
-                  {t(`${config.baseKey}.${i === 0 ? 'surgeries' : i === 1 ? 'perSurgery' : i === 2 ? 'procedureTime' : 'districts'}`)}
+                  {config.translations.activitiesTitle}
                 </div>
               </div>
             ))}
@@ -150,7 +150,7 @@ export default function CampaignLandingPage({ config }: CampaignLandingPageProps
               {t('about.story.title')}
             </span>
             <h2 className="text-4xl md:text-5xl font-extrabold text-[#111111] mb-6 uppercase tracking-tight">
-              {t(`${config.baseKey}.storyTitle`)}
+              {config.translations.storyTitle}
             </h2>
             <p className="text-lg text-gray-700 leading-relaxed mb-8">
               {config.story}
@@ -158,7 +158,7 @@ export default function CampaignLandingPage({ config }: CampaignLandingPageProps
             <div className="flex flex-wrap gap-3">
               <Link href={config.ctaLink}>
                 <Button className="rounded-xl font-bold px-8 py-6 text-base bg-[#111111] text-white hover:bg-[#333]">
-                  {t(`${config.baseKey}.cta`)}
+                  {config.translations.cta}
                 </Button>
               </Link>
               <Link href="/campaigns">
@@ -166,7 +166,7 @@ export default function CampaignLandingPage({ config }: CampaignLandingPageProps
                   variant="outline"
                   className="rounded-xl font-bold px-8 py-6 text-base border-2"
                 >
-                  {t('campaign.viewCampaigns')}
+                  {config.translations.viewCampaigns}
                 </Button>
               </Link>
             </div>
@@ -253,7 +253,7 @@ export default function CampaignLandingPage({ config }: CampaignLandingPageProps
         <div className="max-w-3xl mx-auto">
           <Heart className="w-12 h-12 text-[#95E18A] mx-auto mb-6" />
           <h2 className="text-3xl md:text-4xl font-extrabold uppercase mb-6">
-            {t(`${config.baseKey}.donate`)}
+            {config.translations.donate}
           </h2>
           <p className="text-lg text-gray-300 mb-10">
             Your generosity creates lasting change. Every donation, no matter the size, brings hope to those who need it most.

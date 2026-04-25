@@ -14,6 +14,7 @@ import { CartModule } from "./cart/cart.module";
 import { OrdersModule } from "./orders/orders.module";
 import { PromotionsModule } from './promotions/promotions.module';
 import { UploadsModule } from './uploads/uploads.module';
+import { CurrencyModule } from './currency/currency.module';
 
 @Module({
   imports: [
@@ -45,6 +46,7 @@ import { UploadsModule } from './uploads/uploads.module';
     OrdersModule,
     PromotionsModule,
     UploadsModule,
+    CurrencyModule,
   ],
   providers: [
     {

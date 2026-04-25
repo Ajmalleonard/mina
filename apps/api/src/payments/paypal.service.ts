@@ -46,6 +46,7 @@ export class PaypalService {
 
   async createOrder(amount: number, currency: string = 'EUR', orderId?: string): Promise<any> {
     const accessToken = await this.generateAccessToken();
+    const normalizedCurrency = (currency || 'EUR').toUpperCase();
     const frontendUrl = this.configService.get<string>('FRONTEND_URL') || 'https://minafoundationtz.org';
     const returnUrl = `${frontendUrl}/checkout/paypal-return?orderId=${orderId || ''}`;
     const cancelUrl = `${frontendUrl}/checkout?cancelled=true`;
@@ -63,7 +64,7 @@ export class PaypalService {
             {
               reference_id: orderId || 'donation',
               amount: {
-                currency_code: currency,
+                currency_code: normalizedCurrency,
                 value: amount.toFixed(2),
               },
             },
@@ -103,7 +104,8 @@ export class PaypalService {
       });
 
       if (!response.ok) {
-        throw new Error('Failed to capture PayPal order');
+        const errBody = await response.text();
+        throw new Error(`Failed to capture PayPal order: ${errBody}`);
       }
 
       return response.json();

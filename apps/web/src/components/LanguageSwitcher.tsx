@@ -3,6 +3,7 @@
 import React, { useEffect, useRef, useState } from "react";
 import { useI18n } from '@/lib/i18n';
 import { ChevronDown } from 'lucide-react';
+import { cn } from "@/lib/utils";
 
 type Locale = "en" | "ar" | "tr" | "es";
 
@@ -36,7 +37,7 @@ export default function LanguageSwitcher() {
         onClick={() => setOpen(v => !v)}
         aria-haspopup="menu"
         aria-expanded={open}
-        className="inline-flex items-center gap-2 px-3 py-2 rounded-md border bg-white  text-sm "
+        className="inline-flex items-center gap-2 px-3 py-2 rounded-full p-3  bg-white text-sm "
       >
         <span className="text-lg">{current.flag}</span>
         <span className="hidden sm:inline">{current.label}</span>
@@ -44,15 +45,16 @@ export default function LanguageSwitcher() {
       </button>
 
       {open && (
-        <div className="absolute right-0 mt-2 w-44 bg-white  border rounded-md shadow-lg z-50 overflow-hidden">
+        // if language is arabic right-0 - else left-0
+        <div className={cn("absolute  mt-2 w-44 bg-white  rounded-md z-50 overflow-hidden", locale === "ar" ? "right-0" : "left-0")}>
           {LOCALES.map((l) => (
             <button
               key={l.code}
               onClick={() => { setLocale(l.code); setOpen(false); }}
               className={`w-full text-left px-3 py-2 hover:bg-gray-100 dark:hover:bg-white/5 flex items-center gap-3 ${locale === l.code ? 'font-semibold' : 'font-normal'}`}
             >
-              <span className="text-lg">{l.flag}</span>
-              <span className="truncate">{l.label}</span>
+              <span className="text-sm">{l.flag}</span>
+              <span className="truncate text-sm">{l.label}</span>
             </button>
           ))}
         </div>

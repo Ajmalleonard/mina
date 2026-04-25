@@ -56,7 +56,7 @@ export class PaymentsController {
     let paymentResponse: any = null;
     
     if (paymentMethod === 'paypal') {
-      const order = await this.paypalService.createOrder(Number(amount), currency || 'USD');
+      const order = await this.paypalService.createOrder(Number(amount), currency || 'USD', donation.id);
       // Update donation with tracking ID
       await this.prisma.donation.update({
         where: { id: donation.id },
@@ -102,33 +102,49 @@ export class PaymentsController {
   @Post('paypal/capture')
   async capturePaypalPayment(
     @Body('paypalOrderId') paypalOrderId: string,
-    @Body('orderId') orderId: string,
+    @Body('orderId') orderId?: string,
   ) {
-    this.logger.log(`Capturing PayPal order: ${paypalOrderId} for DB order: ${orderId}`);
-    
+    if (!paypalOrderId) {
+      throw new HttpException('paypalOrderId is required', HttpStatus.BAD_REQUEST);
+    }
+
+    this.logger.log(`Capturing PayPal order: ${paypalOrderId} for DB order: ${orderId || 'N/A'}`);
+
     const captureResult = await this.paypalService.captureOrder(paypalOrderId);
     this.logger.log(`PayPal capture result: ${JSON.stringify(captureResult)}`);
 
-    if (captureResult.status === 'COMPLETED') {
-      // Update DB order to COMPLETED
+    if (captureResult.status !== 'COMPLETED') {
+      return { success: false, status: captureResult.status };
+    }
+
+    // Resolve order either from explicit orderId or by PayPal paymentId
+    const orderById = orderId
+      ? await this.prisma.order.findUnique({
+          where: { id: orderId },
+          include: { items: { include: { activity: true } } },
+        })
+      : null;
+
+    const resolvedOrder = orderById
+      ?? await this.prisma.order.findFirst({
+          where: { paymentId: paypalOrderId },
+          include: { items: { include: { activity: true } } },
+          orderBy: { createdAt: 'desc' },
+        });
+
+    if (resolvedOrder) {
       await this.prisma.order.update({
-        where: { id: orderId },
-        data: { status: 'COMPLETED' },
+        where: { id: resolvedOrder.id },
+        data: { status: 'COMPLETED', paymentId: paypalOrderId },
       });
 
-      // Send confirmation email
-      const order = await this.prisma.order.findUnique({
-        where: { id: orderId },
-        include: { items: { include: { activity: true } } },
-      });
-
-      if (order?.donorEmail) {
+      if (resolvedOrder.donorEmail) {
         this.mailService.sendDonationConfirmationEmail(
-          order.donorEmail,
-          order.donorName,
-          order.totalAmount,
-          order.currency,
-          order.items.map((item: any) => ({
+          resolvedOrder.donorEmail,
+          resolvedOrder.donorName,
+          resolvedOrder.totalAmount,
+          resolvedOrder.currency,
+          resolvedOrder.items.map((item: any) => ({
             title: item.activity?.title || 'Donation',
             amount: item.amount,
             quantity: 1,
@@ -136,10 +152,27 @@ export class PaymentsController {
         ).catch((err) => this.logger.error('Email error:', err));
       }
 
-      return { success: true, status: 'COMPLETED', orderId };
-    } else {
-      return { success: false, status: captureResult.status };
+      return { success: true, status: 'COMPLETED', orderId: resolvedOrder.id };
     }
+
+    // Backward-compatibility path: direct donation records
+    const donation = await this.prisma.donation.findFirst({
+      where: { trackingId: paypalOrderId },
+      include: { activity: true },
+      orderBy: { createdAt: 'desc' },
+    });
+
+    if (donation) {
+      await this.prisma.donation.update({
+        where: { id: donation.id },
+        data: { status: 'completed', paymentMethod: 'paypal' },
+      });
+
+      return { success: true, status: 'COMPLETED', donationId: donation.id };
+    }
+
+    this.logger.warn(`PayPal capture completed but no local order/donation matched order ${paypalOrderId}`);
+    return { success: true, status: 'COMPLETED', warning: 'No local order matched this PayPal payment.' };
   }
 
   @Post('paypal/capture-order')

@@ -8,6 +8,7 @@ import { Button } from "@/components/ui/Button";
 import { useAuth } from "@/context/AuthContext";
 import { useCart } from "@/context/CartContext";
 import LanguageSwitcher from '@/components/LanguageSwitcher';
+import CurrencySwitcher from '@/components/CurrencySwitcher';
 import ThemeToggle from '@/components/ThemeToggle';
 import { useI18n } from '@/lib/i18n';
 
@@ -240,6 +241,7 @@ const Navbar = () => {
 
               {/* Cart Icon */}
               <div className="flex items-center gap-4">
+                <CurrencySwitcher />
                 <LanguageSwitcher />
                 <ThemeToggle />
               </div>
@@ -308,46 +310,47 @@ const Navbar = () => {
 
       {/* Mobile Menu */}
       {isMenuOpen && (
-        <div className="fixed inset-0 z-10000 md:hidden">
-          <div
-            className="absolute inset-0 bg-black/20"
-            onClick={() => setIsMenuOpen(false)}
-          ></div>
-          <div className="absolute top-0 right-0 w-full max-w-sm h-full bg-[#FFFBF2] border-l border-black/5 overflow-y-auto">
-            <div className="p-6">
-                <div className="flex justify-between items-center mb-8">
-                <span className="font-bold text-xl">{t('nav.menu') || 'Menu'}</span>
-                <button
-                  onClick={toggleMenu}
-                  className="p-2 text-[#111111]"
-                  aria-label="Close menu"
-                >
-                  <CloseCircle size="32" color="#111111" variant="Bulk" />
-                </button>
-              </div>
+        <div className="fixed inset-0 z-[10000] md:hidden bg-[#FFFBF2] flex flex-col overflow-hidden">
+          <div className="flex justify-between items-center p-6 border-b border-black/5 shrink-0">
+            <span className="font-bold text-xl tracking-tight">{t('nav.menu') || 'Menu'}</span>
+            <button
+              onClick={toggleMenu}
+              className="p-2 text-[#111111] hover:rotate-90 transition-transform duration-300"
+              aria-label="Close menu"
+            >
+              <CloseCircle size="36" color="#111111" variant="Bulk" />
+            </button>
+          </div>
 
-              <div className="flex flex-col space-y-2">
+          <div className="flex-1 overflow-y-auto px-6 py-8 flex flex-col justify-between">
+            <div className="flex flex-col mt-4">
+              <div className="flex items-center justify-start gap-4 mb-8">
+                <CurrencySwitcher />
+                <LanguageSwitcher />
+              </div>
+              
+              <div className="flex flex-col space-y-6">
                 {navLinks.map((link) => (
                   <Link
                     key={link.href}
                     href={link.href}
-                    className="text-[#111111] text-lg font-medium py-3 border-b border-gray-100 hover:text-[#95E18A]"
+                    className="text-[#111111] text-3xl font-bold hover:text-[#E84E34] transition-colors"
                     onClick={() => setIsMenuOpen(false)}
                   >
                     {t(link.labelKey) || link.label}
                   </Link>
                 ))}
               </div>
+            </div>
 
-              <div className="mt-8">
-                <Link
-                  href="/donate"
-                  onClick={() => setIsMenuOpen(false)}
-                  className="bg-[#111111] text-white w-full block text-center py-3 rounded-full font-medium active:scale-95 transition-transform"
-                >
-                  {t('button.donate')}
-                </Link>
-              </div>
+            <div className="mt-12 space-y-8 pb-8">
+              <Link
+                href="/donate"
+                onClick={() => setIsMenuOpen(false)}
+                className="bg-[#111111] text-white w-full block text-center py-4 rounded-full text-lg font-bold hover:scale-105 active:scale-95 transition-transform"
+              >
+                {t('button.donate')}
+              </Link>
             </div>
           </div>
         </div>

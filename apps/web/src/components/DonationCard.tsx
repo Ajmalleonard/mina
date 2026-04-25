@@ -5,6 +5,7 @@ import { useI18n } from '@/lib/i18n';
 import { Button } from "@/components/ui/Button";
 import { Activity as ActivityIcon } from "lucide-react";
 import OptimizedImage from "@/components/OptimizedImage";
+import { useCurrency } from "@/context/CurrencyContext";
 
 interface Activity {
   id: string;
@@ -32,6 +33,9 @@ export function DonationCard({
   onDonate,
 }: DonationCardProps) {
   const { t } = useI18n();
+  const { currency } = useCurrency();
+  const symbol = currency === 'EUR' ? '€' : '$';
+
   return (
     <div className="bg-white rounded-3xl flex flex-col group overflow-hidden h-full">
       {/* Image Section - Squared Aspect Ratio */}
@@ -70,7 +74,7 @@ export function DonationCard({
               -
             </button>
             <div className="flex items-center justify-center gap-1 font-bold text-lg px-2">
-              <span className="text-[#95E18A]">$</span>
+              <span className="text-[#95E18A]">{symbol}</span>
               <input
                 type="number"
                 min="1"
