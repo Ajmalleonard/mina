@@ -5,6 +5,7 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useCart } from "@/context/CartContext";
 import { useI18n } from '@/lib/i18n';
+import { useCurrency } from '@/context/CurrencyContext';
 import OptimizedImage from "@/components/OptimizedImage";
 
 type HeroSectionProps = {
@@ -46,6 +47,8 @@ const HeroSection: React.FC<HeroSectionProps> = ({
   const [customAmount, setCustomAmount] = useState<string>("");
   const [activities, setActivities] = useState<any[]>([]);
   const { t } = useI18n();
+  const { currency } = useCurrency();
+  const symbol = currency === 'EUR' ? '€' : '$';
 
   // Fetch campaigns from database to link slides
   useEffect(() => {
@@ -192,7 +195,7 @@ const HeroSection: React.FC<HeroSectionProps> = ({
                   : "bg-transparent text-white border-white/40 hover:border-white/80 hover:bg-white/10"
                   }`}
               >
-                ${amount}
+                {symbol}{amount}
               </button>
             ))}
             <button
@@ -210,7 +213,7 @@ const HeroSection: React.FC<HeroSectionProps> = ({
           <div className="flex flex-col sm:flex-row items-center gap-4 mt-2">
             <div className="relative w-full sm:w-1/2">
               <div className="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none text-[#111111] font-bold">
-                <span className="bg-[#111111] text-[#F5A623] rounded-full w-6 h-6 flex items-center justify-center text-sm mr-2">$</span>
+                <span className="bg-[#111111] text-[#F5A623] rounded-full w-6 h-6 flex items-center justify-center text-sm mr-2">{symbol}</span>
               </div>
               <input
                 type="number"
