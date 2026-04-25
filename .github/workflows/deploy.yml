@@ -1,0 +1,56 @@
+name: Deploy Mina Monorepo
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+concurrency:
+  group: mina-deploy-main
+  cancel-in-progress: true
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+
+    steps:
+      - name: Deploy on VPS via SSH
+        uses: appleboy/ssh-action@v1.2.0
+        with:
+          host: ${{ secrets.VPS_HOST }}
+          username: ${{ secrets.VPS_USER }}
+          password: ${{ secrets.VPS_PASSWORD }}
+          port: ${{ secrets.VPS_PORT }}
+          script_stop: true
+          command_timeout: 25m
+          script: |
+            set -euo pipefail
+
+            REPO_DIR="/home/apps/sq/mina"
+
+            cd "$REPO_DIR"
+            echo "== Pull latest =="
+            git fetch origin main
+            git checkout main
+            git pull --ff-only origin main
+
+            echo "== Install dependencies (bun) =="
+            bun install --frozen-lockfile || bun install
+
+            echo "== Build monorepo =="
+            bun run build
+
+            echo "== Ensure API i18n assets exist in dist =="
+            mkdir -p apps/api/dist/src
+            cp -r apps/api/src/i18n apps/api/dist/src/i18n
+
+            echo "== Restart PM2 apps from ecosystem =="
+            pm2 startOrRestart ecosystem.config.js --update-env
+            pm2 save
+
+            echo "== Smoke checks =="
+            curl -fsS http://127.0.0.1:3003/ >/dev/null
+            curl -fsS http://127.0.0.1:3002/ >/dev/null
+
+            echo "Deploy complete ✅"
