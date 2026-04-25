@@ -59,8 +59,36 @@ jobs:
             pm2 startOrRestart ecosystem.config.js --update-env
             pm2 save
 
-            echo "== Smoke checks =="
-            curl -fsS http://127.0.0.1:3003/ >/dev/null
-            curl -fsS http://127.0.0.1:3002/ >/dev/null
+            echo "== Smoke checks (with retry) =="
+            wait_http() {
+              local url="$1"
+              local name="$2"
+              local attempts="${3:-30}"
+              local sleep_secs="${4:-2}"
+
+              for i in $(seq 1 "$attempts"); do
+                if curl -fsS "$url" >/dev/null 2>&1; then
+                  echo "[$name] ready at $url (attempt $i/$attempts)"
+                  return 0
+                fi
+                echo "[$name] waiting... ($i/$attempts)"
+                sleep "$sleep_secs"
+              done
+
+              echo "[$name] failed readiness at $url"
+              return 1
+            }
+
+            wait_http "http://127.0.0.1:3003/" "api" 30 2 || {
+              pm2 show minafoundationtz-backend || true
+              pm2 logs minafoundationtz-backend --lines 80 --nostream || true
+              exit 1
+            }
+
+            wait_http "http://127.0.0.1:3002/" "web" 30 2 || {
+              pm2 show minafoundationtz.org || true
+              pm2 logs minafoundationtz.org --lines 80 --nostream || true
+              exit 1
+            }
 
             echo "Deploy complete ✅"
