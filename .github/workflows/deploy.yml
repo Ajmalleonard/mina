@@ -35,6 +35,16 @@ jobs:
             git checkout main
             git pull --ff-only origin main
 
+            echo "== Ensure bun is available =="
+            export BUN_INSTALL="$HOME/.bun"
+            export PATH="$BUN_INSTALL/bin:$PATH"
+            if ! command -v bun >/dev/null 2>&1; then
+              curl -fsSL https://bun.sh/install | bash
+              export BUN_INSTALL="$HOME/.bun"
+              export PATH="$BUN_INSTALL/bin:$PATH"
+            fi
+            bun --version
+
             echo "== Install dependencies (bun) =="
             bun install --frozen-lockfile || bun install
 
