@@ -95,7 +95,7 @@ const Navbar = () => {
 
   // Navigation links (include English fallback labels)
   const navLinks = [
-    { href: "/", labelKey: "nav.home", label: "Home" },
+
     { href: "/about", labelKey: "nav.about", label: "Who we are" },
     { href: "/campaigns", labelKey: "nav.projects", hasMegaMenu: true, label: "Projects & Campaigns" },
     { href: "/gallery", labelKey: "nav.gallery", label: "Gallery" },
@@ -110,7 +110,7 @@ const Navbar = () => {
     <>
       {/* Navbar - Cream Background, No Blur, Flat */}
       <nav className="bg-[#FFFBF2] fixed w-full z-9999 border-b border-black/5">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="max-w-full  px-4  lg:px-20">
           <div className="flex justify-between items-center h-20">
             {/* Logo */}
             <div className="flex items-center">
@@ -127,13 +127,13 @@ const Navbar = () => {
             </div>
 
             {/* Desktop Nav */}
-            <div className="hidden md:flex items-center space-x-6">
+            <div className="hidden lg:flex items-center gap-2 xl:gap-6 mx-5">
               {navLinks.map((link) => (
                 link.hasMegaMenu ? (
                   <div key={link.href} className="relative group">
                     <Link
                       href={link.href}
-                      className="text-[#111111] hover:text-[#E84E34] px-2 py-6 text-sm font-medium transition-colors flex items-center gap-1"
+                      className="text-[#111111] hover:text-[#E84E34] px-1 xl:px-2 py-6 text-sm font-medium transition-colors flex items-center gap-1 whitespace-nowrap"
                     >
                       {t(link.labelKey) || link.label}
                       <ArrowDown2 size="14" />
@@ -232,7 +232,7 @@ const Navbar = () => {
                   <Link
                     key={link.href}
                     href={link.href}
-                    className="text-[#111111] hover:text-[#E84E34] px-2 py-6 text-sm font-medium transition-colors"
+                      className="text-[#111111] hover:text-[#E84E34] px-1 xl:px-2 py-6 text-sm font-medium transition-colors whitespace-nowrap"
                   >
                     {t(link.labelKey) || link.label}
                   </Link>
@@ -283,7 +283,11 @@ const Navbar = () => {
             </div>
 
             {/* Mobile Menu Button */}
-            <div className="md:hidden flex items-center gap-4">
+            <div className="lg:hidden flex items-center gap-2 sm:gap-4">
+              <div className="flex items-center gap-1 sm:gap-2">
+                <CurrencySwitcher />
+                <LanguageSwitcher />
+              </div>
               <button
                 onClick={openDrawer}
                 className="relative p-2 text-[#111111]"
@@ -310,7 +314,7 @@ const Navbar = () => {
 
       {/* Mobile Menu */}
       {isMenuOpen && (
-        <div className="fixed inset-0 z-[10000] md:hidden bg-[#FFFBF2] flex flex-col overflow-hidden">
+        <div className="fixed inset-0 z-[10000] lg:hidden bg-[#FFFBF2] flex flex-col overflow-hidden">
           <div className="flex justify-between items-center p-6 border-b border-black/5 shrink-0">
             <span className="font-bold text-xl tracking-tight">{t('nav.menu') || 'Menu'}</span>
             <button
@@ -324,11 +328,6 @@ const Navbar = () => {
 
           <div className="flex-1 overflow-y-auto px-6 py-8 flex flex-col justify-between">
             <div className="flex flex-col mt-4">
-              <div className="flex items-center justify-start gap-4 mb-8">
-                <CurrencySwitcher />
-                <LanguageSwitcher />
-              </div>
-              
               <div className="flex flex-col space-y-6">
                 {navLinks.map((link) => (
                   <Link
