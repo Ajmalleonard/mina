@@ -3,7 +3,7 @@ import { BillingRouter } from 'billing-router';
 
 const sdk = new BillingRouter();
 
-export async function middleware(request: NextRequest) {
+export async function proxy(request: NextRequest) {
   const { pathname } = request.nextUrl;
 
   // 1. Bypass check for static assets, Next.js internal routes, API routes, and the suspended page itself
@@ -31,10 +31,10 @@ export async function middleware(request: NextRequest) {
 
     if (isSuspended) {
       console.warn(`[Hosting Suspension] Access denied for domain: ${domain}`);
-      // Rewrite the URL to /suspended and pass the domain as a query parameter
+      // Redirect to /suspended and pass the domain as a query parameter
       const suspendedUrl = new URL('/suspended', request.url);
       suspendedUrl.searchParams.set('domain', domain);
-      return NextResponse.rewrite(suspendedUrl);
+      return NextResponse.redirect(suspendedUrl);
     }
   } catch (error) {
     // Fail-open: if there is an error communicating with Cloudflare KV,
