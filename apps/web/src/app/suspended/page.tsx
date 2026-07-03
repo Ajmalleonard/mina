@@ -9,126 +9,135 @@ function SuspendedContent() {
   const billingUrl = `https://billing.squareexp.com?domain=${encodeURIComponent(domain)}`;
 
   return (
-    <div
-      style={{
-        width: '100%',
-        maxWidth: '440px',
-        textAlign: 'center',
-        padding: '40px 24px',
-        backgroundColor: '#ffffff',
-      }}
-    >
-      {/* Generic Minimalist Warning Icon */}
-      <div
-        style={{
-          width: '64px',
-          height: '64px',
+    <div style={{
+      width: '100%',
+      maxWidth: '480px',
+      textAlign: 'center',
+      padding: '0 24px',
+    }}>
+      {/* Status Bar */}
+      <div style={{
+        display: 'inline-flex',
+        alignItems: 'center',
+        gap: '8px',
+        backgroundColor: '#000000',
+        color: '#ffffff',
+        padding: '6px 14px',
+        fontSize: '11px',
+        fontWeight: '700',
+        letterSpacing: '0.12em',
+        textTransform: 'uppercase',
+        marginBottom: '40px',
+      }}>
+        <span style={{
+          width: '6px',
+          height: '6px',
           borderRadius: '50%',
-          backgroundColor: '#f5f5f7',
-          display: 'flex',
-          alignItems: 'center',
-          justifyContent: 'center',
-          margin: '0 auto 24px auto',
-        }}
-      >
-        <svg
-          width="28"
-          height="28"
-          viewBox="0 0 24 24"
-          fill="none"
-          stroke="#1d1d1f"
-          strokeWidth="1.5"
-          strokeLinecap="round"
-          strokeLinejoin="round"
-        >
-          <circle cx="12" cy="12" r="10" />
-          <line x1="12" y1="8" x2="12" y2="12" />
-          <line x1="12" y1="16" x2="12.01" y2="16" />
-        </svg>
+          backgroundColor: '#ffffff',
+          display: 'inline-block',
+        }} />
+        Service Suspended
       </div>
 
-      <h1
-        style={{
-          fontSize: '22px',
-          fontWeight: '600',
-          color: '#1d1d1f',
-          marginBottom: '10px',
-          letterSpacing: '-0.01em',
-        }}
-      >
-        Website Offline
+      {/* Big Bold Heading */}
+      <h1 style={{
+        fontSize: '52px',
+        fontWeight: '900',
+        color: '#000000',
+        lineHeight: '1',
+        letterSpacing: '-0.03em',
+        marginBottom: '8px',
+        marginTop: 0,
+      }}>
+        OFFLINE
       </h1>
 
-      <span
-        style={{
-          display: 'inline-block',
-          fontSize: '13px',
-          color: '#86868b',
-          backgroundColor: '#f5f5f7',
-          padding: '4px 12px',
-          borderRadius: '16px',
-          marginBottom: '20px',
-          fontWeight: '500',
-        }}
-      >
+      {/* Domain pill */}
+      <div style={{
+        display: 'inline-block',
+        border: '2px solid #000000',
+        padding: '4px 16px',
+        fontSize: '13px',
+        fontWeight: '700',
+        letterSpacing: '0.04em',
+        color: '#000000',
+        marginBottom: '32px',
+      }}>
         {domain}
-      </span>
+      </div>
 
-      <p
-        style={{
-          fontSize: '14px',
-          color: '#515154',
-          lineHeight: '1.5',
-          marginBottom: '28px',
-        }}
-      >
-        This website has been suspended. If you are the administrator of this domain, please check your billing portal to resolve any pending invoices.
+      {/* Divider */}
+      <div style={{ width: '100%', height: '2px', backgroundColor: '#000000', marginBottom: '32px' }} />
+
+      {/* Message */}
+      <p style={{
+        fontSize: '15px',
+        fontWeight: '500',
+        color: '#000000',
+        lineHeight: '1.65',
+        marginBottom: '40px',
+        marginTop: 0,
+      }}>
+        This website has been suspended due to an outstanding invoice.
+        If you are the site owner, please visit the billing portal to
+        settle your balance and restore service.
       </p>
 
+      {/* CTA */}
       <a
         href={billingUrl}
-        target="_blank"
-        rel="noopener noreferrer"
         style={{
           display: 'block',
           width: '100%',
-          padding: '12px',
-          borderRadius: '8px',
-          backgroundColor: '#1d1d1f',
+          padding: '16px',
+          backgroundColor: '#000000',
           color: '#ffffff',
-          fontWeight: '500',
+          fontWeight: '800',
           fontSize: '14px',
+          letterSpacing: '0.08em',
+          textTransform: 'uppercase',
           textDecoration: 'none',
-          transition: 'background-color 0.2s',
           cursor: 'pointer',
+          boxSizing: 'border-box',
         }}
       >
-        Check Status
+        Go to Billing Portal →
       </a>
+
+      {/* Footer */}
+      <p style={{
+        fontSize: '11px',
+        color: '#888888',
+        marginTop: '24px',
+        fontWeight: '500',
+        letterSpacing: '0.04em',
+        textTransform: 'uppercase',
+      }}>
+        Squareexp Hosting Platform
+      </p>
     </div>
   );
 }
 
 export default function SuspendedPage() {
   return (
-    <div
-      style={{
-        position: 'fixed',
-        top: 0,
-        left: 0,
-        width: '100vw',
-        height: '100vh',
-        backgroundColor: '#ffffff',
-        display: 'flex',
-        alignItems: 'center',
-        justifyContent: 'center',
-        fontFamily: '-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif',
-        color: '#1d1d1f',
-        zIndex: 999999,
-        padding: '20px',
-      }}
-    >
-      <Suspense fallback={<div style={{ color: '#86868b' }}>Loading...</div>}>
+    <div style={{
+      position: 'fixed',
+      top: 0,
+      left: 0,
+      width: '100vw',
+      height: '100vh',
+      backgroundColor: '#ffffff',
+      display: 'flex',
+      alignItems: 'center',
+      justifyContent: 'center',
+      fontFamily: '-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif',
+      color: '#000000',
+      zIndex: 999999,
+      padding: '20px',
+      boxSizing: 'border-box',
+    }}>
+      <Suspense fallback={<div style={{ color: '#000000', fontWeight: '700' }}>Loading...</div>}>
         <SuspendedContent />
       </Suspense>
     </div>
