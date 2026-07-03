@@ -11,6 +11,7 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "billing-router": "workspace:*",
     "@next/bundle-analyzer": "^16.2.4",
     "@stripe/react-stripe-js": "^3.6.0",
     "@stripe/stripe-js": "^7.2.0",

@@ -2,7 +2,7 @@
   "name": "mina-monorepo",
   "private": true,
   "packageManager": "npm@10.8.0",
-  "workspaces": ["apps/*"],
+  "workspaces": ["apps/*", "packages/*"],
   "scripts": {
     "dev": "turbo run dev",
     "build": "turbo run build",

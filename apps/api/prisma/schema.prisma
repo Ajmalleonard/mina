@@ -101,11 +101,18 @@ model Activity {
   type         ActivityType     @default(DONATION)
   price        Float? // Fixed price if applicable
 
+  // Urgent Appeals fields
+  isUrgent     Boolean   @default(false)
+  urgencyLevel Int       @default(0) // 1-5; higher = more urgent
+  endDate      DateTime? // Optional deadline for countdown timer
+
   donations Donation[]
   cartItems CartItem[]
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
+
+  @@index([isUrgent, urgencyLevel])
 }
 
 enum ActivityType {
@@ -129,6 +136,7 @@ enum ActivityCategory {
   INCOME_SUPPORT
   GENERAL_HELPS
   CONSTRUCTION_PROJECTS
+  URGENT_APPEAL
 }
 
 model Promotion {

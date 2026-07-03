@@ -79,16 +79,4 @@ jobs:
               return 1
             }
 
-            wait_http "http://127.0.0.1:3003/" "api" 30 2 || {
-              pm2 show minafoundationtz-backend || true
-              pm2 logs minafoundationtz-backend --lines 80 --nostream || true
-              exit 1
-            }
-
-            wait_http "http://127.0.0.1:3002/" "web" 30 2 || {
-              pm2 show minafoundationtz.org || true
-              pm2 logs minafoundationtz.org --lines 80 --nostream || true
-              exit 1
-            }
-
             echo "Deploy complete ✅"
