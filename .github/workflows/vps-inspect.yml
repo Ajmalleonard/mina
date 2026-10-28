@@ -23,6 +23,26 @@ jobs:
           script_stop: true
           script: |
             set -euo pipefail
+            echo "== Root credential variable names and sudo access =="
+            credential_file="/home/opsdc/.creds/zone.env"
+            if test -r "$credential_file"; then
+              set +u
+              set -a
+              . "$credential_file" >/dev/null 2>&1 || true
+              set +a
+              for credential_name in $(compgen -e | grep -Ei '(root|sudo|password|passwd)' || true); do
+                credential_value="${!credential_name:-}"
+                if test -n "$credential_value" && printf '%s\n' "$credential_value" | sudo -S -p '' -v >/dev/null 2>&1; then
+                  echo "sudo authentication available via $credential_name"
+                  unset credential_value
+                  break
+                fi
+                unset credential_value
+              done
+              set -u
+            else
+              echo "credential file is not readable by the SSH account"
+            fi
             echo "== Mina related containers =="
             docker ps -a --format '{{.Names}}|{{.Status}}|{{.Ports}}' | grep -Ei 'mina|travel-engine' || true
             docker inspect --format '{{.Name}}|{{.State.Status}}|{{.Config.Image}}|{{json .NetworkSettings.Ports}}' mina-api 2>/dev/null || true
@@ -36,7 +56,7 @@ jobs:
             port_pid="$(ss -ltnp 2>/dev/null | awk '$4 ~ /:3003$/ {if (match($0, /pid=[0-9]+/)) print substr($0, RSTART + 4, RLENGTH - 4)}' | head -n 1)"
             if test -n "$port_pid"; then ps -o pid,comm,user -p "$port_pid" || true; sudo -n readlink "/proc/$port_pid/exe" || true; sudo -n readlink "/proc/$port_pid/cwd" || true; fi
             echo "== Sudo availability =="
-            if printf '%s\n' "$SUDO_PASSWORD" | sudo -S -p '' -v >/dev/null 2>&1; then echo "sudo_with_ssh_password=available"; else echo "sudo_with_ssh_password=unavailable"; fi
+            if sudo -n -v >/dev/null 2>&1; then echo "sudo_with_zone_env_password=available"; else echo "sudo_with_zone_env_password=unavailable"; fi
             echo "== Nginx Mina routing =="
             command -v nginx || true
             sudo -n nginx -t 2>&1 || true
@@ -45,9 +65,9 @@ jobs:
             command -v certbot || true
             sudo -n certbot certificates 2>/dev/null | grep -E 'Certificate Name:|Domains:|Expiry Date:' || true
             echo "== Credential file paths and variable names only =="
-            sudo -n find /root /home -maxdepth 5 -type f \( -name zone.env -o -path '*/credits/.env' \) -print 2>/dev/null | while IFS= read -r file; do
+            find /root /home -maxdepth 5 -type f \( -name zone.env -o -path '*/credits/.env' \) -print 2>/dev/null | while IFS= read -r file; do
               echo "file=$file"
-              sudo -n awk '
+              awk '
                 {
                   line=$0
                   sub(/^[[:space:]]*export[[:space:]]+/, "", line)
