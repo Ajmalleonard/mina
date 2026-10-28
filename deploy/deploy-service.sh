@@ -33,7 +33,7 @@ has_legacy_pm2() {
 for service in ${DEPLOY_SERVICES//,/ }; do
   case "$service" in
     web) process_name="minafoundationtz.org"; stable_port=3002; temp_port=13002 ;;
-    api) process_name="minafoundationtz-backend"; stable_port=3003; temp_port=13003 ;;
+    api) process_name="minafoundationtz-backend"; stable_port=3005; temp_port=13003 ;;
     mina-panel) process_name=""; stable_port=3004 ;;
     *) echo "Unknown service: $service" >&2; exit 2 ;;
   esac
@@ -49,9 +49,11 @@ for service in ${DEPLOY_SERVICES//,/ }; do
       IMAGE_TAG="$IMAGE_TAG" API_HOST_PORT="$temp_port" docker compose -f "$COMPOSE_FILE" up -d --no-deps --force-recreate "$service"
     fi
     wait_http "$temp_port"
-    pm2 delete "$process_name"
-    pm2 save --force
-    echo "Moving $service to its existing reverse-proxy port $stable_port"
+    if has_legacy_pm2 "$process_name"; then
+      pm2 delete "$process_name"
+      pm2 save --force
+    fi
+    echo "Moving $service to its stable proxy port $stable_port"
     if [[ "$service" == "web" ]]; then
       IMAGE_TAG="$IMAGE_TAG" WEB_HOST_PORT="$stable_port" docker compose -f "$COMPOSE_FILE" up -d --no-deps --force-recreate "$service"
     else
