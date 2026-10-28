@@ -31,7 +31,7 @@ jobs:
               pm2 jlist | node -e 'let s="";process.stdin.on("data",d=>s+=d).on("end",()=>{for(const p of JSON.parse(s)) if(/mina|travel-engine/i.test(p.name)) console.log(p.name+"|"+p.pm2_env.status)})'
             fi
             echo "== Listening ports =="
-            ss -ltnp 2>/dev/null | grep -E ':(3002|3003|3004|13002|13003)([[:space:]]|$)' || true
+            ss -ltnp 2>/dev/null | grep -E ':(3002|3003|3004|3005|13002|13003)([[:space:]]|$)' || true
             echo "== Port 3003 owner =="
             port_pid="$(ss -ltnp 2>/dev/null | awk '$4 ~ /:3003$/ {if (match($0, /pid=[0-9]+/)) print substr($0, RSTART + 4, RLENGTH - 4)}' | head -n 1)"
             if test -n "$port_pid"; then ps -o pid,comm,user -p "$port_pid" || true; sudo -n readlink "/proc/$port_pid/exe" || true; sudo -n readlink "/proc/$port_pid/cwd" || true; fi
@@ -40,13 +40,19 @@ jobs:
             echo "== Nginx Mina routing =="
             command -v nginx || true
             sudo -n nginx -t 2>&1 || true
-            sudo -n nginx -T 2>/dev/null | grep -E 'server_name|proxy_pass|listen' | grep -Ei 'mina|3002|3003|3004|13002|13003' || true
+            sudo -n nginx -T 2>/dev/null | grep -E 'server_name|proxy_pass|listen|configuration file' | grep -Ei 'mina|3002|3003|3004|3005|13002|13003' || true
             echo "== Existing portal certificates =="
             command -v certbot || true
             sudo -n certbot certificates 2>/dev/null | grep -E 'Certificate Name:|Domains:|Expiry Date:' || true
             echo "== Credential file paths and variable names only =="
             sudo -n find /root /home -maxdepth 5 -type f \( -name zone.env -o -path '*/credits/.env' \) -print 2>/dev/null | while IFS= read -r file; do
               echo "file=$file"
-              sudo -n awk -F= '/^[[:space:]]*(export[[:space:]]+)?[A-Za-z_][A-Za-z0-9_]*[[:space:]]*=/ {key=$1; sub(/^[[:space:]]*export[[:space:]]+/, "", key); gsub(/[[:space:]]/, "", key); if (key ~ /cloudflare|(^|_)cf_|zone|account|root|password|token|email/i) print key}' "$file" | sort -u || true
+              sudo -n awk '
+                {
+                  line=$0
+                  sub(/^[[:space:]]*export[[:space:]]+/, "", line)
+                  if (match(line, /^[A-Za-z_][A-Za-z0-9_]*/)) print substr(line, RSTART, RLENGTH)
+                }
+              ' "$file" | sort -u || true
             done || true
             exit 0
