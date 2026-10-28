@@ -12,11 +12,14 @@ jobs:
     steps:
       - name: Inspect Mina deployment state without changing it
         uses: appleboy/ssh-action@v1.2.0
+        env:
+          SUDO_PASSWORD: ${{ secrets.VPS_PASSWORD }}
         with:
           host: ${{ secrets.VPS_HOST }}
           username: ${{ secrets.VPS_USER }}
           password: ${{ secrets.VPS_PASSWORD }}
           port: ${{ secrets.VPS_PORT }}
+          envs: SUDO_PASSWORD
           script_stop: true
           script: |
             set -euo pipefail
@@ -31,9 +34,9 @@ jobs:
             ss -ltnp 2>/dev/null | grep -E ':(3002|3003|3004|13002|13003)([[:space:]]|$)' || true
             echo "== Port 3003 owner =="
             port_pid="$(ss -ltnp 2>/dev/null | awk '$4 ~ /:3003$/ {if (match($0, /pid=[0-9]+/)) print substr($0, RSTART + 4, RLENGTH - 4)}' | head -n 1)"
-            if test -n "$port_pid"; then ps -o pid,comm,user -p "$port_pid" || true; readlink "/proc/$port_pid/exe" || true; fi
+            if test -n "$port_pid"; then ps -o pid,comm,user -p "$port_pid" || true; readlink "/proc/$port_pid/exe" || true; readlink "/proc/$port_pid/cwd" || true; fi
             echo "== Sudo availability =="
-            if sudo -n true 2>/dev/null; then echo "sudo_without_password=available"; else echo "sudo_without_password=unavailable"; fi
+            if printf '%s\n' "$SUDO_PASSWORD" | sudo -S -p '' -v >/dev/null 2>&1; then echo "sudo_with_ssh_password=available"; else echo "sudo_with_ssh_password=unavailable"; fi
             echo "== Nginx Mina routing =="
             command -v nginx || true
             sudo -n nginx -t 2>&1 || true
@@ -44,10 +47,7 @@ jobs:
             echo "== Cloudflare variable names in ~/credits/.env (values hidden) =="
             cf_env="$HOME/credits/.env"
             if test -f "$cf_env"; then
-              set -a
-              source "$cf_env" >/dev/null
-              set +a
-              compgen -e | grep -Ei 'cloudflare|(^|_)cf_|zone|account' | sort -u || true
+              awk -F= '/^[[:space:]]*(export[[:space:]]+)?[A-Za-z_][A-Za-z0-9_]*[[:space:]]*=/ {key=$1; sub(/^[[:space:]]*export[[:space:]]+/, "", key); gsub(/[[:space:]]/, "", key); if (key ~ /cloudflare|(^|_)cf_|zone|account/i) print key}' "$cf_env" | sort -u || true
             else
               echo "~/credits/.env=missing"
             fi
