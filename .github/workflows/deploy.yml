@@ -128,7 +128,7 @@ jobs:
           username: ${{ secrets.VPS_USER }}
           password: ${{ secrets.VPS_PASSWORD }}
           port: ${{ secrets.VPS_PORT }}
-          source: "apps/api/prisma.config.ts,apps/api/prisma/schema.prisma,apps/api/prisma/migrations/**"
+          source: "apps/api/prisma.config.ts,apps/api/prisma/schema.prisma,apps/api/prisma/migrations"
           target: "/home/apps/sq/mina"
           strip_components: 1
       - name: Apply API database migrations
@@ -144,6 +144,7 @@ jobs:
           script: |
             set -euo pipefail
             cd /home/apps/sq/mina/apps/api
+            test -f prisma/migrations/20261028163000_activity_impact_coordinates/migration.sql
             if command -v bunx >/dev/null 2>&1; then
               bunx prisma migrate deploy
             elif test -x node_modules/.bin/prisma; then

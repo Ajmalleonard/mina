@@ -1,0 +1,38 @@
+name: Apply Mina API Prisma migrations
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  migrate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Upload API Prisma schema and migrations
+        uses: appleboy/scp-action@v0.1.7
+        with:
+          host: ${{ secrets.VPS_HOST }}
+          username: ${{ secrets.VPS_USER }}
+          password: ${{ secrets.VPS_PASSWORD }}
+          port: ${{ secrets.VPS_PORT }}
+          source: "apps/api/prisma.config.ts,apps/api/prisma/schema.prisma,apps/api/prisma/migrations"
+          target: "/home/apps/sq/mina"
+          strip_components: 1
+      - name: Apply migrations using the VPS API environment
+        uses: appleboy/ssh-action@v1.2.0
+        with:
+          host: ${{ secrets.VPS_HOST }}
+          username: ${{ secrets.VPS_USER }}
+          password: ${{ secrets.VPS_PASSWORD }}
+          port: ${{ secrets.VPS_PORT }}
+          script_stop: true
+          command_timeout: 10m
+          script: |
+            set -euo pipefail
+            cd /home/apps/sq/mina/apps/api
+            test -f prisma/migrations/20261028163000_activity_impact_coordinates/migration.sql
+            bunx prisma migrate deploy
+            bunx prisma migrate status
