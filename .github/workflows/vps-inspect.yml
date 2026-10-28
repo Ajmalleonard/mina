@@ -34,7 +34,7 @@ jobs:
             ss -ltnp 2>/dev/null | grep -E ':(3002|3003|3004|13002|13003)([[:space:]]|$)' || true
             echo "== Port 3003 owner =="
             port_pid="$(ss -ltnp 2>/dev/null | awk '$4 ~ /:3003$/ {if (match($0, /pid=[0-9]+/)) print substr($0, RSTART + 4, RLENGTH - 4)}' | head -n 1)"
-            if test -n "$port_pid"; then ps -o pid,comm,user -p "$port_pid" || true; readlink "/proc/$port_pid/exe" || true; readlink "/proc/$port_pid/cwd" || true; fi
+            if test -n "$port_pid"; then ps -o pid,comm,user -p "$port_pid" || true; sudo -n readlink "/proc/$port_pid/exe" || true; sudo -n readlink "/proc/$port_pid/cwd" || true; fi
             echo "== Sudo availability =="
             if printf '%s\n' "$SUDO_PASSWORD" | sudo -S -p '' -v >/dev/null 2>&1; then echo "sudo_with_ssh_password=available"; else echo "sudo_with_ssh_password=unavailable"; fi
             echo "== Nginx Mina routing =="
@@ -44,10 +44,9 @@ jobs:
             echo "== Existing portal certificates =="
             command -v certbot || true
             sudo -n certbot certificates 2>/dev/null | grep -E 'Certificate Name:|Domains:|Expiry Date:' || true
-            echo "== Cloudflare variable names in ~/credits/.env (values hidden) =="
-            cf_env="$HOME/credits/.env"
-            if test -f "$cf_env"; then
-              awk -F= '/^[[:space:]]*(export[[:space:]]+)?[A-Za-z_][A-Za-z0-9_]*[[:space:]]*=/ {key=$1; sub(/^[[:space:]]*export[[:space:]]+/, "", key); gsub(/[[:space:]]/, "", key); if (key ~ /cloudflare|(^|_)cf_|zone|account/i) print key}' "$cf_env" | sort -u || true
-            else
-              echo "~/credits/.env=missing"
-            fi
+            echo "== Credential file paths and variable names only =="
+            sudo -n find /root /home -maxdepth 5 -type f \( -name zone.env -o -path '*/credits/.env' \) -print 2>/dev/null | while IFS= read -r file; do
+              echo "file=$file"
+              sudo -n awk -F= '/^[[:space:]]*(export[[:space:]]+)?[A-Za-z_][A-Za-z0-9_]*[[:space:]]*=/ {key=$1; sub(/^[[:space:]]*export[[:space:]]+/, "", key); gsub(/[[:space:]]/, "", key); if (key ~ /cloudflare|(^|_)cf_|zone|account|root|password|token|email/i) print key}' "$file" | sort -u || true
+            done || true
+            exit 0
