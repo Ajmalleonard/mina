@@ -1,0 +1,46 @@
+name: Recover Mina web Docker service
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  recover:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Retire the old Mina web PM2 process and bind Docker
+        uses: appleboy/ssh-action@v1.2.0
+        env:
+          SUDO_PASSWORD: ${{ secrets.VPS_PASSWORD }}
+        with:
+          host: ${{ secrets.VPS_HOST }}
+          username: ${{ secrets.VPS_USER }}
+          password: ${{ secrets.VPS_PASSWORD }}
+          port: ${{ secrets.VPS_PORT }}
+          envs: SUDO_PASSWORD
+          script_stop: true
+          command_timeout: 5m
+          script: |
+            set -euo pipefail
+            printf '%s\n' "$SUDO_PASSWORD" | sudo -S -p '' timeout 30s pm2 delete minafoundationtz.org
+            printf '%s\n' "$SUDO_PASSWORD" | sudo -S -p '' timeout 30s pm2 save --force
+            pid="$(ss -ltnp 2>/dev/null | awk '$4 ~ /:3002$/ {if (match($0, /pid=[0-9]+/)) {print substr($0, RSTART + 4, RLENGTH - 4); exit}}')"
+            if test -n "$pid"; then
+              cwd="$(printf '%s\n' "$SUDO_PASSWORD" | sudo -S -p '' readlink "/proc/$pid/cwd")"
+              case "$cwd" in */mina/*/web|*/mina/web) ;; *) echo "Refusing to stop unexpected port 3002 owner at $cwd" >&2; exit 1 ;; esac
+              printf '%s\n' "$SUDO_PASSWORD" | sudo -S -p '' kill -TERM "$pid"
+            fi
+            cd /home/apps/sq/mina
+            docker compose -f deploy/docker-compose.yml rm -sf web || true
+            IMAGE_TAG=5579021209fd6fc243dd1a43f07282f4da1126cb WEB_HOST_PORT=3002 docker compose -f deploy/docker-compose.yml up -d --no-deps --force-recreate web
+            for attempt in $(seq 1 45); do
+              if node -e 'fetch("http://127.0.0.1:3002").then(r=>process.exit(r.status < 500 ? 0 : 1)).catch(()=>process.exit(1))'; then
+                docker ps --filter name=mina-web --format '{{.Names}}|{{.Status}}|{{.Ports}}'
+                exit 0
+              fi
+              sleep 2
+            done
+            docker logs --tail 100 mina-web
+            exit 1
