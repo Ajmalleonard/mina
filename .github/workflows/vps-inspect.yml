@@ -35,6 +35,14 @@ jobs:
             fi
             echo "== Mina processes in root PM2 =="
             printf '%s\n' "$SUDO_PASSWORD" | sudo -S -p '' pm2 jlist 2>/dev/null | node -e 'let s="";process.stdin.on("data",d=>s+=d).on("end",()=>{try{for(const p of JSON.parse(s)) if(/mina|travel-engine/i.test(p.name)||String(p.pm2_env.pm_cwd||"").includes("/mina")) console.log(p.name+"|"+p.pm2_env.status+"|"+p.pid+"|"+(p.pm2_env.pm_cwd||""))}catch{}})' || true
+            echo "== API Prisma migrations on VPS =="
+            find /home/apps/sq/mina/apps/api/prisma/migrations -mindepth 2 -maxdepth 2 -name migration.sql -printf '%h\n' 2>/dev/null | sort || true
+            echo "== API database migration status =="
+            if test -x /home/apps/sq/mina/apps/api/node_modules/.bin/prisma || command -v bunx >/dev/null 2>&1; then
+              cd /home/apps/sq/mina/apps/api
+              if command -v bunx >/dev/null 2>&1; then bunx prisma migrate status || true; else ./node_modules/.bin/prisma migrate status || true; fi
+              cd /home/apps/sq/mina
+            fi
             echo "== Listening ports =="
             ss -ltnp 2>/dev/null | grep -E ':(3002|3003|3004|3005|3006|4305|13002|13003)([[:space:]]|$)' || true
             echo "== Port 3003 owner =="
