@@ -45,9 +45,9 @@ jobs:
             sudo -n nginx -T 2>/dev/null | grep -E 'server_name|proxy_pass|listen|configuration file' | grep -Ei 'mina|3002|3003|3004|3005|13002|13003' || true
             echo "== Existing portal certificates =="
             command -v certbot || true
-            sudo -n certbot certificates 2>/dev/null | grep -E 'Certificate Name:|Domains:|Expiry Date:' || true
+            sudo -n certbot certificates 2>/dev/null | awk '/Certificate Name: minafoundationtz.org/{show=1} show{print} show && /Expiry Date:/{exit}' || true
             echo "== Credential file paths and variable names only =="
             echo "file=/home/opsdc/.creds/zone.env metadata:"
             printf '%s\n' "$SUDO_PASSWORD" | sudo -S -p '' stat -c 'mode=%a bytes=%s' /home/opsdc/.creds/zone.env 2>/dev/null || true
-            printf '%s\n' "$SUDO_PASSWORD" | sudo -S -p '' awk -F '[=:]' '!/^[[:space:]]*#/ && NF>1 {key=$1; sub(/^[[:space:]]*export[[:space:]]+/,"",key); gsub(/^[[:space:]]+|[[:space:]]+$/, "", key); if (key ~ /^[A-Za-z_][A-Za-z0-9_]*$/) print key; else print "<nonstandard-key-line>"}' /home/opsdc/.creds/zone.env 2>/dev/null || true
+            printf '%s\n' "$SUDO_PASSWORD" | sudo -S -p '' awk -F '[=:]' '!/^[[:space:]]*#/ && NF>1 {key=$1; sub(/^[[:space:]]*export[[:space:]]+/,"",key); gsub(/^[[:space:]]+|[[:space:]]+$/, "", key); if (key ~ /^[A-Za-z_][A-Za-z0-9_]*$/ && key ~ /(cloudflare|(^|_)cf(_|$)|zone|account|root|pass|token|email)/i) print key}' /home/opsdc/.creds/zone.env 2>/dev/null || true
             exit 0
