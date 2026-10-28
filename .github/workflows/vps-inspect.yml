@@ -37,7 +37,14 @@ jobs:
             ss -ltnp 2>/dev/null | grep -E ':(3002|3003|3004|3005|3006|4305|13002|13003)([[:space:]]|$)' || true
             echo "== Port 3003 owner =="
             port_pid="$(ss -ltnp 2>/dev/null | awk '$4 ~ /:3003$/ {if (match($0, /pid=[0-9]+/)) print substr($0, RSTART + 4, RLENGTH - 4)}' | head -n 1)"
-            if test -n "$port_pid"; then ps -o pid,comm,user -p "$port_pid" || true; printf '%s\n' "$SUDO_PASSWORD" | sudo -S -p '' readlink "/proc/$port_pid/exe" || true; printf '%s\n' "$SUDO_PASSWORD" | sudo -S -p '' readlink "/proc/$port_pid/cwd" || true; fi
+            if test -n "$port_pid"; then
+              ps -o pid,ppid,uid,comm -p "$port_pid" || true
+              parent_pid="$(ps -o ppid= -p "$port_pid" | tr -d ' ')"
+              if test -n "$parent_pid"; then ps -o pid,ppid,uid,comm -p "$parent_pid" || true; fi
+              command -v pstree >/dev/null 2>&1 && pstree -sp "$port_pid" || true
+              printf '%s\n' "$SUDO_PASSWORD" | sudo -S -p '' readlink "/proc/$port_pid/exe" || true
+              printf '%s\n' "$SUDO_PASSWORD" | sudo -S -p '' readlink "/proc/$port_pid/cwd" || true
+            fi
             echo "== Sudo availability =="
             if sudo -n -v >/dev/null 2>&1; then echo "sudo_with_ssh_password=available"; else echo "sudo_with_ssh_password=unavailable"; fi
             echo "== Nginx Mina routing =="
