@@ -145,6 +145,8 @@ jobs:
             set -euo pipefail
             cd /home/apps/sq/mina/apps/api
             test -f prisma/migrations/20261028163000_activity_impact_coordinates/migration.sql
+            export DATABASE_URL="$(node -e 'const d=require("dotenv").parse(require("fs").readFileSync(".env"));process.stdout.write(d.DIRECT_URL || "")')"
+            test -n "$DATABASE_URL"
             if command -v bunx >/dev/null 2>&1; then
               bunx prisma migrate deploy
             elif test -x node_modules/.bin/prisma; then
