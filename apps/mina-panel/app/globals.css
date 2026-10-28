@@ -1,0 +1,109 @@
+@import "tailwindcss";
+
+:root {
+  --background: #0a0a0a;
+  --foreground: #fafafa;
+  --card: #0a0a0a;
+  --card-foreground: #fafafa;
+  --muted: #262626;
+  --muted-foreground: #a3a3a3;
+  --border: #262626;
+  --input: #262626;
+  --primary: #10b981;
+  --primary-foreground: #ffffff;
+  --secondary: #262626;
+  --secondary-foreground: #fafafa;
+  --accent: #262626;
+  --accent-foreground: #fafafa;
+  --destructive: #7f1d1d;
+  --destructive-foreground: #fef2f2;
+  --ring: rgba(16, 185, 129, 0.2);
+  --shadow-soft: 0 18px 50px rgba(0, 0, 0, 0.24);
+  --chart-grid: rgba(255, 255, 255, 0.06);
+  --chart-cursor: rgba(255, 255, 255, 0.12);
+  --overlay-grid: rgba(255, 255, 255, 0.03);
+}
+
+.light {
+  --background: #ffffff;
+  --foreground: #0a0a0a;
+  --card: #ffffff;
+  --card-foreground: #0a0a0a;
+  --muted: #f5f5f5;
+  --muted-foreground: #737373;
+  --border: #e5e5e5;
+  --input: #e5e5e5;
+  --primary: #059669;
+  --primary-foreground: #ffffff;
+  --secondary: #f5f5f5;
+  --secondary-foreground: #171717;
+  --accent: #f5f5f5;
+  --accent-foreground: #171717;
+  --destructive: #ef4444;
+  --destructive-foreground: #fafafa;
+  --ring: rgba(5, 150, 105, 0.2);
+  --shadow-soft: 0 18px 44px rgba(0, 0, 0, 0.08);
+  --chart-grid: rgba(0, 0, 0, 0.08);
+  --chart-cursor: rgba(0, 0, 0, 0.12);
+  --overlay-grid: rgba(0, 0, 0, 0.03);
+}
+
+* {
+  border-color: var(--border);
+}
+
+html,
+:root {
+  color-scheme: dark;
+}
+
+.light,
+.light html {
+  color-scheme: light;
+}
+
+body {
+  min-height: 100vh;
+  background:
+    radial-gradient(circle at 12% 14%, rgba(16, 185, 129, 0.18), transparent 23%),
+    radial-gradient(circle at 88% 18%, rgba(16, 185, 129, 0.1), transparent 19%),
+    radial-gradient(circle at 50% 100%, rgba(16, 185, 129, 0.08), transparent 28%),
+    linear-gradient(180deg, rgba(255, 255, 255, 0.02), transparent 18%),
+    var(--background);
+  color: var(--foreground);
+  font-family:
+    "Figtree",
+    "Satoshi",
+    "Avenir Next",
+    "Segoe UI",
+    system-ui,
+    -apple-system,
+    BlinkMacSystemFont,
+    sans-serif;
+  background-attachment: fixed;
+}
+
+::selection {
+  background: color-mix(in srgb, var(--primary) 62%, white 8%);
+  color: var(--secondary-foreground);
+}
+
+button,
+input,
+textarea,
+select {
+  font: inherit;
+}
+
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  background-image:
+    linear-gradient(var(--overlay-grid) 1px, transparent 1px),
+    linear-gradient(90deg, var(--overlay-grid) 1px, transparent 1px);
+  background-size: 40px 40px;
+  mask-image: linear-gradient(180deg, rgba(0, 0, 0, 0.25), transparent 92%);
+  opacity: 0.18;
+}

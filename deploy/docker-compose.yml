@@ -1,0 +1,54 @@
+services:
+  web:
+    image: ghcr.io/ajmalleonard/mina-web:${IMAGE_TAG:-latest}
+    container_name: mina-web
+    restart: unless-stopped
+    env_file:
+      - ../apps/web/.env
+    environment:
+      NODE_ENV: production
+      PORT: 3000
+      HOSTNAME: 0.0.0.0
+    ports:
+      - "127.0.0.1:${WEB_HOST_PORT:-3002}:3000"
+    healthcheck:
+      test: ["CMD", "node", "-e", "fetch('http://127.0.0.1:3000').then(r=>process.exit(r.status < 500 ? 0 : 1)).catch(()=>process.exit(1))"]
+      interval: 30s
+      timeout: 5s
+      retries: 3
+      start_period: 30s
+
+  api:
+    image: ghcr.io/ajmalleonard/mina-api:${IMAGE_TAG:-latest}
+    container_name: mina-api
+    restart: unless-stopped
+    env_file:
+      - ../apps/api/.env
+    environment:
+      NODE_ENV: production
+      PORT: 4000
+    ports:
+      - "127.0.0.1:${API_HOST_PORT:-3003}:4000"
+    healthcheck:
+      test: ["CMD", "node", "-e", "fetch('http://127.0.0.1:4000').then(r=>process.exit(r.status < 500 ? 0 : 1)).catch(()=>process.exit(1))"]
+      interval: 30s
+      timeout: 5s
+      retries: 3
+      start_period: 30s
+
+  mina-panel:
+    image: ghcr.io/ajmalleonard/mina-panel:${IMAGE_TAG:-latest}
+    container_name: mina-panel
+    restart: unless-stopped
+    environment:
+      NODE_ENV: production
+      PORT: 3000
+      HOSTNAME: 0.0.0.0
+    ports:
+      - "127.0.0.1:${PANEL_HOST_PORT:-3004}:3000"
+    healthcheck:
+      test: ["CMD", "node", "-e", "fetch('http://127.0.0.1:3000').then(r=>process.exit(r.status < 500 ? 0 : 1)).catch(()=>process.exit(1))"]
+      interval: 30s
+      timeout: 5s
+      retries: 3
+      start_period: 30s

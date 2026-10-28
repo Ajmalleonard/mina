@@ -1,9 +1,15 @@
 import withBundleAnalyzer from '@next/bundle-analyzer';
+import path from 'node:path';
+import { fileURLToPath } from 'node:url';
+
+const repoRoot = path.join(path.dirname(fileURLToPath(import.meta.url)), '../..');
 
 /** @type {import('next').NextConfig} */
 const withBundle = withBundleAnalyzer({ enabled: process.env.ANALYZE === 'true' });
 
 const nextConfig = {
+  output: "standalone",
+  outputFileTracingRoot: repoRoot,
   images: {
     formats: ["image/avif", "image/webp"],
     deviceSizes: [640, 750, 828, 1080, 1200, 1920, 2048],

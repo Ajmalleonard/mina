@@ -1,0 +1,15 @@
+.git
+.github
+.next
+**/.next
+node_modules
+**/node_modules
+**/.env
+**/.env.*
+**/dist
+**/build
+.turbo
+apps/api/db_dump.sql
+apps/api/prisma/database.dump
+*.dump
+*.log
