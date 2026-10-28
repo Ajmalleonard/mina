@@ -1,0 +1,47 @@
+name: Configure Mina portal domain and TLS
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  configure:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Upload portal Nginx configuration
+        uses: appleboy/scp-action@v0.1.7
+        with:
+          host: ${{ secrets.VPS_HOST }}
+          username: ${{ secrets.VPS_USER }}
+          password: ${{ secrets.VPS_PASSWORD }}
+          port: ${{ secrets.VPS_PORT }}
+          source: deploy/nginx/portal.minafoundationtz.org.conf
+          target: /tmp
+          strip_components: 2
+      - name: Enable the portal and issue its certificate
+        uses: appleboy/ssh-action@v1.2.0
+        env:
+          SUDO_PASSWORD: ${{ secrets.VPS_PASSWORD }}
+        with:
+          host: ${{ secrets.VPS_HOST }}
+          username: ${{ secrets.VPS_USER }}
+          password: ${{ secrets.VPS_PASSWORD }}
+          port: ${{ secrets.VPS_PORT }}
+          envs: SUDO_PASSWORD
+          script_stop: true
+          command_timeout: 10m
+          script: |
+            set -euo pipefail
+            printf '%s\n' "$SUDO_PASSWORD" | sudo -S -p '' bash -c '
+              set -euo pipefail
+              install -m 0644 /tmp/portal.minafoundationtz.org.conf /etc/nginx/sites-available/portal.minafoundationtz.org
+              ln -sfn /etc/nginx/sites-available/portal.minafoundationtz.org /etc/nginx/sites-enabled/portal.minafoundationtz.org
+              nginx -t
+              systemctl reload nginx
+              certbot --nginx --redirect --non-interactive --agree-tos --register-unsafely-without-email -d portal.minafoundationtz.org
+              nginx -t
+              systemctl reload nginx
+            '
