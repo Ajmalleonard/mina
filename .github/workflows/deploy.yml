@@ -127,12 +127,13 @@ jobs:
           DEPLOY_SERVICES: ${{ needs.changes.outputs.services }}
           GHCR_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           GHCR_USERNAME: ${{ github.actor }}
+          SUDO_PASSWORD: ${{ secrets.VPS_PASSWORD }}
         with:
           host: ${{ secrets.VPS_HOST }}
           username: ${{ secrets.VPS_USER }}
           password: ${{ secrets.VPS_PASSWORD }}
           port: ${{ secrets.VPS_PORT }}
-          envs: IMAGE_TAG,DEPLOY_SERVICES,GHCR_TOKEN,GHCR_USERNAME
+          envs: IMAGE_TAG,DEPLOY_SERVICES,GHCR_TOKEN,GHCR_USERNAME,SUDO_PASSWORD
           script_stop: true
           command_timeout: 15m
           script: |

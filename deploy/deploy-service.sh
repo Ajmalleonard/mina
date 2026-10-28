@@ -30,6 +30,17 @@ has_legacy_pm2() {
   command -v pm2 >/dev/null 2>&1 && pm2 describe "$process_name" >/dev/null 2>&1
 }
 
+has_root_pm2() {
+  local process_name="$1"
+  [[ -n "${SUDO_PASSWORD:-}" ]] && printf '%s\n' "$SUDO_PASSWORD" | sudo -S -p '' pm2 describe "$process_name" >/dev/null 2>&1
+}
+
+delete_root_pm2() {
+  local process_name="$1"
+  printf '%s\n' "$SUDO_PASSWORD" | sudo -S -p '' pm2 delete "$process_name"
+  printf '%s\n' "$SUDO_PASSWORD" | sudo -S -p '' pm2 save --force
+}
+
 listener_pid() {
   local port="$1"
   ss -ltnp 2>/dev/null | awk -v port=":$port" '$4 ~ (port "$") && !printed {if (match($0, /pid=[0-9]+/)) {print substr($0, RSTART + 4, RLENGTH - 4); printed=1}}'
@@ -86,7 +97,12 @@ for service in ${DEPLOY_SERVICES//,/ }; do
     fi
   fi
 
-  if { [[ -n "$process_name" ]] && has_legacy_pm2 "$process_name"; } || [[ -n "$legacy_pid" ]]; then
+  retire_pm2=false
+  if [[ -n "$process_name" ]] && { has_legacy_pm2 "$process_name" || has_root_pm2 "$process_name"; }; then
+    retire_pm2=true
+  fi
+
+  if [[ "$retire_pm2" == true || -n "$legacy_pid" ]]; then
     echo "Starting $service on a temporary port before retiring its PM2 process"
     if [[ "$service" == "web" ]]; then
       IMAGE_TAG="$IMAGE_TAG" WEB_HOST_PORT="$temp_port" docker compose -f "$COMPOSE_FILE" up -d --no-deps --force-recreate "$service"
@@ -97,6 +113,9 @@ for service in ${DEPLOY_SERVICES//,/ }; do
     if has_legacy_pm2 "$process_name"; then
       pm2 delete "$process_name"
       pm2 save --force
+    fi
+    if has_root_pm2 "$process_name"; then
+      delete_root_pm2 "$process_name"
     fi
     if [[ "$service" == "web" || "$service" == "api" ]]; then
       stop_legacy_listener "$service" "$stable_port"
