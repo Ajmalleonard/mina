@@ -33,6 +33,8 @@ jobs:
             if command -v pm2 >/dev/null 2>&1; then
               pm2 jlist | node -e 'let s="";process.stdin.on("data",d=>s+=d).on("end",()=>{for(const p of JSON.parse(s)) if(/mina|travel-engine/i.test(p.name)||String(p.pm2_env.pm_cwd||"").includes("/mina")) console.log(p.name+"|"+p.pm2_env.status+"|"+p.pid+"|"+(p.pm2_env.pm_cwd||""))})'
             fi
+            echo "== Mina processes in root PM2 =="
+            printf '%s\n' "$SUDO_PASSWORD" | sudo -S -p '' pm2 jlist 2>/dev/null | node -e 'let s="";process.stdin.on("data",d=>s+=d).on("end",()=>{try{for(const p of JSON.parse(s)) if(/mina|travel-engine/i.test(p.name)||String(p.pm2_env.pm_cwd||"").includes("/mina")) console.log(p.name+"|"+p.pm2_env.status+"|"+p.pid+"|"+(p.pm2_env.pm_cwd||""))}catch{}})' || true
             echo "== Listening ports =="
             ss -ltnp 2>/dev/null | grep -E ':(3002|3003|3004|3005|3006|4305|13002|13003)([[:space:]]|$)' || true
             echo "== Port 3003 owner =="
