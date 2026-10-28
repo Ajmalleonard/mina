@@ -30,10 +30,10 @@ jobs:
             docker inspect --format '{{.Name}}|{{.State.Status}}|{{.Config.Image}}|{{json .NetworkSettings.Ports}}' mina-api 2>/dev/null || true
             echo "== Mina PM2 processes =="
             if command -v pm2 >/dev/null 2>&1; then
-              pm2 jlist | node -e 'let s="";process.stdin.on("data",d=>s+=d).on("end",()=>{for(const p of JSON.parse(s)) if(/mina|travel-engine/i.test(p.name)) console.log(p.name+"|"+p.pm2_env.status)})'
+              pm2 jlist | node -e 'let s="";process.stdin.on("data",d=>s+=d).on("end",()=>{for(const p of JSON.parse(s)) if(/mina|travel-engine/i.test(p.name)||String(p.pm2_env.pm_cwd||"").includes("/mina")) console.log(p.name+"|"+p.pm2_env.status+"|"+p.pid+"|"+(p.pm2_env.pm_cwd||""))})'
             fi
             echo "== Listening ports =="
-            ss -ltnp 2>/dev/null | grep -E ':(3002|3003|3004|3005|13002|13003)([[:space:]]|$)' || true
+            ss -ltnp 2>/dev/null | grep -E ':(3002|3003|3004|3005|3006|4305|13002|13003)([[:space:]]|$)' || true
             echo "== Port 3003 owner =="
             port_pid="$(ss -ltnp 2>/dev/null | awk '$4 ~ /:3003$/ {if (match($0, /pid=[0-9]+/)) print substr($0, RSTART + 4, RLENGTH - 4)}' | head -n 1)"
             if test -n "$port_pid"; then ps -o pid,comm,user -p "$port_pid" || true; printf '%s\n' "$SUDO_PASSWORD" | sudo -S -p '' readlink "/proc/$port_pid/exe" || true; printf '%s\n' "$SUDO_PASSWORD" | sudo -S -p '' readlink "/proc/$port_pid/cwd" || true; fi
@@ -47,12 +47,7 @@ jobs:
             command -v certbot || true
             sudo -n certbot certificates 2>/dev/null | grep -E 'Certificate Name:|Domains:|Expiry Date:' || true
             echo "== Credential file paths and variable names only =="
-            echo "file=/home/opsdc/.creds/zone.env"
-            printf '%s\n' "$SUDO_PASSWORD" | sudo -S -p '' awk '
-              {
-                line=$0
-                sub(/^[[:space:]]*export[[:space:]]+/, "", line)
-                if (match(line, /^[A-Za-z_][A-Za-z0-9_]*/)) print substr(line, RSTART, RLENGTH)
-              }
-            ' /home/opsdc/.creds/zone.env 2>/dev/null | sort -u || true
+            echo "file=/home/opsdc/.creds/zone.env metadata:"
+            printf '%s\n' "$SUDO_PASSWORD" | sudo -S -p '' stat -c 'mode=%a bytes=%s' /home/opsdc/.creds/zone.env 2>/dev/null || true
+            printf '%s\n' "$SUDO_PASSWORD" | sudo -S -p '' awk -F '[=:]' '!/^[[:space:]]*#/ && NF>1 {key=$1; sub(/^[[:space:]]*export[[:space:]]+/,"",key); gsub(/^[[:space:]]+|[[:space:]]+$/, "", key); if (key ~ /^[A-Za-z_][A-Za-z0-9_]*$/) print key; else print "<nonstandard-key-line>"}' /home/opsdc/.creds/zone.env 2>/dev/null || true
             exit 0
