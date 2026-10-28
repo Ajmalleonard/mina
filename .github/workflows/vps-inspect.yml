@@ -29,17 +29,25 @@ jobs:
             fi
             echo "== Listening ports =="
             ss -ltnp 2>/dev/null | grep -E ':(3002|3003|3004|13002|13003)([[:space:]]|$)' || true
+            echo "== Port 3003 owner =="
+            port_pid="$(ss -ltnp 2>/dev/null | awk '$4 ~ /:3003$/ {if (match($0, /pid=[0-9]+/)) print substr($0, RSTART + 4, RLENGTH - 4)}' | head -n 1)"
+            if test -n "$port_pid"; then ps -o pid,comm,user -p "$port_pid" || true; readlink "/proc/$port_pid/exe" || true; fi
+            echo "== Sudo availability =="
+            if sudo -n true 2>/dev/null; then echo "sudo_without_password=available"; else echo "sudo_without_password=unavailable"; fi
             echo "== Nginx Mina routing =="
             command -v nginx || true
-            nginx -t 2>&1 || true
-            nginx -T 2>/dev/null | grep -E 'server_name|proxy_pass|listen' | grep -Ei 'mina|3002|3003|3004|13002|13003' || true
+            sudo -n nginx -t 2>&1 || true
+            sudo -n nginx -T 2>/dev/null | grep -E 'server_name|proxy_pass|listen' | grep -Ei 'mina|3002|3003|3004|13002|13003' || true
             echo "== Existing portal certificates =="
             command -v certbot || true
-            certbot certificates 2>/dev/null | grep -E 'Certificate Name:|Domains:|Expiry Date:' || true
+            sudo -n certbot certificates 2>/dev/null | grep -E 'Certificate Name:|Domains:|Expiry Date:' || true
             echo "== Cloudflare variable names in ~/credits/.env (values hidden) =="
             cf_env="$HOME/credits/.env"
             if test -f "$cf_env"; then
-              awk -F= '/^[[:space:]]*[A-Za-z_][A-Za-z0-9_]*=/ {gsub(/[[:space:]]/, "", $1); if ($1 ~ /(CLOUDFLARE|CF_|ZONE|ACCOUNT)/) print $1}' "$cf_env" | sort -u || true
+              set -a
+              source "$cf_env" >/dev/null
+              set +a
+              compgen -e | grep -Ei 'cloudflare|(^|_)cf_|zone|account' | sort -u || true
             else
               echo "~/credits/.env=missing"
             fi
