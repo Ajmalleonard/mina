@@ -1,0 +1,47 @@
+name: Inspect Mina VPS routing
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  inspect:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Inspect Mina deployment state without changing it
+        uses: appleboy/ssh-action@v1.2.0
+        with:
+          host: ${{ secrets.VPS_HOST }}
+          username: ${{ secrets.VPS_USER }}
+          password: ${{ secrets.VPS_PASSWORD }}
+          port: ${{ secrets.VPS_PORT }}
+          script_stop: true
+          script: |
+            set -euo pipefail
+            echo "== Mina related containers =="
+            docker ps -a --format '{{.Names}}|{{.Status}}|{{.Ports}}' | grep -Ei 'mina|travel-engine' || true
+            echo "== Mina PM2 processes =="
+            if command -v pm2 >/dev/null 2>&1; then
+              pm2 jlist | node -e 'let s="";process.stdin.on("data",d=>s+=d).on("end",()=>{for(const p of JSON.parse(s)) if(/mina|travel-engine/i.test(p.name)) console.log(p.name+"|"+p.pm2_env.status)})'
+            fi
+            echo "== Listening ports =="
+            ss -ltnp 2>/dev/null | grep -E ':(3002|3003|3004|13002|13003)\\b' || true
+            echo "== Nginx Mina routing =="
+            if command -v nginx >/dev/null 2>&1; then
+              nginx -T 2>/dev/null | grep -E 'server_name|proxy_pass|listen' | grep -Ei 'mina|3002|3003|3004|13002|13003' || true
+            fi
+            echo "== Existing portal certificates =="
+            if command -v certbot >/dev/null 2>&1; then
+              certbot certificates 2>/dev/null | grep -E 'Certificate Name:|Domains:|Expiry Date:' | grep -Ei 'portal|mina|Certificate Name|Domains|Expiry' || true
+            else
+              echo "certbot=unavailable"
+            fi
+            echo "== Cloudflare variable names in ~/credits/.env (values hidden) =="
+            cf_env="$HOME/credits/.env"
+            if test -f "$cf_env"; then
+              sed -nE 's/^([A-Za-z_][A-Za-z0-9_]*)=.*/\\1/p' "$cf_env" | grep -Ei 'cloudflare|zone|account' | sort -u || true
+            else
+              echo "~/credits/.env=missing"
+            fi
