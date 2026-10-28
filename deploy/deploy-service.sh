@@ -32,7 +32,7 @@ has_legacy_pm2() {
 
 listener_pid() {
   local port="$1"
-  ss -ltnp 2>/dev/null | awk -v port=":$port" '$4 ~ (port "$") {if (match($0, /pid=[0-9]+/)) {print substr($0, RSTART + 4, RLENGTH - 4); exit}}'
+  ss -ltnp 2>/dev/null | awk -v port=":$port" '$4 ~ (port "$") && !printed {if (match($0, /pid=[0-9]+/)) {print substr($0, RSTART + 4, RLENGTH - 4); printed=1}}'
 }
 
 expected_legacy_cwd() {
