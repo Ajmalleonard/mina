@@ -22,26 +22,24 @@ jobs:
             set -euo pipefail
             echo "== Mina related containers =="
             docker ps -a --format '{{.Names}}|{{.Status}}|{{.Ports}}' | grep -Ei 'mina|travel-engine' || true
+            docker inspect --format '{{.Name}}|{{.State.Status}}|{{.Config.Image}}|{{json .NetworkSettings.Ports}}' mina-api 2>/dev/null || true
             echo "== Mina PM2 processes =="
             if command -v pm2 >/dev/null 2>&1; then
               pm2 jlist | node -e 'let s="";process.stdin.on("data",d=>s+=d).on("end",()=>{for(const p of JSON.parse(s)) if(/mina|travel-engine/i.test(p.name)) console.log(p.name+"|"+p.pm2_env.status)})'
             fi
             echo "== Listening ports =="
-            ss -ltnp 2>/dev/null | grep -E ':(3002|3003|3004|13002|13003)\\b' || true
+            ss -ltnp 2>/dev/null | grep -E ':(3002|3003|3004|13002|13003)([[:space:]]|$)' || true
             echo "== Nginx Mina routing =="
-            if command -v nginx >/dev/null 2>&1; then
-              nginx -T 2>/dev/null | grep -E 'server_name|proxy_pass|listen' | grep -Ei 'mina|3002|3003|3004|13002|13003' || true
-            fi
+            command -v nginx || true
+            nginx -t 2>&1 || true
+            nginx -T 2>/dev/null | grep -E 'server_name|proxy_pass|listen' | grep -Ei 'mina|3002|3003|3004|13002|13003' || true
             echo "== Existing portal certificates =="
-            if command -v certbot >/dev/null 2>&1; then
-              certbot certificates 2>/dev/null | grep -E 'Certificate Name:|Domains:|Expiry Date:' | grep -Ei 'portal|mina|Certificate Name|Domains|Expiry' || true
-            else
-              echo "certbot=unavailable"
-            fi
+            command -v certbot || true
+            certbot certificates 2>/dev/null | grep -E 'Certificate Name:|Domains:|Expiry Date:' || true
             echo "== Cloudflare variable names in ~/credits/.env (values hidden) =="
             cf_env="$HOME/credits/.env"
             if test -f "$cf_env"; then
-              sed -nE 's/^([A-Za-z_][A-Za-z0-9_]*)=.*/\\1/p' "$cf_env" | grep -Ei 'cloudflare|zone|account' | sort -u || true
+              awk -F= '/^[[:space:]]*[A-Za-z_][A-Za-z0-9_]*=/ {gsub(/[[:space:]]/, "", $1); if ($1 ~ /(CLOUDFLARE|CF_|ZONE|ACCOUNT)/) print $1}' "$cf_env" | sort -u || true
             else
               echo "~/credits/.env=missing"
             fi
