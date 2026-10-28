@@ -12,7 +12,8 @@ COPY . .
 ARG NEXT_PUBLIC_API_URL=https://api.minafoundationtz.org
 ENV NEXT_PUBLIC_API_URL=${NEXT_PUBLIC_API_URL}
 ENV NEXT_TELEMETRY_DISABLED=1
-RUN bun run --filter web build
+RUN bun run --filter billing-router build \
+  && bun run --filter web build
 
 FROM node:22-bookworm-slim AS runtime
 ENV NODE_ENV=production NEXT_TELEMETRY_DISABLED=1 HOSTNAME=0.0.0.0 PORT=3000

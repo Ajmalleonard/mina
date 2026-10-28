@@ -35,13 +35,13 @@ jobs:
           else
             while IFS= read -r path; do
               case "$path" in
-                package.json|package-lock.json|bun.lock|turbo.json|.github/workflows/deploy.yml|deploy/docker-compose.yml|deploy/deploy-service.sh)
+                package.json|package-lock.json|bun.lock|turbo.json|.github/workflows/deploy.yml|deploy/docker-compose.yml|deploy/deploy-service.sh|deploy/*.Dockerfile)
                   apps=(web api mina-panel)
                   break
                   ;;
-                apps/web/*|deploy/web.Dockerfile) apps+=(web) ;;
-                apps/api/*|deploy/api.Dockerfile) apps+=(api) ;;
-                apps/mina-panel/*|deploy/mina-panel.Dockerfile) apps+=(mina-panel) ;;
+                apps/web/*) apps+=(web) ;;
+                apps/api/*) apps+=(api) ;;
+                apps/mina-panel/*) apps+=(mina-panel) ;;
                 packages/billing-router/*) apps+=(web api) ;;
               esac
             done < <(git diff --name-only "$BEFORE_SHA" "$HEAD_SHA")
