@@ -36,7 +36,7 @@ jobs:
             ss -ltnp 2>/dev/null | grep -E ':(3002|3003|3004|3005|13002|13003)([[:space:]]|$)' || true
             echo "== Port 3003 owner =="
             port_pid="$(ss -ltnp 2>/dev/null | awk '$4 ~ /:3003$/ {if (match($0, /pid=[0-9]+/)) print substr($0, RSTART + 4, RLENGTH - 4)}' | head -n 1)"
-            if test -n "$port_pid"; then ps -o pid,comm,user -p "$port_pid" || true; sudo -n readlink "/proc/$port_pid/exe" || true; sudo -n readlink "/proc/$port_pid/cwd" || true; fi
+            if test -n "$port_pid"; then ps -o pid,comm,user -p "$port_pid" || true; printf '%s\n' "$SUDO_PASSWORD" | sudo -S -p '' readlink "/proc/$port_pid/exe" || true; printf '%s\n' "$SUDO_PASSWORD" | sudo -S -p '' readlink "/proc/$port_pid/cwd" || true; fi
             echo "== Sudo availability =="
             if sudo -n -v >/dev/null 2>&1; then echo "sudo_with_ssh_password=available"; else echo "sudo_with_ssh_password=unavailable"; fi
             echo "== Nginx Mina routing =="
@@ -47,14 +47,12 @@ jobs:
             command -v certbot || true
             sudo -n certbot certificates 2>/dev/null | grep -E 'Certificate Name:|Domains:|Expiry Date:' || true
             echo "== Credential file paths and variable names only =="
-            sudo -n find /root /home -maxdepth 5 -type f \( -name zone.env -o -path '*/credits/.env' \) -print 2>/dev/null | while IFS= read -r file; do
-              echo "file=$file"
-              sudo -n awk '
-                {
-                  line=$0
-                  sub(/^[[:space:]]*export[[:space:]]+/, "", line)
-                  if (match(line, /^[A-Za-z_][A-Za-z0-9_]*/)) print substr(line, RSTART, RLENGTH)
-                }
-              ' "$file" | sort -u || true
-            done || true
+            echo "file=/home/opsdc/.creds/zone.env"
+            printf '%s\n' "$SUDO_PASSWORD" | sudo -S -p '' awk '
+              {
+                line=$0
+                sub(/^[[:space:]]*export[[:space:]]+/, "", line)
+                if (match(line, /^[A-Za-z_][A-Za-z0-9_]*/)) print substr(line, RSTART, RLENGTH)
+              }
+            ' /home/opsdc/.creds/zone.env 2>/dev/null | sort -u || true
             exit 0
