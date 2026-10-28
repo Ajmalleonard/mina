@@ -95,6 +95,8 @@ export type Activity = {
   priority: number
   type: ActivityType
   price?: number | null
+  impactLat?: number | null
+  impactLng?: number | null
   createdAt: string
   updatedAt: string
 }
@@ -126,6 +128,8 @@ export type ActivityFormValues = {
   priority: string
   type: ActivityType
   price: string
+  impactLat: string
+  impactLng: string
 }
 
 export type ActivityMeta = {

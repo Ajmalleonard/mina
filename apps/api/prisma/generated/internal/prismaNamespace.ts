@@ -1041,6 +1041,11 @@ export const ActivityScalarFieldEnum = {
   priority: 'priority',
   type: 'type',
   price: 'price',
+  impactLat: 'impactLat',
+  impactLng: 'impactLng',
+  isUrgent: 'isUrgent',
+  urgencyLevel: 'urgencyLevel',
+  endDate: 'endDate',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
 } as const

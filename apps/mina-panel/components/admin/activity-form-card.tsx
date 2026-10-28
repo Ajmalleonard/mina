@@ -1,5 +1,6 @@
 import { Add, Edit2 } from "iconsax-react"
 import { ImageAssetField } from "@/components/admin/image-asset-field"
+import { ImpactLocationPicker } from "@/components/admin/impact-location-picker"
 import { LoadingSpinnerIcon } from "@/components/admin/loading-indicator"
 import { Input } from "@/components/ui/input"
 import { Textarea } from "@/components/ui/textarea"
@@ -172,6 +173,41 @@ export function ActivityFormCard({
         onCurrentUrlChange={(value) => onFieldChange("image", value)}
         onSelectedFileChange={onImageFileChange}
       />
+
+      <section className="space-y-3">
+        <div className="flex flex-wrap items-end justify-between gap-3">
+          <div className="space-y-1">
+            <FieldLabel>Impact map location (optional)</FieldLabel>
+            <p className="text-sm text-[var(--muted-foreground)]">
+              Click the map to place a dot. The activity must be visible on the public site to appear.
+            </p>
+          </div>
+          <Button
+            type="button"
+            variant="outline"
+            disabled={!form.impactLat && !form.impactLng}
+            onClick={() => {
+              onFieldChange("impactLat", "")
+              onFieldChange("impactLng", "")
+            }}
+          >
+            Clear location
+          </Button>
+        </div>
+        <ImpactLocationPicker
+          latitude={form.impactLat.trim() ? Number(form.impactLat) : null}
+          longitude={form.impactLng.trim() ? Number(form.impactLng) : null}
+          onLocationSelect={(latitude, longitude) => {
+            onFieldChange("impactLat", latitude.toFixed(6))
+            onFieldChange("impactLng", longitude.toFixed(6))
+          }}
+        />
+        <p aria-live="polite" className="text-xs text-[var(--muted-foreground)]">
+          {form.impactLat && form.impactLng
+            ? `Selected: ${form.impactLat}, ${form.impactLng}`
+            : "No location selected. Click the map to add this activity to the Impact Map."}
+        </p>
+      </section>
 
       <div className="flex flex-wrap gap-3 border-t border-[var(--border)] pt-4">
         <Button type="submit" disabled={isSaving}>

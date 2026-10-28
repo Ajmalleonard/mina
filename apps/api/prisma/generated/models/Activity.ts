@@ -31,6 +31,9 @@ export type ActivityAvgAggregateOutputType = {
   raisedAmount: number | null
   priority: number | null
   price: number | null
+  impactLat: number | null
+  impactLng: number | null
+  urgencyLevel: number | null
 }
 
 export type ActivitySumAggregateOutputType = {
@@ -38,6 +41,9 @@ export type ActivitySumAggregateOutputType = {
   raisedAmount: number | null
   priority: number | null
   price: number | null
+  impactLat: number | null
+  impactLng: number | null
+  urgencyLevel: number | null
 }
 
 export type ActivityMinAggregateOutputType = {
@@ -53,6 +59,11 @@ export type ActivityMinAggregateOutputType = {
   priority: number | null
   type: $Enums.ActivityType | null
   price: number | null
+  impactLat: number | null
+  impactLng: number | null
+  isUrgent: boolean | null
+  urgencyLevel: number | null
+  endDate: Date | null
   createdAt: Date | null
   updatedAt: Date | null
 }
@@ -70,6 +81,11 @@ export type ActivityMaxAggregateOutputType = {
   priority: number | null
   type: $Enums.ActivityType | null
   price: number | null
+  impactLat: number | null
+  impactLng: number | null
+  isUrgent: boolean | null
+  urgencyLevel: number | null
+  endDate: Date | null
   createdAt: Date | null
   updatedAt: Date | null
 }
@@ -87,6 +103,11 @@ export type ActivityCountAggregateOutputType = {
   priority: number
   type: number
   price: number
+  impactLat: number
+  impactLng: number
+  isUrgent: number
+  urgencyLevel: number
+  endDate: number
   createdAt: number
   updatedAt: number
   _all: number
@@ -98,6 +119,9 @@ export type ActivityAvgAggregateInputType = {
   raisedAmount?: true
   priority?: true
   price?: true
+  impactLat?: true
+  impactLng?: true
+  urgencyLevel?: true
 }
 
 export type ActivitySumAggregateInputType = {
@@ -105,6 +129,9 @@ export type ActivitySumAggregateInputType = {
   raisedAmount?: true
   priority?: true
   price?: true
+  impactLat?: true
+  impactLng?: true
+  urgencyLevel?: true
 }
 
 export type ActivityMinAggregateInputType = {
@@ -120,6 +147,11 @@ export type ActivityMinAggregateInputType = {
   priority?: true
   type?: true
   price?: true
+  impactLat?: true
+  impactLng?: true
+  isUrgent?: true
+  urgencyLevel?: true
+  endDate?: true
   createdAt?: true
   updatedAt?: true
 }
@@ -137,6 +169,11 @@ export type ActivityMaxAggregateInputType = {
   priority?: true
   type?: true
   price?: true
+  impactLat?: true
+  impactLng?: true
+  isUrgent?: true
+  urgencyLevel?: true
+  endDate?: true
   createdAt?: true
   updatedAt?: true
 }
@@ -154,6 +191,11 @@ export type ActivityCountAggregateInputType = {
   priority?: true
   type?: true
   price?: true
+  impactLat?: true
+  impactLng?: true
+  isUrgent?: true
+  urgencyLevel?: true
+  endDate?: true
   createdAt?: true
   updatedAt?: true
   _all?: true
@@ -258,6 +300,11 @@ export type ActivityGroupByOutputType = {
   priority: number
   type: $Enums.ActivityType
   price: number | null
+  impactLat: number | null
+  impactLng: number | null
+  isUrgent: boolean
+  urgencyLevel: number
+  endDate: Date | null
   createdAt: Date
   updatedAt: Date
   _count: ActivityCountAggregateOutputType | null
@@ -298,6 +345,11 @@ export type ActivityWhereInput = {
   priority?: Prisma.IntFilter<"Activity"> | number
   type?: Prisma.EnumActivityTypeFilter<"Activity"> | $Enums.ActivityType
   price?: Prisma.FloatNullableFilter<"Activity"> | number | null
+  impactLat?: Prisma.FloatNullableFilter<"Activity"> | number | null
+  impactLng?: Prisma.FloatNullableFilter<"Activity"> | number | null
+  isUrgent?: Prisma.BoolFilter<"Activity"> | boolean
+  urgencyLevel?: Prisma.IntFilter<"Activity"> | number
+  endDate?: Prisma.DateTimeNullableFilter<"Activity"> | Date | string | null
   createdAt?: Prisma.DateTimeFilter<"Activity"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"Activity"> | Date | string
   donations?: Prisma.DonationListRelationFilter
@@ -317,6 +369,11 @@ export type ActivityOrderByWithRelationInput = {
   priority?: Prisma.SortOrder
   type?: Prisma.SortOrder
   price?: Prisma.SortOrderInput | Prisma.SortOrder
+  impactLat?: Prisma.SortOrderInput | Prisma.SortOrder
+  impactLng?: Prisma.SortOrderInput | Prisma.SortOrder
+  isUrgent?: Prisma.SortOrder
+  urgencyLevel?: Prisma.SortOrder
+  endDate?: Prisma.SortOrderInput | Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   donations?: Prisma.DonationOrderByRelationAggregateInput
@@ -339,6 +396,11 @@ export type ActivityWhereUniqueInput = Prisma.AtLeast<{
   priority?: Prisma.IntFilter<"Activity"> | number
   type?: Prisma.EnumActivityTypeFilter<"Activity"> | $Enums.ActivityType
   price?: Prisma.FloatNullableFilter<"Activity"> | number | null
+  impactLat?: Prisma.FloatNullableFilter<"Activity"> | number | null
+  impactLng?: Prisma.FloatNullableFilter<"Activity"> | number | null
+  isUrgent?: Prisma.BoolFilter<"Activity"> | boolean
+  urgencyLevel?: Prisma.IntFilter<"Activity"> | number
+  endDate?: Prisma.DateTimeNullableFilter<"Activity"> | Date | string | null
   createdAt?: Prisma.DateTimeFilter<"Activity"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"Activity"> | Date | string
   donations?: Prisma.DonationListRelationFilter
@@ -358,6 +420,11 @@ export type ActivityOrderByWithAggregationInput = {
   priority?: Prisma.SortOrder
   type?: Prisma.SortOrder
   price?: Prisma.SortOrderInput | Prisma.SortOrder
+  impactLat?: Prisma.SortOrderInput | Prisma.SortOrder
+  impactLng?: Prisma.SortOrderInput | Prisma.SortOrder
+  isUrgent?: Prisma.SortOrder
+  urgencyLevel?: Prisma.SortOrder
+  endDate?: Prisma.SortOrderInput | Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   _count?: Prisma.ActivityCountOrderByAggregateInput
@@ -383,6 +450,11 @@ export type ActivityScalarWhereWithAggregatesInput = {
   priority?: Prisma.IntWithAggregatesFilter<"Activity"> | number
   type?: Prisma.EnumActivityTypeWithAggregatesFilter<"Activity"> | $Enums.ActivityType
   price?: Prisma.FloatNullableWithAggregatesFilter<"Activity"> | number | null
+  impactLat?: Prisma.FloatNullableWithAggregatesFilter<"Activity"> | number | null
+  impactLng?: Prisma.FloatNullableWithAggregatesFilter<"Activity"> | number | null
+  isUrgent?: Prisma.BoolWithAggregatesFilter<"Activity"> | boolean
+  urgencyLevel?: Prisma.IntWithAggregatesFilter<"Activity"> | number
+  endDate?: Prisma.DateTimeNullableWithAggregatesFilter<"Activity"> | Date | string | null
   createdAt?: Prisma.DateTimeWithAggregatesFilter<"Activity"> | Date | string
   updatedAt?: Prisma.DateTimeWithAggregatesFilter<"Activity"> | Date | string
 }
@@ -400,6 +472,11 @@ export type ActivityCreateInput = {
   priority?: number
   type?: $Enums.ActivityType
   price?: number | null
+  impactLat?: number | null
+  impactLng?: number | null
+  isUrgent?: boolean
+  urgencyLevel?: number
+  endDate?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   donations?: Prisma.DonationCreateNestedManyWithoutActivityInput
@@ -419,6 +496,11 @@ export type ActivityUncheckedCreateInput = {
   priority?: number
   type?: $Enums.ActivityType
   price?: number | null
+  impactLat?: number | null
+  impactLng?: number | null
+  isUrgent?: boolean
+  urgencyLevel?: number
+  endDate?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   donations?: Prisma.DonationUncheckedCreateNestedManyWithoutActivityInput
@@ -438,6 +520,11 @@ export type ActivityUpdateInput = {
   priority?: Prisma.IntFieldUpdateOperationsInput | number
   type?: Prisma.EnumActivityTypeFieldUpdateOperationsInput | $Enums.ActivityType
   price?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  impactLat?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  impactLng?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  isUrgent?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  urgencyLevel?: Prisma.IntFieldUpdateOperationsInput | number
+  endDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   donations?: Prisma.DonationUpdateManyWithoutActivityNestedInput
@@ -457,6 +544,11 @@ export type ActivityUncheckedUpdateInput = {
   priority?: Prisma.IntFieldUpdateOperationsInput | number
   type?: Prisma.EnumActivityTypeFieldUpdateOperationsInput | $Enums.ActivityType
   price?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  impactLat?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  impactLng?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  isUrgent?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  urgencyLevel?: Prisma.IntFieldUpdateOperationsInput | number
+  endDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   donations?: Prisma.DonationUncheckedUpdateManyWithoutActivityNestedInput
@@ -476,6 +568,11 @@ export type ActivityCreateManyInput = {
   priority?: number
   type?: $Enums.ActivityType
   price?: number | null
+  impactLat?: number | null
+  impactLng?: number | null
+  isUrgent?: boolean
+  urgencyLevel?: number
+  endDate?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
 }
@@ -493,6 +590,11 @@ export type ActivityUpdateManyMutationInput = {
   priority?: Prisma.IntFieldUpdateOperationsInput | number
   type?: Prisma.EnumActivityTypeFieldUpdateOperationsInput | $Enums.ActivityType
   price?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  impactLat?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  impactLng?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  isUrgent?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  urgencyLevel?: Prisma.IntFieldUpdateOperationsInput | number
+  endDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -510,6 +612,11 @@ export type ActivityUncheckedUpdateManyInput = {
   priority?: Prisma.IntFieldUpdateOperationsInput | number
   type?: Prisma.EnumActivityTypeFieldUpdateOperationsInput | $Enums.ActivityType
   price?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  impactLat?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  impactLng?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  isUrgent?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  urgencyLevel?: Prisma.IntFieldUpdateOperationsInput | number
+  endDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -532,6 +639,11 @@ export type ActivityCountOrderByAggregateInput = {
   priority?: Prisma.SortOrder
   type?: Prisma.SortOrder
   price?: Prisma.SortOrder
+  impactLat?: Prisma.SortOrder
+  impactLng?: Prisma.SortOrder
+  isUrgent?: Prisma.SortOrder
+  urgencyLevel?: Prisma.SortOrder
+  endDate?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
 }
@@ -541,6 +653,9 @@ export type ActivityAvgOrderByAggregateInput = {
   raisedAmount?: Prisma.SortOrder
   priority?: Prisma.SortOrder
   price?: Prisma.SortOrder
+  impactLat?: Prisma.SortOrder
+  impactLng?: Prisma.SortOrder
+  urgencyLevel?: Prisma.SortOrder
 }
 
 export type ActivityMaxOrderByAggregateInput = {
@@ -556,6 +671,11 @@ export type ActivityMaxOrderByAggregateInput = {
   priority?: Prisma.SortOrder
   type?: Prisma.SortOrder
   price?: Prisma.SortOrder
+  impactLat?: Prisma.SortOrder
+  impactLng?: Prisma.SortOrder
+  isUrgent?: Prisma.SortOrder
+  urgencyLevel?: Prisma.SortOrder
+  endDate?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
 }
@@ -573,6 +693,11 @@ export type ActivityMinOrderByAggregateInput = {
   priority?: Prisma.SortOrder
   type?: Prisma.SortOrder
   price?: Prisma.SortOrder
+  impactLat?: Prisma.SortOrder
+  impactLng?: Prisma.SortOrder
+  isUrgent?: Prisma.SortOrder
+  urgencyLevel?: Prisma.SortOrder
+  endDate?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
 }
@@ -582,6 +707,9 @@ export type ActivitySumOrderByAggregateInput = {
   raisedAmount?: Prisma.SortOrder
   priority?: Prisma.SortOrder
   price?: Prisma.SortOrder
+  impactLat?: Prisma.SortOrder
+  impactLng?: Prisma.SortOrder
+  urgencyLevel?: Prisma.SortOrder
 }
 
 export type ActivityNullableScalarRelationFilter = {
@@ -648,6 +776,11 @@ export type ActivityCreateWithoutCartItemsInput = {
   priority?: number
   type?: $Enums.ActivityType
   price?: number | null
+  impactLat?: number | null
+  impactLng?: number | null
+  isUrgent?: boolean
+  urgencyLevel?: number
+  endDate?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   donations?: Prisma.DonationCreateNestedManyWithoutActivityInput
@@ -666,6 +799,11 @@ export type ActivityUncheckedCreateWithoutCartItemsInput = {
   priority?: number
   type?: $Enums.ActivityType
   price?: number | null
+  impactLat?: number | null
+  impactLng?: number | null
+  isUrgent?: boolean
+  urgencyLevel?: number
+  endDate?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   donations?: Prisma.DonationUncheckedCreateNestedManyWithoutActivityInput
@@ -700,6 +838,11 @@ export type ActivityUpdateWithoutCartItemsInput = {
   priority?: Prisma.IntFieldUpdateOperationsInput | number
   type?: Prisma.EnumActivityTypeFieldUpdateOperationsInput | $Enums.ActivityType
   price?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  impactLat?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  impactLng?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  isUrgent?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  urgencyLevel?: Prisma.IntFieldUpdateOperationsInput | number
+  endDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   donations?: Prisma.DonationUpdateManyWithoutActivityNestedInput
@@ -718,6 +861,11 @@ export type ActivityUncheckedUpdateWithoutCartItemsInput = {
   priority?: Prisma.IntFieldUpdateOperationsInput | number
   type?: Prisma.EnumActivityTypeFieldUpdateOperationsInput | $Enums.ActivityType
   price?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  impactLat?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  impactLng?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  isUrgent?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  urgencyLevel?: Prisma.IntFieldUpdateOperationsInput | number
+  endDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   donations?: Prisma.DonationUncheckedUpdateManyWithoutActivityNestedInput
@@ -736,6 +884,11 @@ export type ActivityCreateWithoutDonationsInput = {
   priority?: number
   type?: $Enums.ActivityType
   price?: number | null
+  impactLat?: number | null
+  impactLng?: number | null
+  isUrgent?: boolean
+  urgencyLevel?: number
+  endDate?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   cartItems?: Prisma.CartItemCreateNestedManyWithoutActivityInput
@@ -754,6 +907,11 @@ export type ActivityUncheckedCreateWithoutDonationsInput = {
   priority?: number
   type?: $Enums.ActivityType
   price?: number | null
+  impactLat?: number | null
+  impactLng?: number | null
+  isUrgent?: boolean
+  urgencyLevel?: number
+  endDate?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   cartItems?: Prisma.CartItemUncheckedCreateNestedManyWithoutActivityInput
@@ -788,6 +946,11 @@ export type ActivityUpdateWithoutDonationsInput = {
   priority?: Prisma.IntFieldUpdateOperationsInput | number
   type?: Prisma.EnumActivityTypeFieldUpdateOperationsInput | $Enums.ActivityType
   price?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  impactLat?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  impactLng?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  isUrgent?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  urgencyLevel?: Prisma.IntFieldUpdateOperationsInput | number
+  endDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   cartItems?: Prisma.CartItemUpdateManyWithoutActivityNestedInput
@@ -806,6 +969,11 @@ export type ActivityUncheckedUpdateWithoutDonationsInput = {
   priority?: Prisma.IntFieldUpdateOperationsInput | number
   type?: Prisma.EnumActivityTypeFieldUpdateOperationsInput | $Enums.ActivityType
   price?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  impactLat?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  impactLng?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  isUrgent?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  urgencyLevel?: Prisma.IntFieldUpdateOperationsInput | number
+  endDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   cartItems?: Prisma.CartItemUncheckedUpdateManyWithoutActivityNestedInput
@@ -864,6 +1032,11 @@ export type ActivitySelect<ExtArgs extends runtime.Types.Extensions.InternalArgs
   priority?: boolean
   type?: boolean
   price?: boolean
+  impactLat?: boolean
+  impactLng?: boolean
+  isUrgent?: boolean
+  urgencyLevel?: boolean
+  endDate?: boolean
   createdAt?: boolean
   updatedAt?: boolean
   donations?: boolean | Prisma.Activity$donationsArgs<ExtArgs>
@@ -884,6 +1057,11 @@ export type ActivitySelectCreateManyAndReturn<ExtArgs extends runtime.Types.Exte
   priority?: boolean
   type?: boolean
   price?: boolean
+  impactLat?: boolean
+  impactLng?: boolean
+  isUrgent?: boolean
+  urgencyLevel?: boolean
+  endDate?: boolean
   createdAt?: boolean
   updatedAt?: boolean
 }, ExtArgs["result"]["activity"]>
@@ -901,6 +1079,11 @@ export type ActivitySelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Exte
   priority?: boolean
   type?: boolean
   price?: boolean
+  impactLat?: boolean
+  impactLng?: boolean
+  isUrgent?: boolean
+  urgencyLevel?: boolean
+  endDate?: boolean
   createdAt?: boolean
   updatedAt?: boolean
 }, ExtArgs["result"]["activity"]>
@@ -918,11 +1101,16 @@ export type ActivitySelectScalar = {
   priority?: boolean
   type?: boolean
   price?: boolean
+  impactLat?: boolean
+  impactLng?: boolean
+  isUrgent?: boolean
+  urgencyLevel?: boolean
+  endDate?: boolean
   createdAt?: boolean
   updatedAt?: boolean
 }
 
-export type ActivityOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "title" | "description" | "image" | "goalAmount" | "raisedAmount" | "slug" | "isActive" | "category" | "priority" | "type" | "price" | "createdAt" | "updatedAt", ExtArgs["result"]["activity"]>
+export type ActivityOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "title" | "description" | "image" | "goalAmount" | "raisedAmount" | "slug" | "isActive" | "category" | "priority" | "type" | "price" | "impactLat" | "impactLng" | "isUrgent" | "urgencyLevel" | "endDate" | "createdAt" | "updatedAt", ExtArgs["result"]["activity"]>
 export type ActivityInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   donations?: boolean | Prisma.Activity$donationsArgs<ExtArgs>
   cartItems?: boolean | Prisma.Activity$cartItemsArgs<ExtArgs>
@@ -950,6 +1138,11 @@ export type $ActivityPayload<ExtArgs extends runtime.Types.Extensions.InternalAr
     priority: number
     type: $Enums.ActivityType
     price: number | null
+    impactLat: number | null
+    impactLng: number | null
+    isUrgent: boolean
+    urgencyLevel: number
+    endDate: Date | null
     createdAt: Date
     updatedAt: Date
   }, ExtArgs["result"]["activity"]>
@@ -1389,6 +1582,11 @@ export interface ActivityFieldRefs {
   readonly priority: Prisma.FieldRef<"Activity", 'Int'>
   readonly type: Prisma.FieldRef<"Activity", 'ActivityType'>
   readonly price: Prisma.FieldRef<"Activity", 'Float'>
+  readonly impactLat: Prisma.FieldRef<"Activity", 'Float'>
+  readonly impactLng: Prisma.FieldRef<"Activity", 'Float'>
+  readonly isUrgent: Prisma.FieldRef<"Activity", 'Boolean'>
+  readonly urgencyLevel: Prisma.FieldRef<"Activity", 'Int'>
+  readonly endDate: Prisma.FieldRef<"Activity", 'DateTime'>
   readonly createdAt: Prisma.FieldRef<"Activity", 'DateTime'>
   readonly updatedAt: Prisma.FieldRef<"Activity", 'DateTime'>
 }

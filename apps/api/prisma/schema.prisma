@@ -100,6 +100,8 @@ model Activity {
   priority     Int              @default(0)
   type         ActivityType     @default(DONATION)
   price        Float? // Fixed price if applicable
+  impactLat    Float?
+  impactLng    Float?
 
   // Urgent Appeals fields
   isUrgent     Boolean   @default(false)

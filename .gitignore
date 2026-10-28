@@ -28,6 +28,8 @@ yarn-error.log*
 .env*.local
 apps/api/.env
 apps/web/.env
+apps/api/prisma/database.dump
+apps/api/db_dump.sql
 
 # turbo
 .turbo

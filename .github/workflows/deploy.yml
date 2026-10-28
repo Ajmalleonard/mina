@@ -120,6 +120,38 @@ jobs:
           source: "deploy/docker-compose.yml,deploy/deploy-service.sh"
           target: "/home/apps/sq/mina/deploy"
           strip_components: 1
+      - name: Upload API Prisma schema and migrations
+        if: contains(needs.changes.outputs.services, 'api')
+        uses: appleboy/scp-action@v0.1.7
+        with:
+          host: ${{ secrets.VPS_HOST }}
+          username: ${{ secrets.VPS_USER }}
+          password: ${{ secrets.VPS_PASSWORD }}
+          port: ${{ secrets.VPS_PORT }}
+          source: "apps/api/prisma.config.ts,apps/api/prisma/schema.prisma,apps/api/prisma/migrations/**"
+          target: "/home/apps/sq/mina"
+          strip_components: 1
+      - name: Apply API database migrations
+        if: contains(needs.changes.outputs.services, 'api')
+        uses: appleboy/ssh-action@v1.2.0
+        with:
+          host: ${{ secrets.VPS_HOST }}
+          username: ${{ secrets.VPS_USER }}
+          password: ${{ secrets.VPS_PASSWORD }}
+          port: ${{ secrets.VPS_PORT }}
+          script_stop: true
+          command_timeout: 10m
+          script: |
+            set -euo pipefail
+            cd /home/apps/sq/mina/apps/api
+            if command -v bunx >/dev/null 2>&1; then
+              bunx prisma migrate deploy
+            elif test -x node_modules/.bin/prisma; then
+              ./node_modules/.bin/prisma migrate deploy
+            else
+              echo "Bunx or the local Prisma CLI is required to apply API migrations" >&2
+              exit 1
+            fi
       - name: Pull and restart only changed services
         uses: appleboy/ssh-action@v1.2.0
         env:

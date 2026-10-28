@@ -1,18 +1,18 @@
 export const team = [
   {
     name: "Iddy Abdul Saleh",
-    role: "General Secretary",
+    role: "Executive Secretary",
   },
   {
     name: "Dr. Rajab Abdul Saleh",
     role: "Chairman",
   },
   {
-    name: "Sumaiyah Farouk Hamad",
+    name: "Mariam Dhuli Hemedi",
     role: "Treasurer",
   },
   {
-    name: "Ian Rashid Msonga",
-    role: "Vice General Secretary",
+    name: "Ian Rashid Songa",
+    role: "Councillor",
   },
 ];

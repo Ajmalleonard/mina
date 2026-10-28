@@ -51,7 +51,8 @@ export const ActivityCategory = {
   TANZANIA_AIDS: 'TANZANIA_AIDS',
   INCOME_SUPPORT: 'INCOME_SUPPORT',
   GENERAL_HELPS: 'GENERAL_HELPS',
-  CONSTRUCTION_PROJECTS: 'CONSTRUCTION_PROJECTS'
+  CONSTRUCTION_PROJECTS: 'CONSTRUCTION_PROJECTS',
+  URGENT_APPEAL: 'URGENT_APPEAL'
 } as const
 
 export type ActivityCategory = (typeof ActivityCategory)[keyof typeof ActivityCategory]

@@ -5,6 +5,7 @@ import {
   IsOptional,
   IsString,
   IsUrl,
+  Max,
   MaxLength,
   Min,
 } from 'class-validator';
@@ -59,4 +60,16 @@ export class CreateActivityDto {
   @IsNumber()
   @Min(0)
   price?: number | null;
+
+  @IsOptional()
+  @IsNumber()
+  @Min(-90)
+  @Max(90)
+  impactLat?: number | null;
+
+  @IsOptional()
+  @IsNumber()
+  @Min(-180)
+  @Max(180)
+  impactLng?: number | null;
 }

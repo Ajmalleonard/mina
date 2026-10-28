@@ -1,8 +1,9 @@
 "use client";
 
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { useI18n } from '@/lib/i18n';
 import { Map, MapMarker, MarkerContent, MarkerPopup, MapControls } from "@/components/ui/map";
+import { fetchPublicImpactActivities, type PublicImpactActivity } from "@/lib/impact-activities";
 
 const LOCATIONS = [
   { id: "dar-orphanage", title: "Orphanage Complex", description: "Educational & residential complex for children in Dar es Salaam.", lat: -6.7924, lng: 39.2083, status: "completed" as const, category: "Infrastructure" },
@@ -19,10 +20,42 @@ const LOCATIONS = [
 
 export default function ImpactMapSection() {
   const { t } = useI18n();
+  const [activityLocations, setActivityLocations] = useState<PublicImpactActivity[]>([]);
+
+  useEffect(() => {
+    let isMounted = true;
+
+    fetchPublicImpactActivities()
+      .then((activities) => {
+        if (isMounted) {
+          setActivityLocations(activities);
+        }
+      })
+      .catch((error: unknown) => {
+        console.error("Failed to load activity locations for the Impact Map.", error);
+      });
+
+    return () => {
+      isMounted = false;
+    };
+  }, []);
+
+  const locations = [
+    ...LOCATIONS,
+    ...activityLocations.map((activity) => ({
+      id: activity.id,
+      title: activity.title,
+      description: activity.description,
+      lat: activity.impactLat,
+      lng: activity.impactLng,
+      status: "planned" as const,
+      category: activity.category,
+    })),
+  ];
 
   const STATS = [
-    { label: t('impact.stats.completed'), value: `${LOCATIONS.filter(l => l.status === "completed").length}`, color: "#95E18A" },
-    { label: t('impact.stats.planned'), value: `${LOCATIONS.filter(l => l.status === "planned").length}`, color: "#F5A623" },
+    { label: t('impact.stats.completed'), value: `${locations.filter(l => l.status === "completed").length}`, color: "#95E18A" },
+    { label: t('impact.stats.planned'), value: `${locations.filter(l => l.status === "planned").length}`, color: "#F5A623" },
     { label: t('impact.stats.active'), value: "8+", color: "#111111" },
   ];
 
@@ -78,7 +111,7 @@ export default function ImpactMapSection() {
           >
             <MapControls position="top-right" showZoom showCompass={false} />
 
-            {LOCATIONS.map((loc) => (
+            {locations.map((loc) => (
               <MapMarker key={loc.id} longitude={loc.lng} latitude={loc.lat}>
                 <MarkerContent>
                   {/* Custom dot marker */}

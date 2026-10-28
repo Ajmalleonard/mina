@@ -1,4 +1,4 @@
-import { Injectable, NotFoundException } from '@nestjs/common';
+import { BadRequestException, Injectable, NotFoundException } from '@nestjs/common';
 import { ActivityCategory, ActivityType, Prisma } from '../../prisma/generated/client';
 import { PrismaService } from '../prisma/prisma.service';
 import { CreateActivityDto } from './dto/create-activity.dto';
@@ -98,13 +98,26 @@ export class ActivitiesService {
   }
 
   async create(createActivityDto: CreateActivityDto) {
+    this.validateImpactCoordinates(
+      createActivityDto.impactLat ?? null,
+      createActivityDto.impactLng ?? null,
+    );
+
     return this.prisma.activity.create({
       data: this.buildCreateData(createActivityDto),
     });
   }
 
   async update(id: string, updateActivityDto: UpdateActivityDto) {
-    await this.findById(id);
+    const activity = await this.findById(id);
+    this.validateImpactCoordinates(
+      updateActivityDto.impactLat !== undefined
+        ? updateActivityDto.impactLat
+        : activity.impactLat,
+      updateActivityDto.impactLng !== undefined
+        ? updateActivityDto.impactLng
+        : activity.impactLng,
+    );
 
     return this.prisma.activity.update({
       where: { id },
@@ -136,7 +149,17 @@ export class ActivitiesService {
       priority: createActivityDto.priority ?? 0,
       type: createActivityDto.type ?? ActivityType.DONATION,
       price: createActivityDto.price ?? null,
+      impactLat: createActivityDto.impactLat ?? null,
+      impactLng: createActivityDto.impactLng ?? null,
     };
+  }
+
+  private validateImpactCoordinates(lat: number | null, lng: number | null) {
+    if ((lat === null) !== (lng === null)) {
+      throw new BadRequestException(
+        'Select a map location or clear both coordinates.',
+      );
+    }
   }
 
   private buildUpdateData(updateActivityDto: UpdateActivityDto): Prisma.ActivityUpdateInput {
@@ -187,6 +210,14 @@ export class ActivitiesService {
 
     if (updateActivityDto.price !== undefined) {
       data.price = updateActivityDto.price ?? null;
+    }
+
+    if (updateActivityDto.impactLat !== undefined) {
+      data.impactLat = updateActivityDto.impactLat;
+    }
+
+    if (updateActivityDto.impactLng !== undefined) {
+      data.impactLng = updateActivityDto.impactLng;
     }
 
     return data;
