@@ -129,7 +129,7 @@ jobs:
           password: ${{ secrets.VPS_PASSWORD }}
           port: ${{ secrets.VPS_PORT }}
           source: "apps/api/prisma.config.ts,apps/api/prisma/schema.prisma,apps/api/prisma/migrations"
-          target: "/home/apps/sq/mina"
+          target: "/home/apps/sq/mina/apps"
           strip_components: 1
       - name: Apply API database migrations
         if: contains(needs.changes.outputs.services, 'api')

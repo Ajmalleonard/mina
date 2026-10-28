@@ -19,7 +19,7 @@ jobs:
           password: ${{ secrets.VPS_PASSWORD }}
           port: ${{ secrets.VPS_PORT }}
           source: "apps/api/prisma.config.ts,apps/api/prisma/schema.prisma,apps/api/prisma/migrations"
-          target: "/home/apps/sq/mina"
+          target: "/home/apps/sq/mina/apps"
           strip_components: 1
       - name: Apply migrations using the VPS API environment
         uses: appleboy/ssh-action@v1.2.0
