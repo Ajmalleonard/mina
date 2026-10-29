@@ -43,6 +43,8 @@ jobs:
               if command -v bunx >/dev/null 2>&1; then bunx prisma migrate status || true; else ./node_modules/.bin/prisma migrate status || true; fi
               cd /home/apps/sq/mina
             fi
+            echo "== Activity table columns visible to the API container =="
+            docker exec mina-api node -e 'const {Client}=require("pg");(async()=>{const c=new Client({connectionString:process.env.DATABASE_URL});await c.connect();const r=await c.query("SELECT column_name FROM information_schema.columns WHERE table_schema = $1 AND table_name = $2 ORDER BY ordinal_position",["public","Activity"]);console.log(r.rows.map(x=>x.column_name).join(","));await c.end()})().catch(e=>{console.log("column inspection failed: "+(e.code||e.name));process.exitCode=1})' || true
             echo "== Listening ports =="
             ss -ltnp 2>/dev/null | grep -E ':(3002|3003|3004|3005|3006|4305|13002|13003)([[:space:]]|$)' || true
             echo "== Port 3003 owner =="
