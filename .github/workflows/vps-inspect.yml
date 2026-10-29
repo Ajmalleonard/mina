@@ -28,6 +28,7 @@ jobs:
             echo "== Mina related containers =="
             docker ps -a --format '{{.Names}}|{{.Status}}|{{.Ports}}' | grep -Ei 'mina|travel-engine' || true
             docker inspect --format '{{.Name}}|{{.State.Status}}|{{.Config.Image}}|{{json .NetworkSettings.Ports}}' mina-api 2>/dev/null || true
+            docker inspect --format '{{.Name}}|{{.State.Status}}|{{.Config.Image}}' mina-panel 2>/dev/null || true
             docker inspect --format '{{.Name}}|{{.State.Status}}|{{.State.Error}}|{{.Config.Image}}|{{json .HostConfig.PortBindings}}' mina-web 2>/dev/null || true
             echo "== Mina PM2 processes =="
             if command -v pm2 >/dev/null 2>&1; then
@@ -45,6 +46,8 @@ jobs:
             fi
             echo "== Activity table columns visible to the API container =="
             docker exec mina-api node -e 'const {Client}=require("pg");(async()=>{const c=new Client({connectionString:process.env.DATABASE_URL});await c.connect();const r=await c.query("SELECT column_name FROM information_schema.columns WHERE table_schema = $1 AND table_name = $2 ORDER BY ordinal_position",["public","Activity"]);console.log(r.rows.map(x=>x.column_name).join(","));await c.end()})().catch(e=>{console.log("column inspection failed: "+(e.code||e.name));process.exitCode=1})' || true
+            echo "== Activities with map locations =="
+            docker exec mina-api node -e 'const {Client}=require("pg");(async()=>{const c=new Client({connectionString:process.env.DATABASE_URL});await c.connect();const r=await c.query("SELECT COUNT(*)::int AS total, COUNT(*) FILTER (WHERE \"impactLat\" IS NOT NULL AND \"impactLng\" IS NOT NULL)::int AS mapped FROM \"Activity\"");console.log(`activities_total=${r.rows[0].total}; activities_with_impact_location=${r.rows[0].mapped}`);await c.end()})().catch(e=>{console.log("impact location count failed: "+(e.code||e.name));process.exitCode=1})' || true
             echo "== Admin overview Prisma read probe =="
             docker exec mina-api node -e 'const {PrismaClient}=require("./apps/api/dist/prisma/generated/client");const {Pool}=require("pg");const {PrismaPg}=require("@prisma/adapter-pg");const prisma=new PrismaClient({adapter:new PrismaPg(new Pool({connectionString:process.env.DATABASE_URL}))});(async()=>{const [activities,promotions]=await Promise.all([prisma.activity.findMany({orderBy:[{priority:"asc"},{updatedAt:"desc"}]}),prisma.promotion.findMany({orderBy:[{featured:"desc"},{sortOrder:"asc"},{updatedAt:"desc"}],include:{createdBy:{select:{id:true,email:true,firstName:true,lastName:true}},updatedBy:{select:{id:true,email:true,firstName:true,lastName:true}}}})]);console.log(`admin_activities_read=${activities.length}; admin_promotions_read=${promotions.length}`);await prisma.$disconnect()})().catch(async e=>{console.log("Prisma read probe failed: "+(e.code||e.name));await prisma.$disconnect().catch(()=>{});process.exitCode=1})' || true
             echo "== Listening ports =="
