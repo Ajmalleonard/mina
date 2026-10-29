@@ -34,8 +34,6 @@ export const EMPTY_ACTIVITY_FORM: ActivityFormValues = {
   priority: "0",
   type: "DONATION",
   price: "",
-  impactLat: "",
-  impactLng: "",
 }
 
 export const EMPTY_PROMOTION_FORM: PromotionFormValues = {

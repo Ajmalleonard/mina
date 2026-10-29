@@ -128,8 +128,6 @@ export type ActivityFormValues = {
   priority: string
   type: ActivityType
   price: string
-  impactLat: string
-  impactLng: string
 }
 
 export type ActivityMeta = {

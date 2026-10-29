@@ -3,17 +3,20 @@
 import maplibregl from "maplibre-gl"
 import "maplibre-gl/dist/maplibre-gl.css"
 import { useEffect, useRef } from "react"
+import { cn } from "@/lib/utils"
 
 type ImpactLocationPickerProps = {
   latitude: number | null
   longitude: number | null
   onLocationSelect: (latitude: number, longitude: number) => void
+  className?: string
 }
 
 export function ImpactLocationPicker({
   latitude,
   longitude,
   onLocationSelect,
+  className,
 }: ImpactLocationPickerProps) {
   const containerRef = useRef<HTMLDivElement>(null)
   const mapRef = useRef<maplibregl.Map | null>(null)
@@ -74,12 +77,16 @@ export function ImpactLocationPicker({
     }
 
     marker.setLngLat([longitude, latitude]).addTo(map)
+    map.flyTo({ center: [longitude, latitude], duration: 300 })
   }, [latitude, longitude])
 
   return (
     <div
       aria-label="Select an impact location in Tanzania"
-      className="h-72 overflow-hidden rounded-[1rem] border border-[var(--border)]"
+      className={cn(
+        "h-72 overflow-hidden rounded-[1rem] border border-[var(--border)]",
+        className
+      )}
       ref={containerRef}
     />
   )

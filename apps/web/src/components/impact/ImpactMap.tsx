@@ -92,7 +92,7 @@ const ImpactMap = () => {
               image: activity.image,
               lat: activity.impactLat,
               lng: activity.impactLng,
-              status: 'planned' as const,
+              status: 'completed' as const,
               category: activity.category,
             }))
           );

@@ -30,8 +30,6 @@ function toActivityFormValues(activity: Activity): ActivityFormValues {
     priority: String(activity.priority),
     type: activity.type,
     price: activity.price === null || activity.price === undefined ? "" : String(activity.price),
-    impactLat: activity.impactLat === null || activity.impactLat === undefined ? "" : String(activity.impactLat),
-    impactLng: activity.impactLng === null || activity.impactLng === undefined ? "" : String(activity.impactLng),
   }
 }
 
@@ -113,13 +111,6 @@ export function ActivityEditor({ activityId }: ActivityEditorProps) {
         throw new Error("Activity image is required.")
       }
 
-      const impactLat = form.impactLat.trim() ? Number.parseFloat(form.impactLat) : null
-      const impactLng = form.impactLng.trim() ? Number.parseFloat(form.impactLng) : null
-
-      if ((impactLat === null) !== (impactLng === null)) {
-        throw new Error("Select a map location or clear both coordinates.")
-      }
-
       const payload = {
         title: form.title.trim(),
         slug: form.slug.trim() || undefined,
@@ -132,8 +123,6 @@ export function ActivityEditor({ activityId }: ActivityEditorProps) {
         priority: Number.parseInt(form.priority || "0", 10) || 0,
         type: form.type,
         price: form.price.trim() ? Number.parseFloat(form.price) : null,
-        impactLat,
-        impactLng,
       }
 
       if (activityId) {

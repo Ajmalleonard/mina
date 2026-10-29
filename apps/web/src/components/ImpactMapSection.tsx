@@ -48,7 +48,7 @@ export default function ImpactMapSection() {
       description: activity.description,
       lat: activity.impactLat,
       lng: activity.impactLng,
-      status: "planned" as const,
+      status: "completed" as const,
       category: activity.category,
     })),
   ];
@@ -56,7 +56,7 @@ export default function ImpactMapSection() {
   const STATS = [
     { label: t('impact.stats.completed'), value: `${locations.filter(l => l.status === "completed").length}`, color: "#95E18A" },
     { label: t('impact.stats.planned'), value: `${locations.filter(l => l.status === "planned").length}`, color: "#F5A623" },
-    { label: t('impact.stats.active'), value: "8+", color: "#111111" },
+    { label: t('impact.stats.active'), value: `${locations.length}`, color: "#111111" },
   ];
 
   return (

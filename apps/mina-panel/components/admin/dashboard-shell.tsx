@@ -3,7 +3,7 @@
 import type { ReactNode } from "react"
 import Link from "next/link"
 import { usePathname } from "next/navigation"
-import { Gallery, Home2, Profile2User, Setting2, TaskSquare } from "iconsax-react"
+import { Gallery, Home2, Map1, Profile2User, Setting2, TaskSquare } from "iconsax-react"
 import { AdminRouteGuard } from "@/components/admin/admin-route-guard"
 import { useAdminAuth } from "@/components/admin/admin-auth-provider"
 import { ThemeSwitcher } from "@/components/admin/theme-switcher"
@@ -22,6 +22,12 @@ const PRIMARY_NAV_ITEMS = [
     label: "Activities",
     description: "Manage donation activities and campaign records.",
     icon: TaskSquare,
+  },
+  {
+    href: "/dashboard/impact-map",
+    label: "Impact map",
+    description: "Place completed contributions on the public impact map.",
+    icon: Map1,
   },
   {
     href: "/dashboard/promotions",
