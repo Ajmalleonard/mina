@@ -102,14 +102,14 @@ export function ConfirmDialogProvider({ children }: { children: ReactNode }) {
       {request ? (
         <div
           aria-hidden={false}
-          className="fixed inset-0 z-[120] flex items-center justify-center bg-[rgba(6,10,8,0.52)] px-4 backdrop-blur-sm"
+          className="fixed inset-0 z-[120] flex items-center justify-center bg-[rgba(6,10,8,0.72)] px-4"
           onClick={() => closeDialog(false)}
         >
           <div
             aria-describedby="confirm-dialog-description"
             aria-labelledby="confirm-dialog-title"
             aria-modal="true"
-            className="w-full max-w-md rounded-[1.65rem] border border-[var(--border)] bg-[var(--card)] p-6 shadow-[var(--shadow-soft)]"
+            className="w-full max-w-md rounded-xl border border-[var(--border)] bg-[var(--card)] p-6"
             role="dialog"
             onClick={(event) => event.stopPropagation()}
           >

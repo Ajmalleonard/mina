@@ -60,10 +60,10 @@ export function DashboardShell({ children }: { children: ReactNode }) {
   return (
     <AdminRouteGuard>
       <div className="min-h-svh px-3 py-3 lg:px-5">
-        <div className="mx-auto flex max-w-[1720px] flex-col gap-3 lg:h-[calc(100svh-1.5rem)] lg:flex-row">
-          <aside className="hidden w-[84px] shrink-0 rounded-[1.75rem] border border-[var(--border)] bg-[var(--card)] p-3 shadow-[var(--shadow-soft)] lg:flex lg:flex-col lg:items-center lg:justify-between">
+        <div className="mx-auto flex max-w-[1720px] flex-col gap-3 lg:min-h-[calc(100svh-1.5rem)] lg:flex-row">
+          <aside className="hidden w-[84px] shrink-0 rounded-xl border border-[var(--border)] bg-[var(--card)] p-3 lg:sticky lg:top-3 lg:flex lg:h-[calc(100svh-1.5rem)] lg:self-start lg:flex-col lg:items-center lg:justify-between lg:overflow-y-auto">
             <div className="flex flex-col items-center gap-4">
-              <div className="flex h-12 w-12 items-center justify-center rounded-[1.2rem] border border-[color:rgba(16,173,121,0.24)] bg-[linear-gradient(180deg,rgba(16,173,121,0.14),rgba(16,173,121,0.06))] text-[var(--primary)] shadow-[0_16px_30px_rgba(16,173,121,0.12)]">
+              <div className="flex h-12 w-12 items-center justify-center rounded-xl border border-[var(--border)] bg-[var(--muted)] text-[var(--primary)]">
                 <Home2 color="currentColor" size="24" variant="Bold" />
               </div>
 
@@ -120,7 +120,7 @@ export function DashboardShell({ children }: { children: ReactNode }) {
           </aside>
 
           <div className="flex min-h-0 flex-1 flex-col gap-3">
-            <header className="shrink-0 rounded-[1.75rem] border border-[var(--border)] bg-[var(--card)] px-5 py-4 shadow-[var(--shadow-soft)] lg:px-6">
+            <header className="shrink-0 rounded-xl border border-[var(--border)] bg-[var(--card)] px-5 py-4 lg:px-6">
               <div className="flex flex-col gap-4 xl:flex-row xl:items-end xl:justify-between">
                 <div className="space-y-2.5">
                   <div className="inline-flex w-fit items-center rounded-full border border-[color:rgba(16,173,121,0.22)] bg-[color:rgba(16,173,121,0.08)] px-3 py-1 text-[11px] font-medium uppercase tracking-[0.14em] text-[var(--foreground)]">
@@ -181,7 +181,7 @@ export function DashboardShell({ children }: { children: ReactNode }) {
               </nav>
             </header>
 
-            <main className="rounded-[1.75rem] border border-[var(--border)] bg-[var(--muted)]/42 p-5 shadow-[var(--shadow-soft)] lg:min-h-0 lg:flex-1 lg:overflow-hidden xl:p-6">
+            <main className="min-w-0 flex-1 rounded-xl border border-[var(--border)] bg-[var(--muted)]/42 p-5 xl:p-6">
               {children}
             </main>
           </div>

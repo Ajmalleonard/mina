@@ -50,7 +50,7 @@ export function ThemeSwitcher({ className }: ThemeSwitcherProps) {
             className={cn(
               "inline-flex h-9 items-center gap-2 rounded-full px-3 text-xs font-semibold transition focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-[var(--ring)]",
               isActive
-                ? "bg-[var(--card)] text-[var(--foreground)] shadow-[0_8px_20px_rgba(0,0,0,0.18)]"
+                ? "bg-[var(--card)] text-[var(--foreground)]"
                 : "text-[var(--muted-foreground)] hover:text-[var(--foreground)]",
             )}
             onClick={() => setTheme(option.value)}

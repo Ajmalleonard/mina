@@ -20,17 +20,6 @@ export function ContentTrendChart({ activities, promotions }: ContentTrendChartP
     <div className="h-[280px] w-full">
       <ResponsiveContainer width="100%" height="100%">
         <AreaChart data={chartData} margin={{ top: 8, right: 8, left: -18, bottom: 0 }}>
-          <defs>
-            <linearGradient id="activities-fill" x1="0" x2="0" y1="0" y2="1">
-              <stop offset="0%" stopColor="#10ad79" stopOpacity={0.32} />
-              <stop offset="100%" stopColor="#10ad79" stopOpacity={0.04} />
-            </linearGradient>
-            <linearGradient id="promotions-fill" x1="0" x2="0" y1="0" y2="1">
-              <stop offset="0%" stopColor="#82c4ff" stopOpacity={0.28} />
-              <stop offset="100%" stopColor="#82c4ff" stopOpacity={0.03} />
-            </linearGradient>
-          </defs>
-
           <CartesianGrid stroke="var(--chart-grid)" strokeDasharray="3 3" vertical={false} />
           <XAxis
             axisLine={false}
@@ -50,8 +39,7 @@ export function ContentTrendChart({ activities, promotions }: ContentTrendChartP
             contentStyle={{
               background: "var(--card)",
               border: "1px solid var(--border)",
-              borderRadius: "16px",
-              boxShadow: "var(--shadow-soft)",
+              borderRadius: "12px",
               color: "var(--foreground)",
             }}
             cursor={{ stroke: "var(--chart-cursor)", strokeDasharray: "3 3" }}
@@ -59,17 +47,19 @@ export function ContentTrendChart({ activities, promotions }: ContentTrendChartP
           />
           <Area
             dataKey="activities"
-            fill="url(#activities-fill)"
+            fill="var(--primary)"
+            fillOpacity={0.12}
             name="Activities"
-            stroke="#10ad79"
+            stroke="var(--primary)"
             strokeWidth={2.2}
             type="monotone"
           />
           <Area
             dataKey="promotions"
-            fill="url(#promotions-fill)"
+            fill="var(--muted-foreground)"
+            fillOpacity={0.08}
             name="Promotions"
-            stroke="#82c4ff"
+            stroke="var(--muted-foreground)"
             strokeWidth={2.2}
             type="monotone"
           />
